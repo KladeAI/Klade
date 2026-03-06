@@ -1,9 +1,11 @@
-# Cadre — Architecture Plan (Opus)
+# Cadre — Architecture Plan (Control-Tower)
 
 ## What we're building
-An AI staffing company. Businesses rent AI employees that plug into their existing tools (Slack, email, calendar) and work like real team members.
+Cadre is a managed AI staffing + infrastructure company.
 
-## First Employee: Barbara (Executive Assistant)
+We deploy OpenClaw-style agentic employees into client businesses, pre-configured and production-managed by Cadre. Clients buy operational outcomes, not DIY setup burden.
+
+## First Employee: Jarvis (Executive Assistant Baseline)
 
 ### Day-one capabilities
 1. **Slack integration** — joins client workspace as a bot user, responds to DMs and channel mentions
@@ -24,7 +26,7 @@ An AI staffing company. Businesses rent AI employees that plug into their existi
 │  ├─ Google Workspace OAuth          │
 │  └─ Preferences questionnaire       │
 ├─────────────────────────────────────┤
-│  Barbara Runtime                    │
+│  Jarvis Runtime (Baseline)          │
 │  ├─ Message router (Slack events)   │
 │  ├─ Intent classifier               │
 │  ├─ Tool executor                   │
@@ -63,15 +65,16 @@ An AI staffing company. Businesses rent AI employees that plug into their existi
 - **LLM:** Model-agnostic via API (start with OpenAI/Anthropic)
 - **Styling:** Tailwind CSS + shadcn/ui
 
-### Build Order (Tonight)
-1. New repo scaffold: `cadre/` with Next.js + TypeScript
-2. Landing page with the quote + waitlist signup
-3. Slack bot scaffold (event listener, message handler)
-4. Barbara's core brain (system prompt + tool definitions)
-5. Client dashboard (see Barbara's activity, approve actions)
+### Build Order (Current)
+1. Harden Jarvis as a reusable baseline employee runtime
+2. Standardize connector layer for multi-industry deployment
+3. Ship managed onboarding + approval workflows for non-technical operators
+4. Expand specialized role templates beyond EA
+5. Package Cadre-managed deployment/ops layer as the default customer experience
 
-### What makes this defensible
-- Per-client memory that improves over time
-- Multi-tool orchestration (not just chat)
-- Approval gates build trust
-- Team hierarchy (future: multiple AI employees per client)
+### Long-Term Defensibility
+- Cadre-managed infra + operations (not just software license)
+- Repeatable role blueprints that compound over deployments
+- Multi-agent orchestration with human approval and auditability
+- Fast deployment for non-technical client teams
+- Outcome data loops that improve role performance over time
