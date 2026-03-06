@@ -86,6 +86,31 @@ The wedge is practical implementation: deliver immediate operational output, the
 
 ---
 
+## Monetization Model (How Cadre Makes Money)
+
+Cadre is built to generate recurring revenue from day one.
+
+### Pricing Options
+1. **Monthly Plan**
+   - Includes a defined pool of agent-hours per month
+   - Framed like paying a modern workforce salary, but for AI employees
+
+2. **Yearly Plan**
+   - Includes a larger annual pool of agent-hours
+   - Better effective pricing for committed operators
+
+3. **Billable-Hour Plan**
+   - Usage billed per agent-hour consumed
+   - **Higher unit rate** than equivalent monthly-hour pricing to incentivize subscription plans
+
+### Metering Logic
+- Cadre tracks usage in tokens/events internally and converts this to **agent-hours** for billing.
+- Agent-hours are operational usage units (not literal human chat hours).
+- This gives clients a familiar staffing-style pricing model while preserving technical accuracy under the hood.
+
+### Billing Infrastructure
+- Stripe is the default billing rail for subscriptions, metered usage, invoicing, and payment collection.
+
 ## Company Priorities
 
 1. Build a product that works in the real world

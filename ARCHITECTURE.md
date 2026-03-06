@@ -51,6 +51,12 @@ We deploy OpenClaw-style agentic employees into client businesses, pre-configure
 │  Deployment                         │
 │  ├─ Vercel (web app + API routes)   │
 │  └─ Vercel Cron (scheduled tasks)   │
+├─────────────────────────────────────┤
+│  Revenue & Billing Layer            │
+│  ├─ Usage metering (tokens -> agent-hours)
+│  ├─ Plan engine (monthly/yearly/billable)
+│  ├─ Stripe subscriptions + invoices
+│  └─ Overage/billable-hour rating    │
 └─────────────────────────────────────┘
 ```
 
