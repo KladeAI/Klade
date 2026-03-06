@@ -1,110 +1,114 @@
 # Cadre
 
-> **AI Employees for modern firms**  
-> Deploy role-specific AI employees that plug into your existing tools and execute real work.
+> **The Managed Agent Workforce Company**  
+> We deploy and run OpenClaw-style AI employees for businesses — fully configured, outcome-driven, and production-managed.
 
-Cadre is building the AI staffing layer for SMBs and growth companies: reliable AI employees that operate like high-performance team members, with human approvals where it matters.
+Cadre is building the staffing and infrastructure layer for the agentic economy.
+
+Our core bet is simple: every business will adopt AI agents. Most will fail at implementation alone. Cadre solves that by delivering pre-configured, role-specialized agent employees and operating the full stack for clients.
 
 ---
 
-## Why Cadre Exists
+## Vision
 
-Small and mid-sized firms often can’t afford the depth of talent they need across operations, research, and execution.
+Cadre is not a single-agent demo company.
 
-Cadre closes that gap by giving teams access to deployable AI employees that are:
-- integrated into daily workflows,
-- accountable through activity logs and approvals,
-- and customizable by role.
+Cadre is building a new operating model for work:
+- AI employees that perform real business functions,
+- managed infrastructure that companies do not need to build themselves,
+- and deployment systems that make agent adoption plug-and-play.
 
-> "We don't eliminate jobs. We let small firms access talent they could never afford."
+Long term, Cadre’s agent workforce will execute equivalent outcomes to paid employee roles across multiple functions.
+
+---
+
+## What We Sell
+
+Cadre offers two things together:
+
+1. **AI Staffing**
+   - Role-specific AI employees (Executive Assistant, Analyst, Researcher, Ops roles, and beyond)
+   - Specialized by function and industry context
+
+2. **Managed AI Infrastructure**
+   - Cadre runs the deployment, integration, reliability, and maintenance layer
+   - Clients don’t need technical teams to get value
+
+This is not DIY software. This is managed capability.
 
 ---
 
 ## Product Thesis
 
-Cadre follows a **Base Runtime + Role Layers** architecture:
+Cadre follows a **Base Runtime + Specialized Role Layers** architecture:
 
-- **Base Runtime**
-  - shared memory model
+- **Base Runtime (OpenClaw-style)**
+  - orchestration
+  - memory/context
+  - approvals + guardrails
   - connector framework
-  - approval and audit layer
-  - task orchestration + activity tracking
+  - activity/audit visibility
 
 - **Role Layers**
-  - role-specific behaviors, tools, and prompts
-  - deployable as distinct AI employees (EA, Analyst, Researcher, etc.)
+  - function-specific behaviors
+  - toolpacks and workflows
+  - outcome-specific execution standards
 
-The first baseline employee is **Jarvis (Executive Assistant)**.
-
----
-
-## What Cadre Employees Do
-
-Cadre employees are designed for execution, not novelty chat.
-
-Core capabilities include:
-- communication and inbox support
-- scheduling and calendar operations
-- research and summarization
-- document drafting and task tracking
-- tool-to-tool workflow automation with approval controls
+**Jarvis** is the first baseline employee — a strong starting point, not the final product.
 
 ---
 
-## Product Principles
+## Who We Serve
 
-1. **Plug-and-play first**
-   - Connect quickly to common business stacks
-   - Minimize setup friction for non-technical operators
+Cadre is designed to scale across business types and sizes:
+- startups
+- growth companies
+- mid-market teams
+- larger organizations over time
 
-2. **Trust by design**
-   - Human-in-the-loop approvals for sensitive actions
-   - Full action visibility via logs and status feeds
+The wedge is practical implementation: deliver immediate operational output, then expand role coverage.
 
-3. **Model-agnostic intelligence**
-   - Route tasks to the best model per job
-   - Preserve backend flexibility as model quality changes
+---
 
-4. **Operator-grade reliability**
-   - Built for repeatable workflow execution
-   - Prioritize clean architecture, observability, and maintainability
+## Why This Wins
+
+1. **Agentic future, implementation gap now**
+   - Everyone wants AI agents; few can deploy them correctly
+
+2. **Managed service moat**
+   - Cadre owns deployment quality, operations, and iteration speed
+
+3. **Plug-and-play for non-technical operators**
+   - Business teams buy outcomes, not integration pain
+
+4. **Compounding workforce model**
+   - Each specialized agent improves the full deployment platform
+
+---
+
+## Company Priorities
+
+1. Build a product that works in the real world
+2. Sign and retain paying clients
+3. Expand specialized agent coverage by role and industry
+
+We optimize for execution and outcomes — not fundraising theater.
 
 ---
 
 ## Repositories
 
-- **`cadre`** (this repo): core product app + AI employee runtime
-- **`founder-os`**: internal operating system for execution, planning, and cofounder visibility
+- **`cadre`**: core product and managed-agent runtime
+- **`founder-os`**: internal build/execution operating system
 
 ---
 
-## Current Build Stage
+## Build Standard
 
-- MVP under active development
-- Jarvis baseline being hardened as reusable role foundation
-- Integration surface area expanding
-- Founder/cofounder workflow and deployment readiness in progress
+Cadre is being built with a long-horizon company mindset:
+- move fast
+- stay clean
+- keep systems auditable
+- design for scale from day one
 
----
-
-## Security & Access Posture
-
-- Private repositories by default
-- Least-privilege access model
-- Staged hardening of machine credentials and automation identities
-
----
-
-## Near-Term Roadmap
-
-1. Ship Jarvis baseline runtime (production-quality)
-2. Expand and stabilize integration connectors
-3. Finalize onboarding + approval flows
-4. Launch first implementation-ready customer workflow
-
----
-
-## Founder Standard
-
-Cadre is being built as a serious company from day one:
-**ship fast, but keep systems clean, auditable, and scalable.**
+If AI transforms work, Cadre will be the company that deploys and runs that transformation for businesses.
