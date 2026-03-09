@@ -4,14 +4,14 @@ import type { ReactNode } from "react";
 type ContainerProps = { children: ReactNode; className?: string };
 
 export function Container({ children, className = "" }: ContainerProps) {
-  return <div className={`mx-auto w-full max-w-6xl px-6 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-6xl px-6 lg:px-8 ${className}`}>{children}</div>;
 }
 
 type SectionProps = { id?: string; children: ReactNode; className?: string };
 
 export function Section({ id, children, className = "" }: SectionProps) {
   return (
-    <section id={id} className={`py-16 md:py-24 ${className}`}>
+    <section id={id} className={`relative py-24 md:py-28 lg:py-32 ${className}`}>
       <Container>{children}</Container>
     </section>
   );
@@ -26,13 +26,13 @@ type ButtonProps = {
 export function Button({ href, children, variant = "primary" }: ButtonProps) {
   const styles =
     variant === "primary"
-      ? "bg-white text-black hover:bg-zinc-200"
-      : "border border-zinc-700 bg-zinc-900 text-zinc-100 hover:border-zinc-500";
+      ? "border border-indigo-300/20 bg-gradient-to-r from-white to-indigo-100 text-black shadow-[0_0_24px_rgba(99,102,241,0.35)] hover:shadow-[0_0_38px_rgba(129,140,248,0.45)]"
+      : "border border-zinc-700/90 bg-zinc-900/85 text-zinc-100 hover:border-indigo-400/50 hover:text-white";
 
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition ${styles}`}
+      className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-300 hover:scale-[1.03] ${styles}`}
     >
       {children}
     </Link>
