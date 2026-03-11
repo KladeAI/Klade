@@ -46,6 +46,8 @@ const features = [
   "Workflow deployment",
 ];
 
+const analystTraits = ["SEC + transcript grounded", "Evidence-cited outputs", "Partner-ready in minutes", "Built for high-trust finance teams"];
+
 const founderCards = [
   {
     name: "Adam Benoit",
@@ -123,9 +125,17 @@ export default function HomePage() {
           />
 
           <FadeIn>
-            <p className="mb-5 inline-flex rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-zinc-300">
-              Private beta · limited institutional cohort
-            </p>
+            <div className="mb-5 flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-zinc-300">
+                <span className="relative h-5 w-5 overflow-hidden rounded-full border border-indigo-300/40">
+                  <Image src="/brand/klade-logo-draft.jpg" alt="Klade draft logo" fill sizes="20px" className="object-cover" />
+                </span>
+                Private beta · limited institutional cohort
+              </div>
+              <p className="rounded-full border border-indigo-300/25 bg-indigo-500/10 px-3 py-1 text-xs text-indigo-100">
+                Character-led analyst UX
+              </p>
+            </div>
             <h1 className="max-w-5xl text-5xl font-semibold tracking-tight text-white md:text-7xl lg:text-8xl leading-[0.98]">
               AI analysts for financial intelligence.
             </h1>
@@ -243,6 +253,46 @@ export default function HomePage() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+      </Section>
+
+      <Section>
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-3xl border border-indigo-300/25 bg-gradient-to-br from-zinc-950 via-indigo-950/25 to-zinc-900 p-6 md:p-8">
+            <motion.div
+              className="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full bg-indigo-500/20 blur-3xl"
+              animate={{ y: [0, 12, 0], x: [0, -8, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-indigo-200">Financial Analyst Avatar Concept</p>
+                <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">Meet Kade — your on-screen AI financial analyst.</h2>
+                <p className="mt-4 max-w-2xl text-zinc-300">
+                  Emoji-human warmth with analyst-grade rigor. Kade reads filings, tracks deltas, and returns clear conviction calls that still feel conversational.
+                </p>
+                <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                  {analystTraits.map((trait) => (
+                    <div key={trait} className="rounded-lg border border-zinc-800 bg-zinc-900/75 px-3 py-2 text-sm text-zinc-200">{trait}</div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-2xl border border-indigo-300/30 bg-zinc-950/85 p-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">Avatar preview</p>
+                <div className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/70 p-4">
+                  <p className="text-4xl">🧑🏽‍💼</p>
+                  <p className="mt-2 text-sm text-zinc-300">Kade is analyzing macro pressure across SaaS + semis now.</p>
+                  <div className="mt-3 rounded-lg border border-indigo-300/25 bg-indigo-500/10 p-3 text-sm text-indigo-100">💻 “3 risk deltas surfaced. Memo + slide shipped.”</div>
+                </div>
+                <div className="mt-4 flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-3 py-2">
+                  <div className="relative h-8 w-8 overflow-hidden rounded-md border border-indigo-300/40">
+                    <Image src="/brand/klade-logo-draft.jpg" alt="Klade badge" fill sizes="32px" className="object-cover" />
+                  </div>
+                  <p className="text-sm text-zinc-300">Branded persona anchored to Klade trust cues.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
       </Section>
 
       <Section>

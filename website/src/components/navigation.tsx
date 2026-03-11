@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -22,9 +23,17 @@ export function Navigation() {
       <Container>
         <div className="rounded-2xl border border-white/15 bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,.35)] backdrop-blur-2xl">
           <div className="flex h-14 items-center justify-between px-4">
-            <Link href="/" className="text-lg font-semibold tracking-tight text-white transition-colors duration-300 hover:text-indigo-200">
-              Klade
-              <span className="ml-1 bg-gradient-to-r from-zinc-200 to-indigo-300 bg-clip-text text-transparent">ai</span>
+            <Link
+              href="/"
+              className="group inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-white transition-colors duration-300 hover:text-indigo-200"
+            >
+              <span className="relative h-7 w-7 overflow-hidden rounded-md border border-indigo-300/40 shadow-[0_0_20px_rgba(129,140,248,0.35)]">
+                <Image src="/brand/klade-logo-draft.jpg" alt="Klade logo" fill sizes="28px" className="object-cover transition-transform duration-300 group-hover:scale-105" />
+              </span>
+              <span>
+                Klade
+                <span className="ml-1 bg-gradient-to-r from-zinc-200 to-indigo-300 bg-clip-text text-transparent">ai</span>
+              </span>
             </Link>
 
             <nav className="hidden items-center gap-6 text-sm text-zinc-300 md:flex">
