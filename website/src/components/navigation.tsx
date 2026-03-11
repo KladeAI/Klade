@@ -37,6 +37,7 @@ function trackEvent(eventName: string, payload?: Record<string, string>) {
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState("");
   const [founderMenuImages, setFounderMenuImages] = useState<Record<string, string>>(() =>
     Object.fromEntries(founderMenuPreview.map((founder) => [founder.name, founder.image]))
   );
@@ -48,11 +49,63 @@ export function Navigation() {
   const hadOpenedRef = useRef(false);
 
   const isActiveLink = (href: string) => {
-    if (href.startsWith("/#")) return pathname === "/";
-    if (href === "/") return pathname === "/";
+    if (href.startsWith("/#")) {
+      if (pathname !== "/") return false;
+      const hash = href.slice(1);
+      return activeHash === hash;
+    }
+    if (href === "/") return pathname === "/" && !activeHash;
     return pathname === href;
   };
 
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      return;
+    }
+
+    const sectionIds = navLinks
+      .filter((link) => link.href.startsWith("/#"))
+      .map((link) => link.href.split("#")[1])
+      .filter(Boolean);
+
+    if (sectionIds.length === 0) return;
+
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target.id) {
+          setActiveHash(`#${visible.target.id}`);
+        }
+      },
+      {
+        rootMargin: "-25% 0px -60% 0px",
+        threshold: [0.15, 0.35, 0.6],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    const onHashChange = () => {
+      setActiveHash(window.location.hash || "");
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("hashchange", onHashChange);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) {
@@ -138,6 +191,7 @@ export function Navigation() {
           <div className="flex h-14 items-center justify-between px-4">
             <Link
               href="/"
+              onClick={() => setOpen(false)}
               className="group inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-white transition-colors duration-300 hover:text-indigo-200"
             >
               <span className="relative h-7 w-7 overflow-hidden rounded-md border border-indigo-300/40 shadow-[0_0_20px_rgba(129,140,248,0.35)]">

@@ -9,6 +9,7 @@ type LeadPayload = {
   bottleneck?: string;
   website?: string;
   startedAt?: string;
+  consent?: boolean;
 };
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
@@ -18,6 +19,7 @@ const MAX_FIELD_LENGTH = 1200;
 const MIN_SUBMIT_SECONDS = 3;
 const MAX_FORM_AGE_MS = 48 * 60 * 60 * 1000;
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
+const ALLOWED_TEAM_SIZES = new Set(["1-5", "6-15", "16-40", "41-100", "100+"]);
 const ipRequests = new Map<string, number[]>();
 const recentLeadFingerprints = new Map<string, number>();
 
@@ -211,6 +213,14 @@ export async function POST(request: Request) {
 
   if (!data.name || !data.company || !data.email || !data.teamSize || !data.role || !data.bottleneck) {
     return jsonNoStore({ ok: false, error: "Missing required fields" }, { status: 400 });
+  }
+
+  if (payload.consent !== true) {
+    return jsonNoStore({ ok: false, error: "Consent required" }, { status: 400 });
+  }
+
+  if (!ALLOWED_TEAM_SIZES.has(data.teamSize)) {
+    return jsonNoStore({ ok: false, error: "Invalid team size" }, { status: 400 });
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {

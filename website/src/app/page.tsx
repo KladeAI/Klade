@@ -17,6 +17,7 @@ type LeadForm = {
   bottleneck: string;
   website: string;
   startedAt: string;
+  consent: boolean;
 };
 
 type RoiInputs = {
@@ -34,6 +35,7 @@ const createInitialForm = (): LeadForm => ({
   bottleneck: "",
   website: "",
   startedAt: String(Date.now()),
+  consent: false,
 });
 
 const requiredFormKeys: Array<keyof Pick<LeadForm, "name" | "company" | "email" | "teamSize" | "role" | "bottleneck">> = [
@@ -342,6 +344,7 @@ export default function HomePage() {
   const isSubmitting = status === "submitting";
   const completedFields = requiredFormKeys.filter((key) => form[key].trim().length > 0).length;
   const completionPercent = Math.round((completedFields / requiredFormKeys.length) * 100);
+  const isFormReady = completionPercent === 100 && form.consent;
   const annualHoursRecovered = Math.round(
     roiInputs.analysts * roiInputs.repetitiveHoursPerWeek * 52 * repetitiveLoadReduction
   );
@@ -1336,12 +1339,56 @@ export default function HomePage() {
                   </div>
                 </div>
 
+                <label className="mb-3 flex items-start gap-2 rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-xs text-zinc-300">
+                  <input
+                    required
+                    type="checkbox"
+                    checked={form.consent}
+                    onChange={(event) => setForm((prev) => ({ ...prev, consent: event.target.checked }))}
+                    className="mt-0.5 h-4 w-4 rounded border-zinc-600 bg-zinc-950 accent-indigo-300"
+                  />
+                  <span>
+                    I agree to be contacted by the Klade founders about this pilot request and understand data is reviewed under the security packet process.
+                  </span>
+                </label>
+
+                <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex -space-x-2">
+                      {founderPulse.map((founder) => (
+                        <div key={`form-${founder.name}`} className="relative h-7 w-7 overflow-hidden rounded-full border border-zinc-700">
+                          <Image
+                            src={founderImages[founder.name] ?? founder.image}
+                            alt={`${founder.name} founder photo`}
+                            fill
+                            sizes="28px"
+                            className="object-cover"
+                            onError={() =>
+                              setFounderImages((prev) =>
+                                prev[founder.name] === founder.fallbackImage ? prev : { ...prev, [founder.name]: founder.fallbackImage }
+                              )
+                            }
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-zinc-300">Direct founder review queue</p>
+                  </div>
+                  <p className="text-[11px] uppercase tracking-[0.12em] text-emerald-200">&lt;24h response</p>
+                </div>
+
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex items-center justify-center rounded-xl border border-indigo-300/20 bg-gradient-to-r from-white to-indigo-100 px-5 py-3 text-sm font-semibold text-black shadow-[0_0_24px_rgba(99,102,241,0.35)] transition-all duration-300 hover:scale-[1.03] disabled:opacity-60"
+                  disabled={isSubmitting || !isFormReady}
+                  className="inline-flex items-center justify-center rounded-xl border border-indigo-300/20 bg-gradient-to-r from-white to-indigo-100 px-5 py-3 text-sm font-semibold text-black shadow-[0_0_24px_rgba(99,102,241,0.35)] transition-all duration-300 hover:scale-[1.03] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {isSubmitting ? "Submitting..." : completionPercent < 100 ? `Complete ${requiredFormKeys.length - completedFields} more field${requiredFormKeys.length - completedFields === 1 ? "" : "s"}` : "Submit Request"}
+                  {isSubmitting
+                    ? "Submitting..."
+                    : completionPercent < 100
+                      ? `Complete ${requiredFormKeys.length - completedFields} more field${requiredFormKeys.length - completedFields === 1 ? "" : "s"}`
+                      : !form.consent
+                        ? "Accept consent to continue"
+                        : "Submit Request"}
                 </button>
                 <div className="mt-3 min-h-5" role="status" aria-live="polite">
                   {status === "success" && <p className="text-sm text-emerald-300">Request submitted. We’ll follow up shortly.</p>}
@@ -1548,6 +1595,15 @@ export default function HomePage() {
             >
               Request Early Access — 20 min workflow teardown
             </Link>
+            <div className="mt-2 flex justify-center">
+              <Link
+                href="#security"
+                onClick={() => trackEvent("proof_cta_click", { placement: "mobile_sticky", cta: "review_security_first" })}
+                className="text-[11px] uppercase tracking-[0.12em] text-zinc-300"
+              >
+                Review security first
+              </Link>
+            </div>
           </div>
         </div>
       )}
