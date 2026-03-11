@@ -88,6 +88,7 @@ body::after {
   display: flex;
   width: max-content;
   gap: 0.6rem;
+  will-change: transform;
   animation: marquee-x 22s linear infinite;
 }
 
@@ -112,6 +113,7 @@ body::after {
 
 @media (prefers-reduced-motion: no-preference) {
   .cta-glow {
+    will-change: box-shadow;
     animation: cta-glow 2.8s ease-in-out infinite;
   }
 
@@ -145,5 +147,11 @@ body::after {
     100% {
       transform: translateX(120%);
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .cta-glow {
+    animation-duration: 4.2s;
   }
 }

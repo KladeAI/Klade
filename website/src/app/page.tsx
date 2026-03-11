@@ -469,7 +469,7 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="#lead-form" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "request_early_access" }}>
-                Request Early Access
+                Request Early Access (20-min teardown)
               </Button>
               <Button
                 href="#lead-form"
@@ -1471,6 +1471,11 @@ export default function HomePage() {
               ].map((item) => (
                 <div key={item} className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-zinc-200">{item}</div>
               ))}
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs">
+              <span className="rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-zinc-300">NDA workflow available</span>
+              <span className="rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-zinc-300">DPA + security packet template</span>
+              <span className="rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-zinc-300">Architecture diagram in kickoff week</span>
             </div>
             <p className="mt-5 text-sm text-zinc-400">Typical first-call output: data-flow map, permission model, and rollout checklist your security reviewer can evaluate quickly.</p>
           </div>

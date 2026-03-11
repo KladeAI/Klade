@@ -251,7 +251,7 @@ export function Navigation() {
                 <motion.div
                   id={mobileMenuId}
                   ref={menuPanelRef}
-                  className="relative z-50 border-t border-zinc-800 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 md:hidden"
+                  className="relative z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain border-t border-zinc-800 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 md:hidden"
                   role="dialog"
                   aria-modal="true"
                   initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -16 }}
