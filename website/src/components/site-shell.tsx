@@ -6,7 +6,7 @@ type SiteShellProps = { children: ReactNode };
 
 export function SiteShell({ children }: SiteShellProps) {
   return (
-    <div className="min-h-screen bg-black text-zinc-100">
+    <div className="min-h-screen bg-transparent text-[#0A0F2C]">
       <Navigation />
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         {children}

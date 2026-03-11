@@ -187,30 +187,30 @@ export function Navigation() {
   return (
     <header className="sticky top-4 z-50">
       <Container>
-        <div className="relative rounded-2xl border border-white/15 bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,.35)] backdrop-blur-2xl">
+        <div className="relative rounded-2xl border border-[#22305a]/20 bg-white/78 shadow-[0_14px_36px_-20px_rgba(16,22,47,0.45)] backdrop-blur-2xl">
           <div className="flex h-14 items-center justify-between px-4">
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="group inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-white transition-colors duration-300 hover:text-indigo-200"
+              className="group inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-[#0A0F2C] transition-colors duration-300 hover:text-[#3C5BFF]"
             >
-              <span className="relative h-7 w-7 overflow-hidden rounded-md border border-indigo-300/40 shadow-[0_0_20px_rgba(129,140,248,0.35)]">
+              <span className="relative h-7 w-7 overflow-hidden rounded-md border border-[#3C5BFF]/35 shadow-[0_0_18px_rgba(60,91,255,0.35)]">
                 <Image src="/brand/klade-logo-draft.jpg" alt="Klade logo" fill sizes="28px" className="object-cover transition-transform duration-300 group-hover:scale-105" />
               </span>
               <span>
                 Klade
-                <span className="ml-1 bg-gradient-to-r from-zinc-200 to-indigo-300 bg-clip-text text-transparent">ai</span>
+                <span className="ml-1 bg-gradient-to-r from-[#3C5BFF] to-[#7A5CFF] bg-clip-text text-transparent">ai</span>
               </span>
             </Link>
 
-            <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-zinc-300 md:flex">
+            <nav aria-label="Primary" className="hidden items-center gap-6 text-sm text-[#334067] md:flex">
               {navLinks.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   onClick={() => trackEvent("proof_cta_click", { placement: "navbar", cta: item.label.toLowerCase().replace(/\s+/g, "_") })}
                   aria-current={isActiveLink(item.href) ? "page" : undefined}
-                  className={`transition-colors duration-300 hover:text-indigo-200 ${isActiveLink(item.href) ? "text-indigo-200" : "text-zinc-300"}`}
+                  className={`transition-colors duration-300 hover:text-[#3C5BFF] ${isActiveLink(item.href) ? "text-[#3C5BFF]" : "text-[#334067]"}`}
                 >
                   {item.label}
                 </Link>
@@ -218,7 +218,7 @@ export function Navigation() {
               <Link
                 href={pathname === "/" ? "#lead-form" : "/#lead-form"}
                 onClick={() => trackEvent("hero_cta_click", { placement: "navbar", cta: "book_teardown" })}
-                className="rounded-lg border border-zinc-700/80 bg-zinc-900/70 px-3 py-1.5 text-white transition-all duration-300 hover:scale-105 hover:border-indigo-300/70 hover:shadow-[0_0_22px_rgba(99,102,241,0.35)]"
+                className="rounded-lg border border-[#3C5BFF]/35 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-3 py-1.5 text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_24px_-14px_rgba(60,91,255,0.8)]"
               >
                 Book Teardown
               </Link>
@@ -230,7 +230,7 @@ export function Navigation() {
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls={mobileMenuId}
-              className="inline-flex items-center justify-center rounded-lg border border-zinc-700/80 bg-zinc-900/70 p-2 text-zinc-100 transition-all duration-200 hover:border-indigo-300/60 hover:text-indigo-100 md:hidden"
+              className="inline-flex items-center justify-center rounded-lg border border-[#22305a]/20 bg-white/80 p-2 text-[#10162F] transition-all duration-200 hover:border-[#3C5BFF]/45 hover:text-[#3C5BFF] md:hidden"
               onClick={() => setOpen((value) => !value)}
             >
               {open ? <X size={18} /> : <Menu size={18} />}
@@ -242,7 +242,7 @@ export function Navigation() {
               <>
                 <motion.button
                   aria-label="Close mobile menu backdrop"
-                  className="fixed inset-0 z-40 bg-black/45 md:hidden"
+                  className="fixed inset-0 z-40 bg-[#0A0F2C]/35 md:hidden"
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -251,7 +251,7 @@ export function Navigation() {
                 <motion.div
                   id={mobileMenuId}
                   ref={menuPanelRef}
-                  className="relative z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain border-t border-zinc-800 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 md:hidden"
+                  className="relative z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain border-t border-[#1f2b53]/15 bg-[#F8FAFF]/95 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 md:hidden"
                   role="dialog"
                   aria-modal="true"
                   initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -16 }}
@@ -259,20 +259,20 @@ export function Navigation() {
                   exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
                   transition={{ duration: reduceMotion ? 0.12 : 0.22, ease: "easeOut" }}
                 >
-                  <nav aria-label="Mobile" className="flex flex-col gap-2 text-sm text-zinc-200">
-                    <p className="rounded-lg border border-zinc-800 bg-zinc-950/80 px-3 py-2 text-xs uppercase tracking-[0.16em] text-zinc-500">
+                  <nav aria-label="Mobile" className="flex flex-col gap-2 text-sm text-[#10162F]">
+                    <p className="rounded-lg border border-[#1f2b53]/15 bg-white/85 px-3 py-2 text-xs uppercase tracking-[0.16em] text-[#4b5679]">
                       Founder response in &lt;24h · private beta
                     </p>
-                    <div className="grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.12em] text-zinc-400">
-                      <span className="rounded-md border border-zinc-800 bg-zinc-950/80 px-2 py-1.5 text-center">TLS secured</span>
-                      <span className="rounded-md border border-zinc-800 bg-zinc-950/80 px-2 py-1.5 text-center">Security packet</span>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.12em] text-[#5a678f]">
+                      <span className="rounded-md border border-[#1f2b53]/15 bg-white/82 px-2 py-1.5 text-center">TLS secured</span>
+                      <span className="rounded-md border border-[#1f2b53]/15 bg-white/82 px-2 py-1.5 text-center">Security packet</span>
                     </div>
-                    <div className="rounded-lg border border-zinc-800 bg-zinc-950/80 px-2.5 py-2">
-                      <p className="text-[10px] uppercase tracking-[0.14em] text-zinc-500">Founder channel</p>
+                    <div className="rounded-lg border border-[#1f2b53]/15 bg-white/85 px-2.5 py-2">
+                      <p className="text-[10px] uppercase tracking-[0.14em] text-[#5f6b8f]">Founder channel</p>
                       <div className="mt-2 flex items-center gap-2">
                         <div className="flex -space-x-1.5">
                           {founderMenuPreview.map((founder) => (
-                            <span key={founder.name} className="relative h-6 w-6 overflow-hidden rounded-full border border-zinc-700">
+                            <span key={founder.name} className="relative h-6 w-6 overflow-hidden rounded-full border border-[#1f2b53]/20">
                               <Image
                                 src={founderMenuImages[founder.name] ?? founder.image}
                                 alt={`${founder.name} founder photo`}
@@ -290,7 +290,7 @@ export function Navigation() {
                             </span>
                           ))}
                         </div>
-                        <p className="text-xs text-zinc-300">Direct founder response, not SDR handoff.</p>
+                        <p className="text-xs text-[#344068]">Direct founder response, not SDR handoff.</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs">
@@ -300,7 +300,7 @@ export function Navigation() {
                           trackEvent("proof_cta_click", { placement: "mobile_nav", cta: "email_beta" });
                           setOpen(false);
                         }}
-                        className="rounded-md border border-zinc-800 bg-zinc-950/80 px-2 py-2 text-center text-zinc-300"
+                        className="rounded-md border border-[#1f2b53]/15 bg-white/82 px-2 py-2 text-center text-[#334067]"
                       >
                         Email team
                       </Link>
@@ -310,7 +310,7 @@ export function Navigation() {
                           trackEvent("proof_cta_click", { placement: "mobile_nav", cta: "view_security" });
                           setOpen(false);
                         }}
-                        className="rounded-md border border-zinc-800 bg-zinc-950/80 px-2 py-2 text-center text-zinc-300"
+                        className="rounded-md border border-[#1f2b53]/15 bg-white/82 px-2 py-2 text-center text-[#334067]"
                       >
                         View security
                       </Link>
@@ -324,7 +324,7 @@ export function Navigation() {
                           setOpen(false);
                         }}
                         aria-current={isActiveLink(item.href) ? "page" : undefined}
-                        className={`rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 ${isActiveLink(item.href) ? "bg-zinc-900 text-indigo-200" : ""}`}
+                        className={`rounded-lg px-2 py-2 transition-colors hover:bg-[#eaf0ff] ${isActiveLink(item.href) ? "bg-[#eaf0ff] text-[#3C5BFF]" : ""}`}
                       >
                         {item.label}
                       </Link>
@@ -335,7 +335,7 @@ export function Navigation() {
                         trackEvent("hero_cta_click", { placement: "mobile_nav", cta: "book_teardown" });
                         setOpen(false);
                       }}
-                      className="mt-1 rounded-lg border border-indigo-300/30 bg-indigo-500/15 px-2 py-2 text-indigo-100"
+                      className="mt-1 rounded-lg border border-[#3C5BFF]/30 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-2 py-2 text-white"
                     >
                       Book a 20-min workflow teardown
                     </Link>

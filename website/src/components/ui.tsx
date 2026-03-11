@@ -44,8 +44,8 @@ declare global {
 export function Button({ href, children, variant = "primary", eventName, eventPayload, className = "" }: ButtonProps) {
   const styles =
     variant === "primary"
-      ? "border border-indigo-300/20 bg-gradient-to-r from-white to-indigo-100 text-black shadow-[0_0_24px_rgba(99,102,241,0.35)] hover:shadow-[0_0_38px_rgba(129,140,248,0.45)]"
-      : "border border-zinc-700/90 bg-zinc-900/85 text-zinc-100 hover:border-indigo-400/50 hover:text-white";
+      ? "border border-[#7ea6ff]/45 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] text-white shadow-[0_14px_40px_-20px_rgba(60,91,255,0.8)] hover:shadow-[0_22px_48px_-20px_rgba(122,92,255,0.9)]"
+      : "border border-[#23305a]/30 bg-white/85 text-[#0A0F2C] hover:border-[#3C5BFF]/45 hover:text-[#10162F]";
 
   const onClick = () => {
     if (eventName) {
