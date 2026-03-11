@@ -1,6 +1,6 @@
 "use client";
 
-import { FadeIn, SpotlightCard, StaggerContainer, StaggerItem } from "@/components/animated";
+import { FadeIn, SpotlightCard, StaggerContainer, StaggerItem, TypingText } from "@/components/animated";
 import { SiteShell } from "@/components/site-shell";
 import { Button, Section } from "@/components/ui";
 import { motion } from "framer-motion";
@@ -27,6 +27,13 @@ const initialForm: LeadForm = {
 };
 
 const metrics = ["24/7 analysis", "Minutes to deliverables", "Fraction of analyst cost", "Built for finance teams"];
+
+const trustSignals = [
+  "Founder-led implementation and direct technical access",
+  "Security + architecture review packet shared on first call",
+  "No client-side secrets, scoped access design by default",
+  "Private beta onboarding with limited finance-team slots",
+];
 
 const workflowPain = [
   "Reading filings and earnings transcripts",
@@ -179,6 +186,22 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section className="pt-4 md:pt-8">
+        <FadeIn>
+          <div className="rounded-2xl border border-emerald-300/20 bg-emerald-500/5 p-5 md:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs uppercase tracking-[0.18em] text-emerald-200">Trust-ready from day one</p>
+              <Button href="#security" variant="secondary">Review security posture</Button>
+            </div>
+            <div className="mt-4 grid gap-2 md:grid-cols-2">
+              {trustSignals.map((signal) => (
+                <p key={signal} className="rounded-lg border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-sm text-zinc-200">{signal}</p>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+      </Section>
+
       <Section>
         <FadeIn>
           <h2 className="text-4xl font-semibold text-white md:text-6xl">The workflow is familiar. The drag is expensive.</h2>
@@ -280,7 +303,7 @@ export default function HomePage() {
                 <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">Avatar preview</p>
                 <div className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/70 p-4">
                   <p className="text-4xl">🧑🏽‍💼</p>
-                  <p className="mt-2 text-sm text-zinc-300">Kade is analyzing macro pressure across SaaS + semis now.</p>
+                  <TypingText text="Kade is analyzing macro pressure across SaaS + semis now." className="mt-2 text-sm text-zinc-300" />
                   <div className="mt-3 rounded-lg border border-indigo-300/25 bg-indigo-500/10 p-3 text-sm text-indigo-100">💻 “3 risk deltas surfaced. Memo + slide shipped.”</div>
                 </div>
                 <div className="mt-4 flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-3 py-2">
@@ -514,7 +537,16 @@ export default function HomePage() {
       <Section id="security">
         <FadeIn>
           <div className="rounded-2xl border border-zinc-800 bg-zinc-950/85 p-8">
-            <h2 className="text-3xl font-semibold text-white">Security and trust posture</h2>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-3xl font-semibold text-white">Security and trust posture</h2>
+                <p className="mt-3 max-w-3xl text-zinc-300">
+                  Every deployment starts with a workflow + access review. You get a clear architecture brief, risk boundaries,
+                  and a scoped rollout plan before production use.
+                </p>
+              </div>
+              <Button href="#lead-form" variant="secondary">Get security review packet</Button>
+            </div>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               {[
                 "Least-privilege access controls and workflow-scoped permissions",
@@ -525,6 +557,7 @@ export default function HomePage() {
                 <div key={item} className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-zinc-200">{item}</div>
               ))}
             </div>
+            <p className="mt-5 text-sm text-zinc-400">Typical first-call output: data-flow map, permission model, and rollout checklist your security reviewer can evaluate quickly.</p>
           </div>
         </FadeIn>
       </Section>
@@ -535,9 +568,9 @@ export default function HomePage() {
         </FadeIn>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {founderCards.map((founder) => (
-            <FadeIn key={founder.name} className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+            <FadeIn key={founder.name} className="group flex h-full flex-col rounded-2xl border border-zinc-800 bg-zinc-950 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-300/40 hover:shadow-[0_20px_45px_-30px_rgba(99,102,241,0.8)]">
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-zinc-800">
-                <Image src={founder.image} alt={`${founder.name} profile photo`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                <Image src={founder.image} alt={`${founder.name} profile photo`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
               </div>
               <p className="mt-4 text-sm text-zinc-400">{founder.role}</p>
               <p className="text-xl font-semibold text-white">{founder.name}</p>

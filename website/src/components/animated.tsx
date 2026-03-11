@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
+import { animate, motion, useInView, useMotionTemplate, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type FadeInProps = {
@@ -85,22 +85,28 @@ export function StaggerItem({ children, className = "" }: { children: ReactNode;
 }
 
 export function SpotlightCard({ children, className = "" }: { children: ReactNode; className?: string }) {
-  const [pos, setPos] = useState({ x: 50, y: 50 });
+  const reduceMotion = useReducedMotion();
+  const x = useMotionValue(50);
+  const y = useMotionValue(50);
+  const spotlight = useMotionTemplate`radial-gradient(420px circle at ${x}% ${y}%, rgba(99,102,241,0.22), transparent 40%)`;
 
   return (
     <motion.div
       onMouseMove={(e) => {
+        if (reduceMotion) return;
         const rect = e.currentTarget.getBoundingClientRect();
-        setPos({
-          x: ((e.clientX - rect.left) / rect.width) * 100,
-          y: ((e.clientY - rect.top) / rect.height) * 100,
-        });
+        x.set(((e.clientX - rect.left) / rect.width) * 100);
+        y.set(((e.clientY - rect.top) / rect.height) * 100);
       }}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.3 }}
+      onMouseLeave={() => {
+        x.set(50);
+        y.set(50);
+      }}
+      whileHover={reduceMotion ? undefined : { y: -6, scale: 1.01 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       className={`group relative overflow-hidden rounded-2xl border border-zinc-800/90 bg-zinc-950/80 p-5 shadow-[0_12px_40px_-28px_rgba(129,140,248,0.7)] transition-all duration-300 hover:border-indigo-400/40 hover:shadow-[0_18px_45px_-22px_rgba(99,102,241,0.55)] ${className}`}
       style={{
-        backgroundImage: `radial-gradient(420px circle at ${pos.x}% ${pos.y}%, rgba(99,102,241,0.22), transparent 40%)`,
+        backgroundImage: reduceMotion ? "none" : spotlight,
       }}
     >
       <div className="pointer-events-none absolute inset-0 rounded-2xl border border-indigo-400/15" />

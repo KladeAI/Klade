@@ -37,11 +37,11 @@ export default function TeamPage() {
       </Section>
 
       <Section>
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {founders.map((founder) => (
-            <article key={founder.name} className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+            <article key={founder.name} className="group flex h-full flex-col rounded-2xl border border-zinc-800 bg-zinc-950 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-300/40 hover:shadow-[0_20px_45px_-30px_rgba(99,102,241,0.8)]">
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-zinc-800">
-                <Image src={founder.image} alt={`${founder.name} founder photo`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                <Image src={founder.image} alt={`${founder.name} founder photo`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
               </div>
               <p className="mt-4 text-sm text-zinc-400">Co-Founder</p>
               <h2 className="mt-1 text-2xl font-semibold text-white">{founder.name}</h2>

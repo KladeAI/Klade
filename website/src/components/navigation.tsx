@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "./ui";
 
 const navLinks = [
@@ -18,10 +18,22 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    if (!open) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header className="sticky top-4 z-50">
       <Container>
-        <div className="rounded-2xl border border-white/15 bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,.35)] backdrop-blur-2xl">
+        <div className="relative rounded-2xl border border-white/15 bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,.35)] backdrop-blur-2xl">
           <div className="flex h-14 items-center justify-between px-4">
             <Link
               href="/"
@@ -61,22 +73,34 @@ export function Navigation() {
           </div>
 
           {open && (
-            <div className="border-t border-zinc-800 px-4 pb-4 pt-3 md:hidden">
-              <nav className="flex flex-col gap-2 text-sm text-zinc-200">
-                {navLinks.map((item) => (
-                  <Link key={item.label} href={item.href} onClick={() => setOpen(false)} className="rounded-lg px-2 py-2 hover:bg-zinc-900">
-                    {item.label}
+            <>
+              <button
+                aria-label="Close mobile menu backdrop"
+                className="fixed inset-0 z-40 bg-black/45 md:hidden"
+                onClick={() => setOpen(false)}
+              />
+              <div className="border-t border-zinc-800 px-4 pb-4 pt-3 md:hidden">
+                <nav className="flex flex-col gap-2 text-sm text-zinc-200">
+                  {navLinks.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <Link
+                    href={pathname === "/" ? "#lead-form" : "/#lead-form"}
+                    onClick={() => setOpen(false)}
+                    className="mt-1 rounded-lg border border-indigo-300/30 bg-indigo-500/15 px-2 py-2 text-indigo-100"
+                  >
+                    Book a 20-min workflow teardown
                   </Link>
-                ))}
-                <Link
-                  href={pathname === "/" ? "#lead-form" : "/#lead-form"}
-                  onClick={() => setOpen(false)}
-                  className="mt-1 rounded-lg border border-indigo-300/30 bg-indigo-500/15 px-2 py-2 text-indigo-100"
-                >
-                  Book a 20-min workflow teardown
-                </Link>
-              </nav>
-            </div>
+                </nav>
+              </div>
+            </>
           )}
         </div>
       </Container>
