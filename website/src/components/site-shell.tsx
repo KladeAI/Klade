@@ -8,7 +8,9 @@ export function SiteShell({ children }: SiteShellProps) {
   return (
     <div className="min-h-screen bg-black text-zinc-100">
       <Navigation />
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1} className="focus:outline-none">
+        {children}
+      </main>
       <Footer />
     </div>
   );

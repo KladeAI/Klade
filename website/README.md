@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Klade Website V2
 
-## Getting Started
+Premium launch-preview build for Klade's institutional AI analyst landing experience.
 
-First, run the development server:
+## Focus Areas (current)
+- High-trust conversion homepage
+- Founder presence + premium visual polish
+- Mobile-first navigation + sticky CTA
+- Security-forward lead capture
+- Strict origin hardening for lead API (same-host Vercel preview enforcement)
+- Security review fast-lane conversion cues near primary form CTA
+- Smart mobile sticky CTA (auto-hides near form + dismiss control)
 
+## Local Development
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+Open http://localhost:3000
+
+## Morning Build / QA Checklist
+Before sharing a preview URL:
+
+1. **Run a production build**
+   ```bash
+   npm run build
+   ```
+2. **Spot-check key sections on desktop + mobile width**
+   - Hero + CTA buttons
+   - Mobile hamburger menu interactions
+   - Security posture section
+   - Founder cards
+   - Lead form submit states
+3. **Verify conversion polish components**
+   - Credibility strip renders
+   - FAQ accordion opens/closes cleanly
+   - Mobile sticky CTA is visible and not blocking form submission
+4. **Validate lead intake hardening**
+   - `/api/lead` rejects invalid payloads
+   - Honeypot field remains hidden
+   - Rate limit returns 429 on burst attempts
+
+## Deploy Preview (Vercel)
+```bash
+vercel
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If `vercel` isn't installed:
+```bash
+npm i -g vercel
+vercel login
+vercel
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production Deploy
+```bash
+vercel --prod
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+- Founder visuals load from `public/founders/*.jpg` with `.svg` fallback support in homepage cards
+- Lead form posts to `src/app/api/lead/route.ts`
+- Global security headers + CSP configured in `next.config.ts`
+- Homepage includes Organization schema (`application/ld+json`) for search trust signals
+- Core homepage is `src/app/page.tsx`

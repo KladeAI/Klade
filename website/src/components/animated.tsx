@@ -9,17 +9,30 @@ type FadeInProps = {
   delay?: number;
 };
 
+type ProgressBarProps = {
+  label: string;
+  value: number;
+  suffix?: string;
+  className?: string;
+};
+
+type MarqueeStripProps = {
+  items: string[];
+  className?: string;
+};
+
 export function FadeIn({ children, className, delay = 0 }: FadeInProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
+  const reduceMotion = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
-      transition={{ duration: 0.65, ease: "easeOut", delay }}
+      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : reduceMotion ? { opacity: 0 } : { opacity: 0, y: 28 }}
+      transition={{ duration: reduceMotion ? 0.2 : 0.65, ease: "easeOut", delay: reduceMotion ? 0 : delay }}
     >
       {children}
     </motion.div>
@@ -29,6 +42,7 @@ export function FadeIn({ children, className, delay = 0 }: FadeInProps) {
 export function CountUp({ value, suffix = "", className = "" }: { value: number; suffix?: string; className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.7 });
+  const reduceMotion = useReducedMotion();
   const motionValue = useMotionValue(0);
   const rounded = useTransform(motionValue, (latest) => Math.round(latest));
   const [display, setDisplay] = useState(0);
@@ -40,14 +54,42 @@ export function CountUp({ value, suffix = "", className = "" }: { value: number;
 
   useEffect(() => {
     if (!inView) return;
+    if (reduceMotion) {
+      motionValue.set(value);
+      return;
+    }
     const controls = animate(motionValue, value, { duration: 1.25, ease: "easeOut" });
     return () => controls.stop();
-  }, [inView, motionValue, value]);
+  }, [inView, motionValue, reduceMotion, value]);
 
   return (
     <div ref={ref} className={className}>
       {display}
       {suffix}
+    </div>
+  );
+}
+
+export function ProgressBar({ label, value, suffix = "%", className = "" }: ProgressBarProps) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: true, amount: 0.45 });
+  const reduceMotion = useReducedMotion();
+  const width = Math.min(100, Math.max(0, value));
+
+  return (
+    <div ref={ref} className={`space-y-2 ${className}`}>
+      <div className="flex items-center justify-between text-xs uppercase tracking-[0.14em] text-zinc-400">
+        <span>{label}</span>
+        <span className="text-zinc-300">{value}{suffix}</span>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
+        <motion.div
+          className="h-full rounded-full bg-gradient-to-r from-indigo-300 via-indigo-200 to-white"
+          initial={{ width: 0 }}
+          animate={{ width: inView ? `${width}%` : "0%" }}
+          transition={{ duration: reduceMotion ? 0 : 0.8, ease: "easeOut" }}
+        />
+      </div>
     </div>
   );
 }
@@ -118,24 +160,48 @@ export function SpotlightCard({ children, className = "" }: { children: ReactNod
 export function TypingText({ text, className = "" }: { text: string; className?: string }) {
   const ref = useRef<HTMLParagraphElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.4 });
-  const [visibleText, setVisibleText] = useState("");
-
-  useEffect(() => {
-    if (!inView) return;
-    let i = 0;
-    const timer = setInterval(() => {
-      i += 1;
-      setVisibleText(text.slice(0, i));
-      if (i >= text.length) clearInterval(timer);
-    }, 10);
-
-    return () => clearInterval(timer);
-  }, [inView, text]);
+  const reduceMotion = useReducedMotion();
 
   return (
-    <p ref={ref} className={className}>
-      {visibleText}
-      <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-indigo-300 align-middle" />
-    </p>
+    <motion.p
+      ref={ref}
+      className={className}
+      initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
+      animate={inView ? { opacity: 1, y: 0 } : reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
+      transition={{ duration: reduceMotion ? 0 : 0.45, ease: "easeOut" }}
+    >
+      {text}
+      {!reduceMotion && <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-indigo-300 align-middle" />}
+    </motion.p>
+  );
+}
+
+export function MarqueeStrip({ items, className = "" }: MarqueeStripProps) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return (
+      <div className={`flex flex-wrap gap-2 ${className}`}>
+        {items.map((item) => (
+          <span key={item} className="rounded-full border border-zinc-800 bg-zinc-900/80 px-3 py-1 text-xs text-zinc-300">
+            {item}
+          </span>
+        ))}
+      </div>
+    );
+  }
+
+  const loopItems = [...items, ...items];
+
+  return (
+    <div className={`marquee-shell ${className}`}>
+      <div className="marquee-track">
+        {loopItems.map((item, index) => (
+          <span key={`${item}-${index}`} className="marquee-chip">
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }

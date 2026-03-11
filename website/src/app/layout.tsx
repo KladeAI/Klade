@@ -7,11 +7,34 @@ const geist = Geist({
   subsets: ["latin"],
 });
 
+const title = "Klade | AI Analysts for Financial Intelligence";
+const description =
+  "Klade builds AI analysts for finance teams to research companies, screen sectors, and produce investment-grade deliverables in minutes.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://kladeai.com"),
-  title: "Klade | AI Analysts for Financial Intelligence",
-  description:
-    "Klade builds AI analysts for finance teams to research companies, screen sectors, and produce investment-grade deliverables in minutes.",
+  title,
+  description,
+  applicationName: "Klade",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: "https://kladeai.com",
+    siteName: "Klade",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +44,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geist.variable} bg-black font-sans antialiased`}>{children}</body>
+      <body className={`${geist.variable} bg-black font-sans antialiased`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-black"
+        >
+          Skip to main content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

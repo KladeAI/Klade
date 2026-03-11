@@ -1,3 +1,4 @@
+import { FadeIn } from "@/components/animated";
 import { SiteShell } from "@/components/site-shell";
 import { Button, Section } from "@/components/ui";
 
@@ -29,20 +30,29 @@ const faqs = [
   ["What happens after we submit a request?", "You get a founder-led response within 24 hours and a clear rollout plan."],
 ];
 
+const trustItems = [
+  "Security + architecture packet included in kickoff week",
+  "Workflow-scoped access model (least privilege by default)",
+  "Founder-led launch and direct technical handoff",
+  "No client-side secrets in standard deployment pattern",
+];
+
 export default function PricingPage() {
   return (
     <SiteShell>
       <Section className="pt-20">
-        <h1 className="text-5xl font-semibold tracking-tight text-white">Pricing</h1>
-        <p className="mt-4 max-w-3xl text-zinc-300">
-          Flexible pricing across credit usage, subscriptions, and enterprise deployment paths.
-        </p>
+        <FadeIn>
+          <h1 className="text-5xl font-semibold tracking-tight text-white">Pricing</h1>
+          <p className="mt-4 max-w-3xl text-zinc-300">
+            Flexible pricing across credit usage, subscriptions, and enterprise deployment paths.
+          </p>
+        </FadeIn>
       </Section>
 
-      <Section>
+      <Section className="pt-6 md:pt-8">
         <div className="grid gap-4 md:grid-cols-3">
-          {plans.map((plan) => (
-            <article key={plan.name} className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
+          {plans.map((plan, index) => (
+            <FadeIn key={plan.name} delay={index * 0.05} className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
               <h2 className="text-xl font-semibold text-white">{plan.name}</h2>
               <p className="mt-2 text-3xl font-semibold text-zinc-100">{plan.price}</p>
               <p className="mt-3 text-sm text-zinc-400">{plan.description}</p>
@@ -51,32 +61,51 @@ export default function PricingPage() {
                   <li key={point}>• {point}</li>
                 ))}
               </ul>
-            </article>
+            </FadeIn>
           ))}
         </div>
       </Section>
 
-      <Section>
-        <h2 className="text-3xl font-semibold text-white">FAQ</h2>
-        <div className="mt-6 space-y-3">
-          {faqs.map(([q, a]) => (
-            <div key={q} className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-              <p className="font-medium text-white">{q}</p>
-              <p className="mt-2 text-zinc-300">{a}</p>
+      <Section className="py-8">
+        <FadeIn>
+          <div className="rounded-2xl border border-emerald-300/20 bg-emerald-500/5 p-6 md:p-7">
+            <p className="text-xs uppercase tracking-[0.16em] text-emerald-200">Trust center preview</p>
+            <div className="mt-4 grid gap-2 md:grid-cols-2">
+              {trustItems.map((item) => (
+                <p key={item} className="rounded-lg border border-zinc-800 bg-zinc-900/75 px-3 py-2 text-sm text-zinc-200">
+                  {item}
+                </p>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        </FadeIn>
+      </Section>
+
+      <Section className="pt-4">
+        <FadeIn>
+          <h2 className="text-3xl font-semibold text-white">FAQ</h2>
+          <div className="mt-6 space-y-3">
+            {faqs.map(([q, a], index) => (
+              <FadeIn key={q} delay={index * 0.04} className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+                <p className="font-medium text-white">{q}</p>
+                <p className="mt-2 text-zinc-300">{a}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </FadeIn>
       </Section>
 
       <Section>
-        <div className="rounded-2xl border border-indigo-300/20 bg-gradient-to-r from-zinc-900 via-indigo-950/30 to-zinc-950 p-8 text-center">
-          <h2 className="text-3xl font-semibold text-white">Need a custom enterprise deployment?</h2>
-          <p className="mt-3 text-zinc-300">We’ll map your workflow, compliance requirements, and launch path in one call.</p>
-          <div className="mt-6 flex justify-center gap-3">
-            <Button href="/#lead-form">Book a 20-min workflow teardown</Button>
-            <Button href="mailto:beta@kladeai.com?subject=Enterprise%20Deployment" variant="secondary">Contact Sales</Button>
+        <FadeIn>
+          <div className="rounded-2xl border border-indigo-300/20 bg-gradient-to-r from-zinc-900 via-indigo-950/30 to-zinc-950 p-8 text-center">
+            <h2 className="text-3xl font-semibold text-white">Need a custom enterprise deployment?</h2>
+            <p className="mt-3 text-zinc-300">We’ll map your workflow, compliance requirements, and launch path in one call.</p>
+            <div className="mt-6 flex justify-center gap-3">
+              <Button href="/#lead-form">Book a 20-min workflow teardown</Button>
+              <Button href="mailto:beta@kladeai.com?subject=Enterprise%20Deployment" variant="secondary">Contact Sales</Button>
+            </div>
           </div>
-        </div>
+        </FadeIn>
       </Section>
     </SiteShell>
   );
