@@ -219,6 +219,13 @@ const conversionAssurance = [
   "Clear KPI target before any rollout decision",
 ];
 
+const bottleneckQuickPicks = [
+  "Earnings prep + memo drafting",
+  "Sector screens and daily risk updates",
+  "IC deck production and partner briefings",
+  "Transcript/filing synthesis across coverage",
+];
+
 const idealForTeams = [
   "Investment teams handling high-volume filings, transcripts, and memo cycles",
   "Groups that need partner-ready output in hours, not days",
@@ -403,6 +410,17 @@ export default function HomePage() {
     } catch {
       setStatus("error");
     }
+  }
+
+  function applyQuickBottleneckTemplate(template: string) {
+    setForm((prev) => {
+      if (prev.bottleneck.trim().length > 0) return prev;
+      return {
+        ...prev,
+        bottleneck: `${template} — today this is mostly manual and creates delay for partner-ready output.`,
+      };
+    });
+    trackEvent("form_quick_pick", { template });
   }
 
   return (
@@ -1258,6 +1276,21 @@ export default function HomePage() {
                   className="rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-indigo-400"
                 />
               </label>
+              <div className="grid gap-2 text-sm text-zinc-300 md:col-span-2">
+                <p>Pick your closest bottleneck (optional)</p>
+                <div className="flex flex-wrap gap-2">
+                  {bottleneckQuickPicks.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => applyQuickBottleneckTemplate(item)}
+                      className="rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300 transition hover:border-indigo-300/50 hover:text-white"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <label className="grid gap-2 text-sm text-zinc-300 md:col-span-2">
                 What does your team need help with?
                 <textarea
@@ -1374,6 +1407,13 @@ export default function HomePage() {
               >
                 Get security review packet
               </Button>
+            </div>
+            <div className="mt-5 rounded-xl border border-emerald-300/20 bg-emerald-500/5 px-4 py-3">
+              <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-emerald-100">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" />
+                Security controls reviewed in every founder kickoff
+              </p>
+              <p className="mt-1 text-sm text-zinc-300">Architecture map + permission boundaries are included before workflow activation.</p>
             </div>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               {[

@@ -23,9 +23,9 @@ const navLinks = [
 ];
 
 const founderMenuPreview = [
-  { name: "Adam", image: "/founders/adam.jpg" },
-  { name: "Arjun", image: "/founders/arjun.jpg" },
-  { name: "Gavin", image: "/founders/gavin.jpg" },
+  { name: "Adam", image: "/founders/adam.jpg", fallbackImage: "/founders/adam.svg" },
+  { name: "Arjun", image: "/founders/arjun.jpg", fallbackImage: "/founders/arjun.svg" },
+  { name: "Gavin", image: "/founders/gavin.jpg", fallbackImage: "/founders/gavin.svg" },
 ];
 
 function trackEvent(eventName: string, payload?: Record<string, string>) {
@@ -37,6 +37,9 @@ function trackEvent(eventName: string, payload?: Record<string, string>) {
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
+  const [founderMenuImages, setFounderMenuImages] = useState<Record<string, string>>(() =>
+    Object.fromEntries(founderMenuPreview.map((founder) => [founder.name, founder.image]))
+  );
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const mobileMenuId = useId();
@@ -216,7 +219,20 @@ export function Navigation() {
                         <div className="flex -space-x-1.5">
                           {founderMenuPreview.map((founder) => (
                             <span key={founder.name} className="relative h-6 w-6 overflow-hidden rounded-full border border-zinc-700">
-                              <Image src={founder.image} alt={`${founder.name} founder photo`} fill sizes="24px" className="object-cover" />
+                              <Image
+                                src={founderMenuImages[founder.name] ?? founder.image}
+                                alt={`${founder.name} founder photo`}
+                                fill
+                                sizes="24px"
+                                className="object-cover"
+                                onError={() =>
+                                  setFounderMenuImages((prev) =>
+                                    prev[founder.name] === founder.fallbackImage
+                                      ? prev
+                                      : { ...prev, [founder.name]: founder.fallbackImage }
+                                  )
+                                }
+                              />
                             </span>
                           ))}
                         </div>
