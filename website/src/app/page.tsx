@@ -71,6 +71,21 @@ const capabilities = [
 
 const integrations = ["Slack", "Microsoft Teams", "Internal Chat", "Research Portals", "CRM/Deal Systems", "Knowledge Bases"];
 
+const premiumSignals = [
+  {
+    title: "Clarity in 5–10 seconds",
+    body: "Headline + product proof communicate what Klade is, who it’s for, and what action to take immediately.",
+  },
+  {
+    title: "Motion with purpose",
+    body: "Ambient motion, line reveals, and microinteractions guide attention without distracting from trust and readability.",
+  },
+  {
+    title: "Conversion without friction",
+    body: "Persistent Join Beta paths, strong social proof language, and low-friction lead capture keep momentum high.",
+  },
+];
+
 const metrics = [
   { value: 24, suffix: "/7", label: "analysis coverage" },
   { value: 10, suffix: "x", label: "output expansion" },
@@ -338,6 +353,30 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </Section>
+
+      <Section className="pt-8">
+        <FadeIn>
+          <div className="rounded-3xl border border-[#1f2b53]/12 bg-white p-6 md:p-8">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#5A6175]">Premium website signals</p>
+            <h2 className="mt-2 text-3xl font-semibold text-[#10162F] md:text-4xl">Built like premium AI infrastructure, not a generic template.</h2>
+            <p className="mt-3 max-w-3xl text-sm text-[#4B5578]">
+              We optimize first impression, motion clarity, and conversion flow so users understand value quickly and act.
+            </p>
+            <div className="mt-6 grid gap-3 md:grid-cols-3">
+              {premiumSignals.map((signal) => (
+                <motion.div
+                  key={signal.title}
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  className="rounded-xl border border-[#1f2b53]/12 bg-[#f4f7ff] p-4"
+                >
+                  <p className="text-sm font-semibold text-[#10162F]">{signal.title}</p>
+                  <p className="mt-2 text-xs text-[#4B5578]">{signal.body}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
       </Section>
 
       <Section className="pt-8">
