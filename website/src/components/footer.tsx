@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Container } from "./ui";
 
@@ -21,14 +20,7 @@ export function Footer() {
       <Container className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
         {/* Brand column */}
         <div>
-          <div className="flex items-center gap-2">
-            <span className="relative h-7 w-7 overflow-hidden rounded-md">
-              <Image src="/brand/klade-kmark.jpg" alt="K" fill sizes="28px" className="object-cover invert brightness-200" />
-            </span>
-            <span className="text-lg font-bold tracking-tight text-white">
-              Klade<span className="bg-gradient-to-r from-[#4FD1FF] to-[#7A5CFF] bg-clip-text text-transparent">ai</span>
-            </span>
-          </div>
+          <p className="text-base font-semibold tracking-tight text-white">Klade</p>
           <p className="mt-4 max-w-sm text-sm text-[#9aa4cb]">
             One AI teammate. Many specialists behind the scenes. Moldable AI support shaped to your company.
           </p>

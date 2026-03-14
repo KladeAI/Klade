@@ -105,43 +105,6 @@ declare global {
 
 /* ===== COMPONENTS ===== */
 
-function IntroReveal() {
-  const reduceMotion = useReducedMotion();
-  const [visible, setVisible] = useState(!reduceMotion);
-  useEffect(() => {
-    if (reduceMotion) return;
-    const timer = setTimeout(() => setVisible(false), 1300);
-    return () => clearTimeout(timer);
-  }, [reduceMotion]);
-  if (!visible) return null;
-  return (
-    <motion.div
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-[#080c1a]"
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 0 }}
-      transition={{ delay: 0.9, duration: 0.35, ease: "easeOut" }}
-    >
-      <div className="relative flex flex-col items-center gap-6">
-        <motion.div
-          className="absolute h-52 w-52 rounded-full bg-[#4FD1FF]/20 blur-3xl"
-          initial={{ scale: 0.65, opacity: 0.2 }}
-          animate={{ scale: 1.05, opacity: 0.5 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        />
-        <motion.div
-          className="relative z-10 flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-5 py-2"
-          initial={{ y: 12, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.35 }}
-        >
-          <Image src="/brand/klade-kmark.jpg" alt="K" width={28} height={28} className="rounded-md invert brightness-200" />
-          <span className="tracking-[0.22em] text-xs uppercase text-white/80">Klade</span>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
 function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   return (
@@ -197,22 +160,11 @@ export default function HomePage() {
 
   return (
     <SiteShell>
-      <IntroReveal />
-
       {/* ===== HERO ===== */}
-      <Section className="pt-6 md:pt-10">
-        <div className="hero-shell premium-sheen relative overflow-hidden rounded-2xl px-5 py-8 md:px-8 md:py-12">
-          <div className="hero-grid pointer-events-none absolute inset-0 opacity-40" />
-          <motion.div
-            className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-[#4FD1FF]/15 blur-3xl"
-            animate={reduceMotion ? { opacity: 0.5 } : { x: [0, 30, 0], y: [0, 20, 0] }}
-            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="pointer-events-none absolute -right-24 -bottom-16 h-80 w-80 rounded-full bg-[#7A5CFF]/20 blur-3xl"
-            animate={reduceMotion ? { opacity: 0.5 } : { x: [0, -24, 0], y: [0, -14, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          />
+      <Section className="pt-2 md:pt-4">
+        <div className="relative overflow-hidden rounded-xl border border-white/8 bg-gradient-to-b from-[#0d1225] to-[#080c1a] px-5 py-8 md:px-8 md:py-10">
+          <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-[#4FD1FF]/8 blur-3xl" />
+          <div className="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-[#7A5CFF]/8 blur-3xl" />
 
           <FadeIn>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#4FD1FF]/25 bg-[#4FD1FF]/8 px-3 py-1 text-xs uppercase tracking-[0.18em] text-[#4FD1FF]">

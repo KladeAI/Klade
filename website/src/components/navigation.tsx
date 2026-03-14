@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -120,29 +119,24 @@ export function Navigation() {
   }, []);
 
   return (
-    <header className="sticky top-2 z-50">
+    <header className="sticky top-0 z-50">
       <Container>
-        <div className="relative rounded-2xl border border-white/10 bg-[#0a0f2c]/80 shadow-[0_14px_36px_-20px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
-          <div className="flex h-14 items-center justify-between px-4">
+        <div className="relative border-b border-white/8 bg-[#080c1a]/90 backdrop-blur-xl">
+          <div className="flex h-12 items-center justify-between">
             {/* Logo */}
-            <Link href="/" onClick={() => setOpen(false)} className="group inline-flex items-center gap-2">
-              <span className="relative h-7 w-7 overflow-hidden rounded-md">
-                <Image src="/brand/klade-kmark.jpg" alt="K" fill sizes="28px" className="object-cover invert brightness-200" />
-              </span>
-              <span className="text-lg font-bold tracking-tight text-white">
-                Klade<span className="bg-gradient-to-r from-[#4FD1FF] to-[#7A5CFF] bg-clip-text text-transparent">ai</span>
-              </span>
+            <Link href="/" onClick={() => setOpen(false)} className="text-base font-semibold tracking-tight text-white">
+              Klade
             </Link>
 
             {/* Desktop nav */}
-            <nav aria-label="Primary" className="hidden items-center gap-5 text-sm md:flex">
+            <nav aria-label="Primary" className="hidden items-center gap-6 text-[13px] md:flex">
               {navLinks.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   onClick={() => trackEvent("nav_click", { cta: item.label.toLowerCase().replace(/\s+/g, "_") })}
                   aria-current={isActiveLink(item.href) ? "page" : undefined}
-                  className={`transition-colors duration-200 hover:text-[#4FD1FF] ${isActiveLink(item.href) ? "text-[#4FD1FF]" : "text-[#9aa4cb]"}`}
+                  className={`transition-colors duration-200 hover:text-white ${isActiveLink(item.href) ? "text-white" : "text-[#7a84a8]"}`}
                 >
                   {item.label}
                 </Link>
@@ -150,9 +144,9 @@ export function Navigation() {
               <Link
                 href={pathname === "/" ? "#lead-form" : "/#lead-form"}
                 onClick={() => trackEvent("nav_cta_click", { cta: "join_beta" })}
-                className="rounded-lg border border-[#4FD1FF]/30 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-4 py-1.5 text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_24px_-14px_rgba(79,209,255,0.6)]"
+                className="rounded-md bg-white px-3.5 py-1.5 text-[13px] font-medium text-[#080c1a] transition-all duration-200 hover:bg-white/90"
               >
-                Join Private Beta
+                Join Beta
               </Link>
             </nav>
 
@@ -163,10 +157,10 @@ export function Navigation() {
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls={mobileMenuId}
-              className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 p-2 text-white/80 transition-all duration-200 hover:border-[#4FD1FF]/30 hover:text-[#4FD1FF] md:hidden"
+              className="inline-flex items-center justify-center p-1.5 text-[#7a84a8] transition-colors hover:text-white md:hidden"
               onClick={() => setOpen((v) => !v)}
             >
-              {open ? <X size={18} /> : <Menu size={18} />}
+              {open ? <X size={16} /> : <Menu size={16} />}
             </button>
           </div>
 
@@ -185,7 +179,7 @@ export function Navigation() {
                 <motion.div
                   id={mobileMenuId}
                   ref={menuPanelRef}
-                  className="relative z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain border-t border-white/8 bg-[#0a0f2c]/95 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl md:hidden"
+                  className="relative z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-white/8 bg-[#080c1a]/95 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl md:hidden"
                   role="dialog"
                   aria-modal="true"
                   initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -16 }}
@@ -219,9 +213,9 @@ export function Navigation() {
                       <Link
                         href={pathname === "/" ? "#lead-form" : "/#lead-form"}
                         onClick={() => setOpen(false)}
-                        className="rounded-lg border border-[#4FD1FF]/30 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-3 py-2 text-center text-xs font-medium text-white"
+                        className="rounded-md bg-white px-3 py-2 text-center text-xs font-medium text-[#080c1a]"
                       >
-                        Join Private Beta
+                        Join Beta
                       </Link>
                     </div>
                   </nav>
