@@ -13,7 +13,7 @@ type SectionProps = { id?: string; children: ReactNode; className?: string };
 
 export function Section({ id, children, className = "" }: SectionProps) {
   return (
-    <section id={id} className={`relative py-24 md:py-28 lg:py-32 ${className}`}>
+    <section id={id} className={`relative py-16 md:py-20 lg:py-24 ${className}`}>
       <Container>{children}</Container>
     </section>
   );
@@ -44,14 +44,13 @@ declare global {
 export function Button({ href, children, variant = "primary", eventName, eventPayload, className = "" }: ButtonProps) {
   const styles =
     variant === "primary"
-      ? "border border-[#7ea6ff]/45 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] text-white shadow-[0_14px_40px_-20px_rgba(60,91,255,0.8)] hover:shadow-[0_22px_48px_-20px_rgba(122,92,255,0.9)]"
-      : "border border-[#23305a]/30 bg-white/85 text-[#0A0F2C] hover:border-[#3C5BFF]/45 hover:text-[#10162F]";
+      ? "border border-[#4FD1FF]/30 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] text-white shadow-[0_14px_40px_-20px_rgba(60,91,255,0.6)] hover:shadow-[0_22px_48px_-20px_rgba(122,92,255,0.7)]"
+      : "border border-white/12 bg-white/5 text-[#d8def5] hover:border-white/20 hover:bg-white/8 hover:text-white";
 
   const onClick = () => {
     if (eventName) {
       trackEvent(eventName, eventPayload);
     }
-
     if (eventPayload?.cta?.includes("book")) {
       trackEvent("calendar_click", { placement: eventPayload.placement ?? "unknown", cta: eventPayload.cta });
     }

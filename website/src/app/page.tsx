@@ -6,7 +6,9 @@ import { Button, Section } from "@/components/ui";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+
+/* ===== DATA ===== */
 
 type LeadForm = {
   name: string;
@@ -22,235 +24,172 @@ type LeadForm = {
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
 const createInitialForm = (): LeadForm => ({
-  name: "",
-  company: "",
-  email: "",
-  teamSize: "",
-  role: "",
-  bottleneck: "",
-  website: "",
-  startedAt: String(Date.now()),
+  name: "", company: "", email: "", teamSize: "", role: "", bottleneck: "", website: "", startedAt: String(Date.now()),
 });
 
-const trustTickerOne = [
-  "24/7 analysis",
-  "Earnings call summaries",
-  "Sector screening",
-  "Memo drafting",
+const requiredFields: Array<keyof Pick<LeadForm, "name" | "company" | "email" | "teamSize" | "role" | "bottleneck">> = [
+  "name", "company", "email", "teamSize", "role", "bottleneck",
+];
+
+const trustTickerItems = [
+  "One bot, many specialists",
+  "Models & valuations",
+  "Research & memos",
   "PowerPoint-ready output",
-  "Works in Slack + Teams",
-  "Built for financial intelligence",
-];
-
-const trustTickerTwo = [
-  "Evidence-cited responses",
-  "Workflow-scoped permissions",
-  "Enterprise deployment posture",
+  "Workflow automation",
+  "Operations support",
+  "Data organization",
+  "Custom business tasks",
+  "Built around your workflow",
   "Founder-led onboarding",
-  "Fast pilot activation",
-  "Control + visibility by default",
-];
-
-const pains = [
-  "Filings and transcripts consume hours of senior analyst time.",
-  "CIM reviews and memo drafting create repeatable manual load.",
-  "Sector screens and updates are rebuilt from scratch every week.",
-  "Deliverables arrive late when teams are overloaded.",
+  "Enterprise-grade security",
+  "24/7 execution coverage",
 ];
 
 const capabilities = [
-  "AI document analysis",
-  "Earnings call summaries",
-  "Sector screening",
-  "Investment memo generation",
-  "PowerPoint-ready output",
-  "Chat-based analyst workflows",
-  "Custom analyst deployment",
-  "Workflow-specific automation",
+  { title: "Financial Models", desc: "DCFs, LBOs, comps tables — structured and cited.", icon: "📊" },
+  { title: "Presentations", desc: "PowerPoint-ready decks from data to narrative.", icon: "📑" },
+  { title: "Research & Memos", desc: "Deep-dive research with sources and analysis.", icon: "🔍" },
+  { title: "Internal Reports", desc: "Automated reporting for stakeholders and teams.", icon: "📋" },
+  { title: "Workflow Automation", desc: "Recurring processes systematized and executed.", icon: "⚙️" },
+  { title: "Data Organization", desc: "Structure, clean, and surface insights from data.", icon: "🗃️" },
+  { title: "Operations Support", desc: "Process management, coordination, logistics.", icon: "🔗" },
+  { title: "Custom Tasks", desc: "Anything your team needs — Clay adapts.", icon: "🎯" },
 ];
 
-const integrations = ["Slack", "Microsoft Teams", "Internal Chat", "Research Portals", "CRM/Deal Systems", "Knowledge Bases"];
+const orchestrationSteps = [
+  { label: "You ask Clay", desc: "Natural language request through one interface." },
+  { label: "Clay routes", desc: "Work is dispatched to the right specialist agent." },
+  { label: "Specialists execute", desc: "Dedicated sub-agents handle the task with precision." },
+  { label: "Output delivered", desc: "Structured, cited, ready-to-use deliverables returned." },
+];
 
-const premiumSignals = [
-  {
-    title: "Clarity in 5–10 seconds",
-    body: "Headline + product proof communicate what Klade is, who it’s for, and what action to take immediately.",
-  },
-  {
-    title: "Motion with purpose",
-    body: "Ambient motion, line reveals, and microinteractions guide attention without distracting from trust and readability.",
-  },
-  {
-    title: "Conversion without friction",
-    body: "Persistent Join Beta paths, strong social proof language, and low-friction lead capture keep momentum high.",
-  },
+const roiCards = [
+  { title: "Less repetitive load", desc: "Free your team from rebuilding the same models, reports, and decks every week." },
+  { title: "Faster turnaround", desc: "Deliverables in minutes, not days. Research, analysis, and presentations on demand." },
+  { title: "Lower cost per output", desc: "Dramatically cheaper than additional headcount for recurring analytical work." },
+  { title: "Consistent quality", desc: "Structured, cited, format-compliant output every time — no variance." },
+];
+
+const useCases = [
+  { title: "Research & Due Diligence", desc: "Company screening, market analysis, competitive intelligence." },
+  { title: "Financial Analysis", desc: "Valuation models, earnings summaries, sector deep-dives." },
+  { title: "Reporting & Dashboards", desc: "Recurring reports, KPI tracking, stakeholder updates." },
+  { title: "Deck & Presentation Creation", desc: "IC decks, board materials, client presentations." },
+  { title: "Operations & Process", desc: "Workflow coordination, data pipeline management, internal tooling." },
+  { title: "Custom Internal Tasks", desc: "Whatever your team needs — Clay molds to the workflow." },
 ];
 
 const metrics = [
-  { value: 24, suffix: "/7", label: "analysis coverage" },
+  { value: 24, suffix: "/7", label: "execution coverage" },
   { value: 10, suffix: "x", label: "output expansion" },
   { value: 70, suffix: "%", label: "less repetitive load" },
   { value: 15, suffix: "min", label: "to first draft" },
 ];
 
-const heroCards = [
-  { title: "Live filing ingest", body: "10-Q + call transcript parsed with cited deltas.", rotate: -4 },
-  { title: "Memo draft", body: "Investment memo + risk table generated in minutes.", rotate: 3 },
-  { title: "Deck preview", body: "PowerPoint-ready summary with key growth drivers.", rotate: -2 },
-];
-
-const requiredFields: Array<keyof Pick<LeadForm, "name" | "company" | "email" | "teamSize" | "role" | "bottleneck">> = [
-  "name",
-  "company",
-  "email",
-  "teamSize",
-  "role",
-  "bottleneck",
+const founders = [
+  { name: "Adam Benoit", role: "Co-Founder", focus: "Economics, financial markets, and investment research workflows.", email: "adam@kladeai.com", image: "/founders/adam.jpg" },
+  { name: "Arjun Rath", role: "Co-Founder", focus: "Product + infrastructure systems that turn analyst workflows into reliable execution.", email: "arjun@kladeai.com", image: "/founders/arjun.jpg" },
+  { name: "Gavin Kim", role: "Co-Founder", focus: "Quantitative systems design and structured decision-support outputs.", email: "gavin@kladeai.com", image: "/founders/gavin.jpg" },
 ];
 
 function trackEvent(eventName: string, payload?: Record<string, string>) {
   if (typeof window === "undefined") return;
-  const event = { event: eventName, ...payload };
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push(event);
+  window.dataLayer.push({ event: eventName, ...payload });
 }
 
 declare global {
-  interface Window {
-    dataLayer?: Array<Record<string, string>>;
-  }
+  interface Window { dataLayer?: Array<Record<string, string>>; }
 }
+
+/* ===== COMPONENTS ===== */
 
 function IntroReveal() {
   const reduceMotion = useReducedMotion();
   const [visible, setVisible] = useState(!reduceMotion);
-
   useEffect(() => {
     if (reduceMotion) return;
     const timer = setTimeout(() => setVisible(false), 1300);
     return () => clearTimeout(timer);
   }, [reduceMotion]);
-
   if (!visible) return null;
-
   return (
     <motion.div
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0A0F2C]"
+      className="fixed inset-0 z-[90] flex items-center justify-center bg-[#080c1a]"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
       transition={{ delay: 0.9, duration: 0.35, ease: "easeOut" }}
     >
       <div className="relative flex flex-col items-center gap-6">
         <motion.div
-          className="absolute h-52 w-52 rounded-full bg-[#4FD1FF]/35 blur-3xl"
+          className="absolute h-52 w-52 rounded-full bg-[#4FD1FF]/20 blur-3xl"
           initial={{ scale: 0.65, opacity: 0.2 }}
-          animate={{ scale: 1.05, opacity: 0.7 }}
+          animate={{ scale: 1.05, opacity: 0.5 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
-        <svg width="220" height="78" viewBox="0 0 220 78" className="relative z-10">
-          <path className="line-draw" d="M8 58C42 24 72 16 116 24C153 31 180 47 212 22" stroke="#4FD1FF" strokeWidth="2" fill="none" />
-        </svg>
         <motion.div
-          className="relative z-10 flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-white"
+          className="relative z-10 flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-5 py-2"
           initial={{ y: 12, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.35 }}
         >
-          <Image src="/brand/klade-logo-draft.jpg" alt="Klade" width={28} height={28} className="rounded-full" />
-          <span className="tracking-[0.22em] text-xs uppercase">Klade</span>
+          <Image src="/brand/klade-kmark.jpg" alt="Klade" width={28} height={28} className="rounded-lg" />
+          <span className="tracking-[0.22em] text-xs uppercase text-white/80">Klade</span>
         </motion.div>
       </div>
     </motion.div>
   );
 }
 
-function DemoPanel() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="space-y-3 rounded-2xl border border-[#2c3a66]/20 bg-[#0A0F2C]/95 p-5">
-        <div className="h-4 w-32 animate-pulse rounded bg-white/20" />
-        <div className="h-20 animate-pulse rounded-xl bg-white/10" />
-        <div className="grid gap-2 md:grid-cols-2">
-          <div className="h-24 animate-pulse rounded-xl bg-white/10" />
-          <div className="h-24 animate-pulse rounded-xl bg-white/10" />
-        </div>
-      </div>
-    );
-  }
-
+function HeroVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
-      className="space-y-3 rounded-2xl border border-[#2c3a66]/20 bg-[#0A0F2C]/95 p-5 text-[#d8def5]"
-    >
-      <p className="text-[11px] uppercase tracking-[0.18em] text-[#9aa4cb]">Live proof</p>
-      <p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm">
-        <span className="text-[#9aa4cb]">Prompt:</span> Summarize NVIDIA’s latest earnings call and highlight the main growth drivers.
-      </p>
-      <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm">
-        <p className="font-medium text-white">Structured response</p>
-        <ul className="mt-2 space-y-1 text-[#d8def5]">
-          <li>• Data center demand remained the primary growth engine.</li>
-          <li>• Gross margin outlook tightened due to mix and supply timing.</li>
-          <li>• Management highlighted enterprise AI pipeline acceleration.</li>
-        </ul>
-      </div>
-      <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="rounded-xl border border-[#4FD1FF]/35 bg-[#4FD1FF]/10 p-3 text-sm">
-        Citations attached: 8-K transcript + Q filing references
-      </motion.div>
-      <div className="grid gap-2 md:grid-cols-2">
-        <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25 }} className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm">
-          Memo preview loaded
-        </motion.div>
-        <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm">
-          Deck preview rendered
-        </motion.div>
-      </div>
-    </motion.div>
+    <div className="video-container aspect-video">
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster="/brand/clay-avatar.jpg"
+        className="h-full w-full object-cover"
+      >
+        <source src="/video/klade-launch.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#080c1a]/60 via-transparent to-transparent" />
+    </div>
   );
 }
+
+/* ===== PAGE ===== */
 
 export default function HomePage() {
   const reduceMotion = useReducedMotion();
   const [form, setForm] = useState<LeadForm>(() => createInitialForm());
   const [status, setStatus] = useState<SubmissionStatus>("idle");
-
   const completedFields = useMemo(
     () => requiredFields.filter((key) => form[key].trim().length > 0).length,
     [form]
   );
   const completion = Math.round((completedFields / requiredFields.length) * 100);
 
-  useEffect(() => {
-    trackEvent("landing_view", { source: "homepage_v2_1" });
-  }, []);
+  useEffect(() => { trackEvent("landing_view", { source: "homepage_v3" }); }, []);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    trackEvent("form_submit_attempt", { source: "homepage_v2_1" });
+    trackEvent("form_submit_attempt", { source: "homepage_v3" });
     setStatus("submitting");
-
     try {
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       if (!response.ok) throw new Error("submit-failed");
       setStatus("success");
       setForm(createInitialForm());
-      trackEvent("qualified_lead", { source: "homepage_v2_1" });
+      trackEvent("qualified_lead", { source: "homepage_v3" });
     } catch {
       setStatus("error");
     }
@@ -260,262 +199,269 @@ export default function HomePage() {
     <SiteShell>
       <IntroReveal />
 
+      {/* ===== HERO ===== */}
       <Section className="pt-20 md:pt-28">
-        <div className="hero-shell premium-sheen relative overflow-hidden rounded-3xl px-6 py-14 md:px-12 md:py-16">
-          <div className="hero-grid pointer-events-none absolute inset-0 opacity-45" />
+        <div className="hero-shell premium-sheen relative overflow-hidden rounded-3xl px-6 py-12 md:px-12 md:py-16">
+          <div className="hero-grid pointer-events-none absolute inset-0 opacity-40" />
           <motion.div
-            className="pointer-events-none absolute -left-16 -top-12 h-64 w-64 rounded-full bg-[#4FD1FF]/30 blur-3xl"
-            animate={reduceMotion ? { opacity: 0.65 } : { x: [0, 26, 0], y: [0, 18, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-[#4FD1FF]/15 blur-3xl"
+            animate={reduceMotion ? { opacity: 0.5 } : { x: [0, 30, 0], y: [0, 20, 0] }}
+            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="pointer-events-none absolute -right-24 -bottom-16 h-80 w-80 rounded-full bg-[#7A5CFF]/35 blur-3xl"
-            animate={reduceMotion ? { opacity: 0.65 } : { x: [0, -24, 0], y: [0, -14, 0] }}
-            transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+            className="pointer-events-none absolute -right-24 -bottom-16 h-80 w-80 rounded-full bg-[#7A5CFF]/20 blur-3xl"
+            animate={reduceMotion ? { opacity: 0.5 } : { x: [0, -24, 0], y: [0, -14, 0] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           />
 
           <FadeIn>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-[#d9e2ff]">
-              <span className="relative h-5 w-5 overflow-hidden rounded-full border border-white/30">
-                <Image src="/brand/klade-logo-draft.jpg" alt="Klade" fill sizes="20px" className="object-cover" />
-              </span>
-              Private beta · finance teams only
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#4FD1FF]/25 bg-[#4FD1FF]/8 px-3 py-1 text-xs uppercase tracking-[0.18em] text-[#4FD1FF]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4FD1FF] animate-pulse" />
+              Private Beta
             </div>
-            <h1 className="mt-6 max-w-5xl text-5xl font-semibold leading-[0.96] text-white md:text-7xl lg:text-8xl">
-              Scale your analyst team without scaling headcount.
+            <h1 className="mt-6 max-w-5xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl lg:text-7xl">
+              One AI teammate.<br />
+              <span className="klade-gradient-text">Many specialists behind the scenes.</span>
             </h1>
-            <p className="mt-5 max-w-3xl text-lg text-[#d8def5] md:text-xl">
-              Klade builds AI analysts that review filings, summarize earnings calls, screen sectors, draft investment memos,
-              and generate partner-ready deliverables in minutes.
+            <p className="mt-5 max-w-3xl text-lg text-[#b3bedf] md:text-xl">
+              Clay is your moldable AI operator — one interface backed by many specialized agents.
+              Models, decks, research, workflows, and more. Shaped around how your team actually works.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="#lead-form" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "join_beta" }}>
-                Join Beta
+                Join Private Beta
               </Button>
-              <Button
-                href="#lead-form"
-                variant="secondary"
-                eventName="hero_cta_click"
-                eventPayload={{ placement: "hero", cta: "book_demo" }}
-              >
-                Book Demo
+              <Button href="#meet-clay" variant="secondary" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "meet_clay" }}>
+                Meet Clay ↓
               </Button>
+            </div>
+
+            {/* Capability chips */}
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Models & Valuations", "Research & Memos", "Presentations", "Workflow Automation", "Operations", "Custom Tasks"].map((chip) => (
+                <span key={chip} className="rounded-full border border-white/8 bg-white/4 px-3 py-1 text-xs text-[#9aa4cb]">
+                  {chip}
+                </span>
+              ))}
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.1} className="mt-8 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-            <div className="klade-gradient-border rounded-2xl bg-[#0A0F2C] p-4 text-sm text-[#d8def5]">
-              <p className="text-[11px] uppercase tracking-[0.16em] text-[#9aa4cb]">Clay workspace</p>
-              <div className="mt-3 space-y-2">
-                <p className="ml-auto max-w-lg rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-white">
-                  Summarize NVIDIA’s latest earnings call and flag growth drivers + downside risks.
-                </p>
-                <p className="max-w-xl rounded-xl border border-[#4FD1FF]/30 bg-[#4FD1FF]/10 px-3 py-2">
-                  Completed with citations, risk table, and a deck-ready summary card.
-                </p>
-              </div>
+          {/* Hero video + Clay workspace preview */}
+          <FadeIn delay={0.1} className="mt-10 grid gap-5 lg:grid-cols-[1.1fr_1fr]">
+            <div id="meet-clay" className="scroll-mt-28">
+              <HeroVideo />
             </div>
             <div className="space-y-3">
-              {heroCards.map((card, index) => (
-                <motion.div
-                  key={card.title}
-                  className="surface-glass rounded-xl px-4 py-3 text-[#dbe3ff]"
-                  animate={
-                    reduceMotion
-                      ? { opacity: 1 }
-                      : { y: [0, -4, 0], rotate: [card.rotate, card.rotate + 0.6, card.rotate], x: [0, index % 2 ? 2 : -2, 0] }
-                  }
-                  transition={{ duration: 7 + index, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <p className="text-xs uppercase tracking-[0.14em] text-[#9aa4cb]">{card.title}</p>
-                  <p className="mt-1 text-sm">{card.body}</p>
-                </motion.div>
-              ))}
+              <div className="klade-gradient-border rounded-2xl bg-[#080c1a] p-4 text-sm text-[#d8def5]">
+                <div className="flex items-center gap-2">
+                  <Image src="/brand/clay-avatar.jpg" alt="Clay" width={24} height={24} className="rounded-full" />
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-[#9aa4cb]">Clay workspace</p>
+                </div>
+                <div className="mt-3 space-y-2">
+                  <p className="ml-auto max-w-lg rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white/90">
+                    Build a DCF model for NVIDIA and flag key growth drivers.
+                  </p>
+                  <p className="max-w-xl rounded-xl border border-[#4FD1FF]/20 bg-[#4FD1FF]/8 px-3 py-2 text-[#d8def5]">
+                    ✓ DCF complete with cited assumptions, risk table, and deck-ready summary.
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { label: "Research", detail: "Company deep-dive" },
+                  { label: "Memo", detail: "Investment thesis" },
+                  { label: "Deck", detail: "8-slide summary" },
+                ].map((card) => (
+                  <div key={card.label} className="surface-glass rounded-xl px-3 py-2.5 text-center">
+                    <p className="text-[10px] uppercase tracking-[0.14em] text-[#9aa4cb]">{card.label}</p>
+                    <p className="mt-0.5 text-xs text-[#d8def5]">{card.detail}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </FadeIn>
         </div>
       </Section>
 
-      <Section className="py-8">
-        <div className="space-y-2 rounded-2xl border border-[#1f2b53]/10 bg-white/75 p-4">
+      {/* ===== TRUST TICKER ===== */}
+      <Section className="py-4">
+        <div className="rounded-2xl border border-white/6 bg-white/3 p-3">
           <div className="ticker-row">
             <div className="ticker-track">
-              {[...trustTickerOne, ...trustTickerOne].map((item, index) => (
-                <span key={`${item}-${index}`} className="ticker-pill">{item}</span>
-              ))}
-            </div>
-          </div>
-          <div className="ticker-row">
-            <div className="ticker-track reverse">
-              {[...trustTickerTwo, ...trustTickerTwo].map((item, index) => (
-                <span key={`${item}-${index}`} className="ticker-pill">{item}</span>
+              {[...trustTickerItems, ...trustTickerItems].map((item, i) => (
+                <span key={`${item}-${i}`} className="ticker-pill">{item}</span>
               ))}
             </div>
           </div>
         </div>
       </Section>
 
-      <Section className="pt-8">
+      {/* ===== HOW CLAY WORKS — ORCHESTRATION ===== */}
+      <Section id="how-it-works" className="pt-8">
         <FadeIn>
-          <div className="rounded-3xl border border-[#1f2b53]/12 bg-white p-6 md:p-8">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-[#5A6175]">Premium website signals</p>
-            <h2 className="mt-2 text-3xl font-semibold text-[#10162F] md:text-4xl">Built like premium AI infrastructure, not a generic template.</h2>
-            <p className="mt-3 max-w-3xl text-sm text-[#4B5578]">
-              We optimize first impression, motion clarity, and conversion flow so users understand value quickly and act.
-            </p>
-            <div className="mt-6 grid gap-3 md:grid-cols-3">
-              {premiumSignals.map((signal) => (
-                <motion.div
-                  key={signal.title}
-                  whileHover={reduceMotion ? undefined : { y: -4 }}
-                  className="rounded-xl border border-[#1f2b53]/12 bg-[#f4f7ff] p-4"
-                >
-                  <p className="text-sm font-semibold text-[#10162F]">{signal.title}</p>
-                  <p className="mt-2 text-xs text-[#4B5578]">{signal.body}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">How Clay works</p>
+          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">
+            One interface. Many agents behind it.
+          </h2>
+          <p className="mt-3 max-w-3xl text-[#9aa4cb]">
+            Clay receives your request, routes it to the right specialist sub-agent, and delivers structured output — all through a single, seamless experience.
+          </p>
         </FadeIn>
-      </Section>
-
-      <Section className="pt-8">
-        <FadeIn>
-          <h2 className="text-4xl font-semibold text-[#10162F] md:text-6xl">Where finance teams lose time</h2>
-          <p className="mt-3 max-w-3xl text-[#4B5578]">Scroll through the workflow drag points. Klade removes this repeatable load while keeping analyst-grade quality and control.</p>
-        </FadeIn>
-        <div className="mt-8 grid gap-4 md:grid-cols-[160px_1fr]">
-          <div className="relative hidden md:block">
-            <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-[#3C5BFF]/20 via-[#7A5CFF]/40 to-transparent" />
-            <motion.div
-              className="absolute left-1/2 top-0 h-16 w-px -translate-x-1/2 bg-gradient-to-b from-[#4FD1FF] to-[#3C5BFF]"
-              initial={{ y: 0 }}
-              whileInView={{ y: 320 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1.4, ease: "easeOut" }}
-            />
-          </div>
-          <StaggerContainer className="grid gap-4">
-            {pains.map((pain) => (
-              <StaggerItem key={pain}>
-                <SpotlightCard className="surface-light text-[#10162F]">
-                  <p className="text-sm font-medium">{pain}</p>
-                </SpotlightCard>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+        <div className="mt-10 grid gap-3 md:grid-cols-4">
+          {orchestrationSteps.map((step, i) => (
+            <FadeIn key={step.label} delay={i * 0.06}>
+              <div className="surface-card rounded-2xl p-5 text-center transition-all duration-300 hover:-translate-y-1">
+                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#4FD1FF]/25 bg-[#4FD1FF]/10 text-sm font-semibold text-[#4FD1FF]">
+                  {i + 1}
+                </div>
+                <p className="mt-3 text-sm font-medium text-white">{step.label}</p>
+                <p className="mt-1.5 text-xs text-[#9aa4cb]">{step.desc}</p>
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </Section>
 
-      <Section className="pt-6 md:pt-10">
+      {/* ===== CAPABILITIES ===== */}
+      <Section id="capabilities" className="pt-6">
         <FadeIn>
-          <div className="rounded-3xl border border-[#1f2b53]/12 bg-[#10162F] p-6 md:p-8">
-            <h2 className="text-3xl font-semibold text-white md:text-5xl">Traditional analyst vs Klade AI analyst</h2>
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <motion.div whileHover={{ y: -4 }} className="rounded-2xl border border-white/12 bg-white/5 p-5 text-[#d8def5]">
-                <p className="text-xs uppercase tracking-[0.16em] text-[#9aa4cb]">Traditional analyst</p>
-                <ul className="mt-3 space-y-2 text-sm">
-                  <li>• ~$150,000+ annual compensation</li>
-                  <li>• Limited working hours</li>
-                  <li>• Manual workflow switching</li>
-                  <li>• One person’s bandwidth ceiling</li>
-                </ul>
-              </motion.div>
-              <motion.div whileHover={{ y: -4 }} className="rounded-2xl border border-[#4FD1FF]/35 bg-gradient-to-br from-[#3C5BFF]/24 to-[#7A5CFF]/24 p-5 text-white">
-                <p className="text-xs uppercase tracking-[0.16em] text-[#d8def5]">Klade AI analyst</p>
-                <ul className="mt-3 space-y-2 text-sm">
-                  <li>• Dramatically lower cost-per-output</li>
-                  <li>• 24/7 execution coverage</li>
-                  <li>• Structured deliverables in minutes</li>
-                  <li>• Parallel workflows without burnout</li>
-                </ul>
-              </motion.div>
-            </div>
-          </div>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Capabilities</p>
+          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">
+            One bot. Many specialists.
+          </h2>
+          <p className="mt-3 max-w-3xl text-[#9aa4cb]">
+            Clay orchestrates specialized agents across every function your team needs. Not a single-purpose tool — a moldable system that adapts to your workflows.
+          </p>
         </FadeIn>
-      </Section>
-
-      <Section id="capabilities" className="pt-10">
-        <FadeIn>
-          <h2 className="text-4xl font-semibold text-[#10162F] md:text-5xl">Product capabilities</h2>
-        </FadeIn>
-        <StaggerContainer className="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {capabilities.map((capability) => (
-            <StaggerItem key={capability}>
+        <StaggerContainer className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {capabilities.map((cap) => (
+            <StaggerItem key={cap.title}>
               <motion.div
-                whileHover={reduceMotion ? undefined : { y: -6, scale: 1.01 }}
-                className="surface-light rounded-2xl p-5 transition-shadow hover:shadow-[0_20px_45px_-28px_rgba(60,91,255,0.5)]"
+                whileHover={reduceMotion ? undefined : { y: -4, scale: 1.01 }}
+                className="surface-card rounded-2xl p-5 transition-all duration-300"
               >
-                <div className="mb-3 h-8 w-8 rounded-lg bg-gradient-to-br from-[#4FD1FF] to-[#7A5CFF]" />
-                <p className="text-sm font-medium text-[#10162F]">{capability}</p>
+                <span className="text-2xl">{cap.icon}</span>
+                <p className="mt-2 text-sm font-medium text-white">{cap.title}</p>
+                <p className="mt-1.5 text-xs text-[#9aa4cb]">{cap.desc}</p>
               </motion.div>
             </StaggerItem>
           ))}
         </StaggerContainer>
       </Section>
 
-      <Section>
+      {/* ===== USE CASES ===== */}
+      <Section className="pt-6">
         <FadeIn>
-          <h2 className="text-4xl font-semibold text-[#10162F] md:text-5xl">Product proof</h2>
-        </FadeIn>
-        <div className="mt-6 grid gap-4 lg:grid-cols-[1.25fr_1fr]">
-          <DemoPanel />
-          <FadeIn className="rounded-2xl border border-[#1f2b53]/12 bg-white p-5">
-            <p className="text-xs uppercase tracking-[0.16em] text-[#5a6175]">Outputs synchronized</p>
-            <div className="mt-3 space-y-2">
-              <p className="rounded-xl border border-[#1f2b53]/12 bg-[#f2f6ff] px-3 py-2 text-sm text-[#22305a]">Research memo · version 1.4</p>
-              <p className="rounded-xl border border-[#1f2b53]/12 bg-[#f2f6ff] px-3 py-2 text-sm text-[#22305a]">IC deck draft · 8 slides</p>
-              <p className="rounded-xl border border-[#1f2b53]/12 bg-[#f2f6ff] px-3 py-2 text-sm text-[#22305a]">Risk appendix · cited sources</p>
-            </div>
-          </FadeIn>
-        </div>
-      </Section>
-
-      <Section id="how-it-works">
-        <FadeIn>
-          <h2 className="text-4xl font-semibold text-[#10162F] md:text-5xl">How it works</h2>
-        </FadeIn>
-        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {[
-            "Klade creates your AI analyst",
-            "We map your workflow and permission boundaries",
-            "Your team assigns work in chat or platform",
-            "Clay returns structured research + deliverables",
-          ].map((step, index) => (
-            <FadeIn key={step} className="surface-light rounded-2xl p-5">
-              <p className="text-xs uppercase tracking-[0.14em] text-[#5A6175]">Step {index + 1}</p>
-              <p className="mt-2 text-sm font-medium text-[#10162F]">{step}</p>
-            </FadeIn>
-          ))}
-        </div>
-      </Section>
-
-      <Section>
-        <FadeIn>
-          <div className="rounded-3xl border border-[#1f2b53]/12 bg-white p-6 md:p-8">
-            <h2 className="text-3xl font-semibold text-[#10162F] md:text-4xl">Works where your team works</h2>
-            <p className="mt-3 max-w-3xl text-sm text-[#4B5578]">Not just logo rows. Inputs route into Klade, outputs route back into the systems your team already runs on.</p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {integrations.map((integration, index) => (
-                <motion.div
-                  key={integration}
-                  className="rounded-xl border border-[#1f2b53]/12 bg-[#f3f7ff] px-4 py-3 text-sm text-[#22305a]"
-                  animate={reduceMotion ? undefined : { y: [0, index % 2 ? -3 : 3, 0] }}
-                  transition={{ duration: 6 + index, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  {integration}
-                </motion.div>
+          <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Use cases</p>
+            <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">
+              Klade molds to the company. Not the other way around.
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">
+              One system, many specialists — shaped around the way your business actually operates.
+            </p>
+            <div className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {useCases.map((uc) => (
+                <div key={uc.title} className="rounded-xl border border-white/8 bg-white/4 p-4 transition-colors hover:border-white/12">
+                  <p className="text-sm font-medium text-white">{uc.title}</p>
+                  <p className="mt-1.5 text-xs text-[#9aa4cb]">{uc.desc}</p>
+                </div>
               ))}
             </div>
           </div>
         </FadeIn>
       </Section>
 
+      {/* ===== ROI ===== */}
+      <Section id="roi-estimator" className="pt-6 scroll-mt-28">
+        <FadeIn>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">ROI</p>
+          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">
+            Why teams switch to Klade.
+          </h2>
+          <p className="mt-3 max-w-3xl text-[#9aa4cb]">
+            Replace repetitive analytical headcount with adaptable AI support that scales across functions.
+          </p>
+        </FadeIn>
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          {/* Before / After */}
+          <FadeIn className="rounded-2xl border border-white/8 bg-white/3 p-5">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#9aa4cb]">Without Klade</p>
+            <ul className="mt-3 space-y-2 text-sm text-[#b3bedf]">
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Hours spent on repetitive models and reports</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Bandwidth ceiling from finite headcount</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Inconsistent deliverable quality</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> One tool per function, constant switching</li>
+            </ul>
+          </FadeIn>
+          <FadeIn delay={0.05} className="rounded-2xl border border-[#4FD1FF]/20 bg-[#4FD1FF]/5 p-5">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#4FD1FF]">With Klade</p>
+            <ul className="mt-3 space-y-2 text-sm text-[#d8def5]">
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Deliverables in minutes, not days</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Scales across functions without new hires</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Structured, cited, format-compliant every time</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> One AI teammate handles it all</li>
+            </ul>
+          </FadeIn>
+        </div>
+        <div className="mt-4 grid gap-3 md:grid-cols-4">
+          {roiCards.map((card) => (
+            <FadeIn key={card.title} className="surface-card rounded-xl p-4">
+              <p className="text-sm font-medium text-white">{card.title}</p>
+              <p className="mt-1.5 text-xs text-[#9aa4cb]">{card.desc}</p>
+            </FadeIn>
+          ))}
+        </div>
+      </Section>
+
+      {/* ===== METRICS ===== */}
+      <Section className="py-6">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {metrics.map((metric) => (
+            <FadeIn key={metric.label} className="rounded-2xl border border-white/8 bg-white/4 p-5 text-center">
+              <CountUp value={metric.value} suffix={metric.suffix} className="text-4xl font-semibold text-white" />
+              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#9aa4cb]">{metric.label}</p>
+            </FadeIn>
+          ))}
+        </div>
+      </Section>
+
+      {/* ===== COMPARISON ===== */}
+      <Section className="pt-4">
+        <FadeIn>
+          <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
+            <h2 className="text-3xl font-semibold text-white md:text-4xl">Traditional headcount vs Clay.</h2>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-white/8 bg-white/4 p-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-[#9aa4cb]">Traditional hire</p>
+                <ul className="mt-3 space-y-2 text-sm text-[#b3bedf]">
+                  <li>• ~$150,000+ annual compensation</li>
+                  <li>• Limited working hours</li>
+                  <li>• One person&apos;s bandwidth ceiling</li>
+                  <li>• Manual workflow switching</li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-[#4FD1FF]/25 bg-gradient-to-br from-[#3C5BFF]/12 to-[#7A5CFF]/12 p-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-[#4FD1FF]">Clay — your AI teammate</p>
+                <ul className="mt-3 space-y-2 text-sm text-[#d8def5]">
+                  <li>• Dramatically lower cost-per-output</li>
+                  <li>• 24/7 execution coverage</li>
+                  <li>• Parallel workflows, no burnout</li>
+                  <li>• One interface for every function</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </Section>
+
+      {/* ===== SECURITY ===== */}
       <Section id="security" className="pt-4">
         <FadeIn>
-          <div className="rounded-3xl border border-[#1f2b53]/12 bg-[#F8FAFF] p-6 md:p-8">
-            <h2 className="text-3xl font-semibold text-[#10162F] md:text-4xl">Built for teams that care about control.</h2>
-            <p className="mt-3 max-w-3xl text-[#4B5578]">Secure-by-design architecture, workflow-scoped access, and visibility-first deployment posture from day one.</p>
+          <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Security</p>
+            <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">Built for teams that care about control.</h2>
+            <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">Secure-by-design architecture, workflow-scoped access, and visibility-first deployment posture from day one.</p>
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {[
                 "Least-privilege integration model",
@@ -523,108 +469,106 @@ export default function HomePage() {
                 "Audit-log ready event patterns",
                 "Founder-led deployment accountability",
               ].map((item) => (
-                <p key={item} className="rounded-xl border border-[#1f2b53]/12 bg-white px-4 py-3 text-sm text-[#22305a]">{item}</p>
+                <p key={item} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-[#d8def5]">{item}</p>
               ))}
             </div>
           </div>
         </FadeIn>
       </Section>
 
-      <Section>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {metrics.map((metric) => (
-            <FadeIn key={metric.label} className="rounded-2xl border border-[#1f2b53]/12 bg-[#10162F] p-5 text-center text-white">
-              <CountUp value={metric.value} suffix={metric.suffix} className="text-4xl font-semibold" />
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#b3bedf]">{metric.label}</p>
+      {/* ===== FOUNDERS ===== */}
+      <Section id="founders" className="pt-6">
+        <FadeIn>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Founding team</p>
+          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">Built by operators, not outsiders.</h2>
+          <p className="mt-3 max-w-3xl text-[#9aa4cb]">
+            Three founders operating inside the workflows we&apos;re automating. Founder-led through every step of onboarding and deployment.
+          </p>
+        </FadeIn>
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {founders.map((f, i) => (
+            <FadeIn key={f.name} delay={i * 0.05}>
+              <div className="group rounded-2xl border border-white/8 bg-white/4 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#4FD1FF]/25">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-white/8">
+                  <Image
+                    src={f.image}
+                    alt={`${f.name}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="mt-4 text-[11px] uppercase tracking-[0.12em] text-[#9aa4cb]">{f.role}</p>
+                <h3 className="mt-1 text-xl font-semibold text-white">{f.name}</h3>
+                <p className="mt-2 text-sm text-[#b3bedf]">{f.focus}</p>
+                <Link href={`mailto:${f.email}`} className="mt-3 inline-block text-sm text-[#4FD1FF] transition-colors hover:text-white">
+                  {f.email} →
+                </Link>
+              </div>
             </FadeIn>
           ))}
         </div>
-        <FadeIn className="mt-4 rounded-2xl border border-[#1f2b53]/12 bg-white p-5">
-          <h3 className="text-lg font-semibold text-[#10162F]">Launch readiness</h3>
-          <div className="mt-4 space-y-4">
-            <ProgressBar label="Workflow onboarding" value={92} className="text-[#10162F]" />
-            <ProgressBar label="Security packet completeness" value={96} className="text-[#10162F]" />
-            <ProgressBar label="Deliverable quality" value={94} className="text-[#10162F]" />
-          </div>
-        </FadeIn>
       </Section>
 
-      <Section>
+      {/* ===== CTA BANNER ===== */}
+      <Section className="py-6">
         <FadeIn>
-          <div className="rounded-3xl border border-[#3C5BFF]/20 bg-gradient-to-r from-[#0A0F2C] via-[#10162F] to-[#0A0F2C] p-8 text-white">
-            <h2 className="text-3xl font-semibold md:text-5xl">Be among the first teams using AI analysts.</h2>
-            <p className="mt-3 max-w-3xl text-[#cad4f8]">Private beta. Limited onboarding. Founder collaboration. Fast response.</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button href="#lead-form" eventName="proof_cta_click" eventPayload={{ placement: "beta_banner", cta: "join_beta" }}>
-                Join Beta
+          <div className="rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-r from-[#0a0f2c] via-[#10162f] to-[#0a0f2c] p-8 text-center">
+            <h2 className="text-3xl font-semibold text-white md:text-4xl">Ready to meet your AI teammate?</h2>
+            <p className="mt-3 text-[#b3bedf]">Private beta. Founder-led onboarding. Fast response.</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Button href="#lead-form" eventName="cta_click" eventPayload={{ placement: "banner", cta: "join_beta" }}>
+                Join Private Beta
               </Button>
-              <Button
-                href="#lead-form"
-                variant="secondary"
-                eventName="proof_cta_click"
-                eventPayload={{ placement: "beta_banner", cta: "tell_us_about_team" }}
-              >
-                Tell us about your team
+              <Button href="mailto:arjun@kladeai.com" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "email_founder" }}>
+                Email a Founder
               </Button>
             </div>
           </div>
         </FadeIn>
       </Section>
 
-      <Section id="lead-form" className="scroll-mt-28 pt-8">
+      {/* ===== LEAD FORM ===== */}
+      <Section id="lead-form" className="scroll-mt-28 pt-4">
         <FadeIn>
-          <div className="rounded-3xl border border-[#1f2b53]/12 bg-white p-6 md:p-8">
-            <h2 className="text-3xl font-semibold text-[#10162F]">Tell us about your team.</h2>
-            <p className="mt-2 text-sm text-[#4B5578]">Share your bottleneck and we’ll return a practical rollout plan.</p>
+          <div className="rounded-3xl border border-white/8 bg-white/4 p-6 md:p-8">
+            <h2 className="text-3xl font-semibold text-white">Tell us about your team.</h2>
+            <p className="mt-2 text-sm text-[#9aa4cb]">Share your bottleneck and we&apos;ll return a practical rollout plan.</p>
 
             <form className="mt-6 grid gap-4 md:grid-cols-2" onSubmit={onSubmit} aria-busy={status === "submitting"}>
               <fieldset className="contents" disabled={status === "submitting"}>
                 <label className="hidden" aria-hidden="true">
-                  Company Website
-                  <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => setForm((prev) => ({ ...prev, website: event.target.value }))} />
+                  Website
+                  <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(e) => setForm((p) => ({ ...p, website: e.target.value }))} />
                 </label>
                 <input type="hidden" name="startedAt" value={form.startedAt} readOnly />
 
-                <label className="grid gap-2 text-sm text-[#22305a]">
-                  Name
-                  <input
-                    required
-                    value={form.name}
-                    onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-                    className="rounded-lg border border-[#1f2b53]/18 bg-[#f4f7ff] px-3 py-2 text-[#10162F] outline-none focus:border-[#3C5BFF]"
-                  />
-                </label>
+                {[
+                  { key: "name" as const, label: "Name", type: "text" },
+                  { key: "company" as const, label: "Company", type: "text" },
+                  { key: "email" as const, label: "Work Email", type: "email" },
+                ].map((field) => (
+                  <label key={field.key} className="grid gap-2 text-sm text-[#b3bedf]">
+                    {field.label}
+                    <input
+                      required
+                      type={field.type}
+                      value={form[field.key]}
+                      onChange={(e) => setForm((p) => ({ ...p, [field.key]: e.target.value }))}
+                      className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-white outline-none transition-colors focus:border-[#4FD1FF]/50 placeholder:text-[#5a6a8a]"
+                    />
+                  </label>
+                ))}
 
-                <label className="grid gap-2 text-sm text-[#22305a]">
-                  Company
-                  <input
-                    required
-                    value={form.company}
-                    onChange={(event) => setForm((prev) => ({ ...prev, company: event.target.value }))}
-                    className="rounded-lg border border-[#1f2b53]/18 bg-[#f4f7ff] px-3 py-2 text-[#10162F] outline-none focus:border-[#3C5BFF]"
-                  />
-                </label>
-
-                <label className="grid gap-2 text-sm text-[#22305a]">
-                  Work Email
-                  <input
-                    required
-                    type="email"
-                    value={form.email}
-                    onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-                    className="rounded-lg border border-[#1f2b53]/18 bg-[#f4f7ff] px-3 py-2 text-[#10162F] outline-none focus:border-[#3C5BFF]"
-                  />
-                </label>
-
-                <label className="grid gap-2 text-sm text-[#22305a]">
+                <label className="grid gap-2 text-sm text-[#b3bedf]">
                   Team Size
                   <select
                     required
                     value={form.teamSize}
-                    onChange={(event) => setForm((prev) => ({ ...prev, teamSize: event.target.value }))}
-                    className="rounded-lg border border-[#1f2b53]/18 bg-[#f4f7ff] px-3 py-2 text-[#10162F] outline-none focus:border-[#3C5BFF]"
+                    onChange={(e) => setForm((p) => ({ ...p, teamSize: e.target.value }))}
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-white outline-none transition-colors focus:border-[#4FD1FF]/50"
                   >
-                    <option value="">Select team size</option>
+                    <option value="">Select</option>
                     <option value="1-5">1-5</option>
                     <option value="6-15">6-15</option>
                     <option value="16-40">16-40</option>
@@ -633,34 +577,34 @@ export default function HomePage() {
                   </select>
                 </label>
 
-                <label className="grid gap-2 text-sm text-[#22305a] md:col-span-2">
+                <label className="grid gap-2 text-sm text-[#b3bedf] md:col-span-2">
                   Role
                   <input
                     required
                     value={form.role}
-                    onChange={(event) => setForm((prev) => ({ ...prev, role: event.target.value }))}
-                    className="rounded-lg border border-[#1f2b53]/18 bg-[#f4f7ff] px-3 py-2 text-[#10162F] outline-none focus:border-[#3C5BFF]"
+                    onChange={(e) => setForm((p) => ({ ...p, role: e.target.value }))}
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-white outline-none transition-colors focus:border-[#4FD1FF]/50"
                   />
                 </label>
 
-                <label className="grid gap-2 text-sm text-[#22305a] md:col-span-2">
+                <label className="grid gap-2 text-sm text-[#b3bedf] md:col-span-2">
                   What does your team need help with?
                   <textarea
                     required
                     rows={4}
                     value={form.bottleneck}
-                    onChange={(event) => setForm((prev) => ({ ...prev, bottleneck: event.target.value }))}
-                    className="rounded-lg border border-[#1f2b53]/18 bg-[#f4f7ff] px-3 py-2 text-[#10162F] outline-none focus:border-[#3C5BFF]"
+                    onChange={(e) => setForm((p) => ({ ...p, bottleneck: e.target.value }))}
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-white outline-none transition-colors focus:border-[#4FD1FF]/50"
                   />
                 </label>
 
                 <div className="md:col-span-2">
-                  <div className="rounded-xl border border-[#1f2b53]/14 bg-[#f4f7ff] p-3">
-                    <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.14em] text-[#5A6175]">
+                  <div className="rounded-xl border border-white/8 bg-white/3 p-3">
+                    <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.14em] text-[#9aa4cb]">
                       <span>Form completion</span>
                       <span>{completion}%</span>
                     </div>
-                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/8">
                       <motion.div
                         className="h-full rounded-full bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF]"
                         initial={{ width: 0 }}
@@ -675,26 +619,26 @@ export default function HomePage() {
                   <button
                     type="submit"
                     disabled={status === "submitting" || completion < 100}
-                    className="cta-glow inline-flex items-center justify-center rounded-xl border border-[#3C5BFF]/35 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-5 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="cta-glow inline-flex items-center justify-center rounded-xl border border-[#4FD1FF]/30 bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {status === "submitting" ? "Submitting..." : "Submit request"}
                   </button>
-                  <Link href="mailto:beta@kladeai.com" className="inline-flex items-center rounded-xl border border-[#1f2b53]/20 px-4 py-3 text-sm text-[#22305a]">
-                    beta@kladeai.com
-                  </Link>
                 </div>
 
                 <div className="md:col-span-2" role="status" aria-live="polite">
-                  {status === "success" && <p className="text-sm text-emerald-600">Request submitted. We’ll follow up shortly.</p>}
-                  {status === "error" && <p className="text-sm text-rose-600">Something failed. Please email beta@kladeai.com.</p>}
+                  {status === "success" && <p className="text-sm text-emerald-400">Request submitted. A founder will follow up within 24 hours.</p>}
+                  {status === "error" && <p className="text-sm text-rose-400">Something failed. Please email arjun@kladeai.com directly.</p>}
                 </div>
               </fieldset>
             </form>
 
-            <div className="mt-6 grid gap-2 text-xs text-[#5A6175] md:grid-cols-3">
-              <Link href="mailto:adam@kladeai.com" className="hover:text-[#10162F]">adam@kladeai.com</Link>
-              <Link href="mailto:arjun@kladeai.com" className="hover:text-[#10162F]">arjun@kladeai.com</Link>
-              <Link href="mailto:gavin@kladeai.com" className="hover:text-[#10162F]">gavin@kladeai.com</Link>
+            {/* Founder contact strip */}
+            <div className="mt-6 flex flex-wrap gap-4 border-t border-white/8 pt-4">
+              {founders.map((f) => (
+                <Link key={f.name} href={`mailto:${f.email}`} className="text-sm text-[#9aa4cb] transition-colors hover:text-[#4FD1FF]">
+                  {f.email}
+                </Link>
+              ))}
             </div>
           </div>
         </FadeIn>

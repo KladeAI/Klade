@@ -1,23 +1,66 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "./ui";
 
+const footerLinks = [
+  { label: "Capabilities", href: "/#capabilities" },
+  { label: "ROI", href: "/#roi-estimator" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Team", href: "/team" },
+];
+
+const founders = [
+  { name: "Adam", email: "adam@kladeai.com" },
+  { name: "Arjun", email: "arjun@kladeai.com" },
+  { name: "Gavin", email: "gavin@kladeai.com" },
+];
+
 export function Footer() {
   return (
-    <footer className="border-t border-[#1f2b53]/12 bg-white/55 py-10">
-      <Container className="flex flex-col gap-8 text-sm text-[#5A6175] md:flex-row md:items-end md:justify-between">
+    <footer className="border-t border-white/8 bg-[#060a16] py-14">
+      <Container className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+        {/* Brand column */}
         <div>
-          <p className="font-medium text-[#10162F]">Klade builds AI analysts for financial intelligence teams.</p>
-          <p className="mt-2 max-w-xl text-[#4B5578]">
-            Research companies, screen sectors, digest filings, and generate investment-grade deliverables in minutes.
+          <div className="flex items-center gap-3">
+            <span className="relative h-8 w-8 overflow-hidden rounded-lg border border-[#4FD1FF]/20">
+              <Image src="/brand/klade-kmark.jpg" alt="Klade" fill sizes="32px" className="object-cover" />
+            </span>
+            <Image src="/brand/klade-wordmark.jpg" alt="Klade" width={80} height={24} className="h-5 w-auto object-contain opacity-80" />
+          </div>
+          <p className="mt-4 max-w-sm text-sm text-[#9aa4cb]">
+            One AI teammate. Many specialists behind the scenes. Moldable AI support shaped to your company.
           </p>
-          <p className="mt-3 text-[#6a7391]">© {new Date().getFullYear()} Klade. All rights reserved.</p>
+          <p className="mt-4 text-xs text-[#5a6a8a]">© {new Date().getFullYear()} Klade. All rights reserved.</p>
         </div>
-        <div className="grid gap-2 text-[#334067]">
-          <Link href="/pricing" className="hover:text-[#10162F]">Pricing</Link>
-          <Link href="/team" className="hover:text-[#10162F]">Founding Team</Link>
-          <Link href="mailto:adam@kladeai.com" className="hover:text-[#10162F]">adam@kladeai.com</Link>
-          <Link href="mailto:arjun@kladeai.com" className="hover:text-[#10162F]">arjun@kladeai.com</Link>
-          <Link href="mailto:gavin@kladeai.com" className="hover:text-[#10162F]">gavin@kladeai.com</Link>
+
+        {/* Navigation */}
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#5a6a8a]">Navigate</p>
+          <div className="mt-3 grid gap-2">
+            {footerLinks.map((link) => (
+              <Link key={link.label} href={link.href} className="text-sm text-[#9aa4cb] transition-colors hover:text-white">
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Founders */}
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#5a6a8a]">Talk to a Founder</p>
+          <div className="mt-3 grid gap-2">
+            {founders.map((f) => (
+              <Link key={f.name} href={`mailto:${f.email}`} className="text-sm text-[#9aa4cb] transition-colors hover:text-[#4FD1FF]">
+                {f.email}
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/#lead-form"
+            className="mt-4 inline-flex rounded-lg border border-[#4FD1FF]/25 bg-[#4FD1FF]/10 px-4 py-2 text-xs font-medium text-[#4FD1FF] transition-all hover:bg-[#4FD1FF]/15"
+          >
+            Join Private Beta →
+          </Link>
         </div>
       </Container>
     </footer>
