@@ -134,7 +134,7 @@ function IntroReveal() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.35 }}
         >
-          <Image src="/brand/klade-kmark.jpg" alt="Klade" width={28} height={28} className="rounded-lg" />
+          <Image src="/brand/klade-kmark.jpg" alt="K" width={28} height={28} className="rounded-md invert brightness-200" />
           <span className="tracking-[0.22em] text-xs uppercase text-white/80">Klade</span>
         </motion.div>
       </div>
@@ -200,8 +200,8 @@ export default function HomePage() {
       <IntroReveal />
 
       {/* ===== HERO ===== */}
-      <Section className="pt-20 md:pt-28">
-        <div className="hero-shell premium-sheen relative overflow-hidden rounded-3xl px-6 py-12 md:px-12 md:py-16">
+      <Section className="pt-6 md:pt-10">
+        <div className="hero-shell premium-sheen relative overflow-hidden rounded-2xl px-5 py-8 md:px-8 md:py-12">
           <div className="hero-grid pointer-events-none absolute inset-0 opacity-40" />
           <motion.div
             className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-[#4FD1FF]/15 blur-3xl"
@@ -284,7 +284,7 @@ export default function HomePage() {
       </Section>
 
       {/* ===== TRUST TICKER ===== */}
-      <Section className="py-4">
+      <Section className="py-2">
         <div className="rounded-2xl border border-white/6 bg-white/3 p-3">
           <div className="ticker-row">
             <div className="ticker-track">
@@ -297,7 +297,7 @@ export default function HomePage() {
       </Section>
 
       {/* ===== HOW CLAY WORKS — ORCHESTRATION ===== */}
-      <Section id="how-it-works" className="pt-8">
+      <Section id="how-it-works" className="pt-4">
         <FadeIn>
           <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">How Clay works</p>
           <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">
@@ -415,7 +415,7 @@ export default function HomePage() {
       </Section>
 
       {/* ===== METRICS ===== */}
-      <Section className="py-6">
+      <Section className="py-3">
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           {metrics.map((metric) => (
             <FadeIn key={metric.label} className="rounded-2xl border border-white/8 bg-white/4 p-5 text-center">
@@ -511,7 +511,7 @@ export default function HomePage() {
       </Section>
 
       {/* ===== CTA BANNER ===== */}
-      <Section className="py-6">
+      <Section className="py-3">
         <FadeIn>
           <div className="rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-r from-[#0a0f2c] via-[#10162f] to-[#0a0f2c] p-8 text-center">
             <h2 className="text-3xl font-semibold text-white md:text-4xl">Ready to meet your AI teammate?</h2>

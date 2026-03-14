@@ -120,16 +120,18 @@ export function Navigation() {
   }, []);
 
   return (
-    <header className="sticky top-4 z-50">
+    <header className="sticky top-2 z-50">
       <Container>
         <div className="relative rounded-2xl border border-white/10 bg-[#0a0f2c]/80 shadow-[0_14px_36px_-20px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
           <div className="flex h-14 items-center justify-between px-4">
             {/* Logo */}
-            <Link href="/" onClick={() => setOpen(false)} className="group inline-flex items-center gap-2.5">
-              <span className="relative h-8 w-8 overflow-hidden rounded-lg border border-[#4FD1FF]/25 shadow-[0_0_14px_rgba(79,209,255,0.2)]">
-                <Image src="/brand/klade-kmark.jpg" alt="Klade" fill sizes="32px" className="object-cover" />
+            <Link href="/" onClick={() => setOpen(false)} className="group inline-flex items-center gap-2">
+              <span className="relative h-7 w-7 overflow-hidden rounded-md">
+                <Image src="/brand/klade-kmark.jpg" alt="K" fill sizes="28px" className="object-cover invert brightness-200" />
               </span>
-              <Image src="/brand/klade-wordmark.jpg" alt="Klade" width={80} height={24} className="h-5 w-auto object-contain opacity-90 transition-opacity group-hover:opacity-100" />
+              <span className="text-lg font-bold tracking-tight text-white">
+                Klade<span className="bg-gradient-to-r from-[#4FD1FF] to-[#7A5CFF] bg-clip-text text-transparent">ai</span>
+              </span>
             </Link>
 
             {/* Desktop nav */}

@@ -21,11 +21,13 @@ export function Footer() {
       <Container className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
         {/* Brand column */}
         <div>
-          <div className="flex items-center gap-3">
-            <span className="relative h-8 w-8 overflow-hidden rounded-lg border border-[#4FD1FF]/20">
-              <Image src="/brand/klade-kmark.jpg" alt="Klade" fill sizes="32px" className="object-cover" />
+          <div className="flex items-center gap-2">
+            <span className="relative h-7 w-7 overflow-hidden rounded-md">
+              <Image src="/brand/klade-kmark.jpg" alt="K" fill sizes="28px" className="object-cover invert brightness-200" />
             </span>
-            <Image src="/brand/klade-wordmark.jpg" alt="Klade" width={80} height={24} className="h-5 w-auto object-contain opacity-80" />
+            <span className="text-lg font-bold tracking-tight text-white">
+              Klade<span className="bg-gradient-to-r from-[#4FD1FF] to-[#7A5CFF] bg-clip-text text-transparent">ai</span>
+            </span>
           </div>
           <p className="mt-4 max-w-sm text-sm text-[#9aa4cb]">
             One AI teammate. Many specialists behind the scenes. Moldable AI support shaped to your company.

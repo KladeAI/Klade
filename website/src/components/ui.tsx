@@ -6,14 +6,14 @@ import type { ReactNode } from "react";
 type ContainerProps = { children: ReactNode; className?: string };
 
 export function Container({ children, className = "" }: ContainerProps) {
-  return <div className={`mx-auto w-full max-w-6xl px-6 lg:px-8 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-7xl px-4 lg:px-6 ${className}`}>{children}</div>;
 }
 
 type SectionProps = { id?: string; children: ReactNode; className?: string };
 
 export function Section({ id, children, className = "" }: SectionProps) {
   return (
-    <section id={id} className={`relative py-16 md:py-20 lg:py-24 ${className}`}>
+    <section id={id} className={`relative py-10 md:py-12 lg:py-14 ${className}`}>
       <Container>{children}</Container>
     </section>
   );
