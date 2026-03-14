@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -124,8 +125,11 @@ export function Navigation() {
         <div className="relative border-b border-white/8 bg-[#080c1a]/90 backdrop-blur-xl">
           <div className="flex h-12 items-center justify-between">
             {/* Logo */}
-            <Link href="/" onClick={() => setOpen(false)} className="text-base font-semibold tracking-tight text-white">
-              Klade
+            <Link href="/" onClick={() => setOpen(false)} className="inline-flex items-center gap-2">
+              <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-md bg-white/10 p-0.5">
+                <Image src="/brand/klade-kmark.jpg" alt="K" fill sizes="28px" className="object-contain brightness-[2] contrast-[1.2] saturate-0 invert" />
+              </span>
+              <span className="text-base font-semibold tracking-tight text-white">Klade</span>
             </Link>
 
             {/* Desktop nav */}

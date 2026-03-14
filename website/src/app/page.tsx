@@ -6,7 +6,7 @@ import { Button, Section } from "@/components/ui";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 /* ===== DATA ===== */
 
@@ -107,8 +107,31 @@ declare global {
 
 function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+  const [volume, setVolume] = useState(0.7);
+  const [showVolume, setShowVolume] = useState(false);
+
+  function toggleMute() {
+    if (videoRef.current) {
+      const next = !muted;
+      videoRef.current.muted = next;
+      setMuted(next);
+      if (!next) videoRef.current.volume = volume;
+    }
+  }
+
+  function handleVolume(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = parseFloat(e.target.value);
+    setVolume(val);
+    if (videoRef.current) {
+      videoRef.current.volume = val;
+      if (val === 0) { setMuted(true); videoRef.current.muted = true; }
+      else if (muted) { setMuted(false); videoRef.current.muted = false; }
+    }
+  }
+
   return (
-    <div className="video-container aspect-video">
+    <div className="video-container aspect-video" onMouseEnter={() => setShowVolume(true)} onMouseLeave={() => setShowVolume(false)}>
       <video
         ref={videoRef}
         autoPlay
@@ -120,7 +143,32 @@ function HeroVideo() {
       >
         <source src="/video/klade-launch.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#080c1a]/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#080c1a]/40 via-transparent to-transparent" />
+      
+      {/* Volume controls */}
+      <div className={`absolute bottom-3 right-3 flex items-center gap-2 rounded-lg bg-black/60 px-2.5 py-1.5 backdrop-blur-sm transition-opacity duration-200 ${showVolume ? "opacity-100" : "opacity-0 sm:opacity-60 sm:hover:opacity-100"}`}>
+        <button
+          onClick={toggleMute}
+          className="text-white/90 transition-colors hover:text-white"
+          aria-label={muted ? "Unmute" : "Mute"}
+        >
+          {muted ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          )}
+        </button>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value={muted ? 0 : volume}
+          onChange={handleVolume}
+          className="h-1 w-16 cursor-pointer appearance-none rounded-full bg-white/30 accent-white [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+          aria-label="Volume"
+        />
+      </div>
     </div>
   );
 }
