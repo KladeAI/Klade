@@ -3,7 +3,8 @@ import { Container } from "./ui";
 
 const footerLinks = [
   { label: "Capabilities", href: "/#capabilities" },
-  { label: "ROI", href: "/#roi-estimator" },
+  { label: "Docs", href: "/docs" },
+  { label: "Demo", href: "/demo" },
   { label: "Pricing", href: "/pricing" },
   { label: "Team", href: "/team" },
 ];
