@@ -153,6 +153,35 @@ function isDuplicateLead(data: { email: string; company: string; role: string })
   return typeof previous === "number" && now - previous < DUPLICATE_WINDOW_MS;
 }
 
+
+/* ── Telegram notification ── */
+function escHtml(s: string) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+async function notifyTelegram(data: Record<string, string>) {
+  const token = process.env.TG_BOT_TOKEN;
+  const chatId = process.env.TG_CHAT_ID;
+  if (!token || !chatId) return;
+
+  const text = [
+    "🔔 <b>New Klade Lead</b>",
+    "",
+    `<b>Name:</b> ${escHtml(data.name)}`,
+    `<b>Company:</b> ${escHtml(data.company)}`,
+    `<b>Email:</b> ${escHtml(data.email)}`,
+    `<b>Team Size:</b> ${escHtml(data.teamSize)}`,
+    `<b>Role:</b> ${escHtml(data.role)}`,
+    `<b>Bottleneck:</b> ${escHtml(data.bottleneck)}`,
+  ].join("\n");
+
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
+  }).catch(() => {});
+}
+
 export async function POST(request: Request) {
   const clientIp = getClientIp(request);
 
@@ -230,6 +259,9 @@ export async function POST(request: Request) {
   if (isDuplicateLead({ email: data.email, company: data.company, role: data.role })) {
     return jsonNoStore({ ok: true });
   }
+
+  // Notify founders via Telegram
+  await notifyTelegram(data);
 
   console.info("[lead_capture]", {
     ...data,
