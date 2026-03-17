@@ -283,6 +283,43 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* ===== JENSEN HUANG NVIDIA QUOTE ===== */}
+      <Section className="py-6 md:py-8">
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-br from-[#0d1225] via-[#0a0f2c] to-[#10162f] px-6 py-10 md:px-12 md:py-14">
+            {/* Decorative gradient orbs */}
+            <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#76b900]/8 blur-[80px]" />
+            <div className="pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-[#76b900]/6 blur-[80px]" />
+            
+            <div className="relative mx-auto max-w-4xl text-center">
+              {/* Large quote mark */}
+              <span className="block text-6xl leading-none text-[#76b900]/30 md:text-8xl">&ldquo;</span>
+              
+              <blockquote className="mt-2 text-2xl font-semibold leading-snug text-white md:text-3xl lg:text-4xl">
+                Every company in the world today needs to have an OpenClaw strategy, an agentic system strategy. This is the new computer.
+              </blockquote>
+              
+              <div className="mt-6 flex items-center justify-center gap-3">
+                <div className="h-px w-8 bg-[#76b900]/40" />
+                <div>
+                  <p className="text-sm font-semibold text-white">Jensen Huang</p>
+                  <p className="text-xs text-[#9aa4cb]">CEO of NVIDIA · GTC 2026</p>
+                </div>
+                <div className="h-px w-8 bg-[#76b900]/40" />
+              </div>
+              
+              <p className="mt-1 text-[10px] text-[#5a6a8a]">Source: Business Insider, March 2026</p>
+              
+              <div className="mx-auto mt-8 h-px w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              
+              <p className="mt-6 text-sm text-[#9aa4cb]">
+                Klade builds on OpenClaw to deploy AI analysts for professional firms.
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+      </Section>
+
       {/* ===== TRUST TICKER ===== */}
       <Section className="py-2">
         <div className="rounded-2xl border border-white/6 bg-white/3 p-3">

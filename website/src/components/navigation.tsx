@@ -15,7 +15,8 @@ declare global {
 const navLinks = [
   { label: "Meet Clay", href: "/#meet-clay" },
   { label: "Capabilities", href: "/#capabilities" },
-  { label: "ROI", href: "/#roi-estimator" },
+  { label: "Docs", href: "/docs" },
+  { label: "Demo", href: "/demo" },
   { label: "Pricing", href: "/pricing" },
   { label: "Team", href: "/team" },
 ];
