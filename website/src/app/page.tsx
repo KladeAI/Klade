@@ -1,9 +1,9 @@
 "use client";
 
-import { CountUp, FadeIn, ProgressBar, SpotlightCard, StaggerContainer, StaggerItem } from "@/components/animated";
+import { FadeIn, ProgressBar, SpotlightCard, StaggerContainer, StaggerItem } from "@/components/animated";
 import { SiteShell } from "@/components/site-shell";
 import { Button, Section } from "@/components/ui";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
@@ -80,11 +80,31 @@ const useCases = [
   { title: "Custom Internal Tasks", desc: "Whatever your team needs — Clay molds to the workflow." },
 ];
 
-const metrics = [
-  { value: 24, suffix: "/7", label: "execution coverage" },
-  { value: 10, suffix: "x", label: "output expansion" },
-  { value: 70, suffix: "%", label: "less repetitive load" },
-  { value: 15, suffix: "min", label: "to first draft" },
+const clayOutputs = [
+  {
+    id: "dcf",
+    icon: "📊",
+    title: "DCF / Valuation Model",
+    descriptor: "Built with assumptions + sensitivity",
+  },
+  {
+    id: "memo",
+    icon: "📝",
+    title: "Investment Memo",
+    descriptor: "Structured, decision-ready",
+  },
+  {
+    id: "research",
+    icon: "🔍",
+    title: "Market Research",
+    descriptor: "Cross-source synthesis",
+  },
+  {
+    id: "forecast",
+    icon: "📈",
+    title: "Financial Forecast",
+    descriptor: "Forward projections",
+  },
 ];
 
 const founders = [
@@ -170,6 +190,445 @@ function HeroVideo() {
         />
       </div>
     </div>
+  );
+}
+
+/* ===== CLAY OUTPUT MODAL CONTENT ===== */
+
+function DCFContent() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-xl font-semibold text-white">DCF Valuation — NVIDIA Corporation (NVDA)</h3>
+        <p className="mt-1 text-sm text-[#9aa4cb]">Discounted cash flow model with sensitivity analysis</p>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Revenue Projections</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/8">
+                <th className="px-3 py-2 text-left text-xs text-[#9aa4cb]">Fiscal Year</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">FY2027</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">FY2028</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">FY2029</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">FY2030</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">FY2031</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/5">
+                <td className="px-3 py-2 text-[#d8def5]">Revenue ($B)</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$156.2</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$189.5</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$221.3</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$249.7</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$274.7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+          <p className="text-xs uppercase tracking-[0.14em] text-[#9aa4cb] mb-2">Key Assumptions</p>
+          <ul className="space-y-1.5 text-sm text-[#d8def5]">
+            <li className="flex justify-between"><span>COGS</span><span className="text-white">38% of revenue</span></li>
+            <li className="flex justify-between"><span>OpEx</span><span className="text-white">12% → 13%</span></li>
+            <li className="flex justify-between"><span>WACC</span><span className="text-white">10.5%</span></li>
+            <li className="flex justify-between"><span>Terminal Growth</span><span className="text-white">3.0%</span></li>
+          </ul>
+        </div>
+        <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+          <p className="text-xs uppercase tracking-[0.14em] text-[#9aa4cb] mb-2">Valuation Output</p>
+          <ul className="space-y-1.5 text-sm text-[#d8def5]">
+            <li className="flex justify-between"><span>Terminal Value</span><span className="text-white font-medium">$4.82T</span></li>
+            <li className="flex justify-between"><span>Enterprise Value</span><span className="text-white font-medium">$3.61T</span></li>
+            <li className="flex justify-between"><span>Equity Value / Share</span><span className="text-[#4FD1FF] font-semibold">$147.82</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Sensitivity Analysis — Equity Value per Share</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/8">
+                <th className="px-3 py-2 text-left text-xs text-[#9aa4cb]">WACC ↓ / Growth →</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2.0%</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2.5%</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">3.0%</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">3.5%</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">4.0%</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { wacc: "9.0%", values: ["$168.41", "$178.93", "$191.20", "$205.87", "$223.74"] },
+                { wacc: "9.5%", values: ["$155.28", "$164.30", "$174.73", "$187.02", "$201.68"] },
+                { wacc: "10.0%", values: ["$143.62", "$151.39", "$160.27", "$170.64", "$183.01"] },
+                { wacc: "10.5%", values: ["$133.21", "$139.94", "$147.82", "$156.99", "$167.78"] },
+                { wacc: "11.0%", values: ["$123.89", "$129.73", "$136.47", "$144.32", "$153.55"] },
+                { wacc: "11.5%", values: ["$115.52", "$120.60", "$126.39", "$133.07", "$140.87"] },
+                { wacc: "12.0%", values: ["$107.98", "$112.40", "$117.39", "$123.07", "$129.59"] },
+              ].map((row) => (
+                <tr key={row.wacc} className={`border-b border-white/5 ${row.wacc === "10.5%" ? "bg-[#4FD1FF]/5" : ""}`}>
+                  <td className="px-3 py-2 text-[#d8def5] font-medium">{row.wacc}</td>
+                  {row.values.map((v, i) => (
+                    <td key={i} className={`px-3 py-2 text-right ${row.wacc === "10.5%" && i === 2 ? "text-[#4FD1FF] font-semibold" : "text-white"}`}>{v}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p className="text-xs text-[#5a6a8a]">Clay Execution Engine · Generated moments ago</p>
+    </div>
+  );
+}
+
+function MemoContent() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-xl font-semibold text-white">Investment Memo — Palantir Technologies (PLTR)</h3>
+        <p className="mt-1 text-sm text-[#9aa4cb]">Structured investment thesis and recommendation</p>
+      </div>
+
+      <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-2">Company Overview</p>
+        <p className="text-sm text-[#d8def5] leading-relaxed">
+          Palantir Technologies is an AI/ML platform company serving government and commercial enterprises. Founded in 2003 and headquartered in Denver, CO,
+          Palantir builds software that enables organizations to integrate, manage, and derive insight from large-scale data operations.
+        </p>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Business Model</p>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+            <p className="text-sm font-medium text-white">Government Segment</p>
+            <p className="text-2xl font-semibold text-white mt-1">56%</p>
+            <p className="text-xs text-[#9aa4cb]">of total revenue</p>
+          </div>
+          <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+            <p className="text-sm font-medium text-white">Commercial Segment</p>
+            <p className="text-2xl font-semibold text-white mt-1">44%</p>
+            <p className="text-xs text-[#9aa4cb]">of total revenue — AIP platform driving expansion</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Key Growth Drivers</p>
+        <div className="space-y-2">
+          {[
+            { metric: "AIP Adoption", detail: "Accelerating across both government and commercial verticals" },
+            { metric: "US Commercial Rev", detail: "+70% YoY growth driven by enterprise AI demand" },
+            { metric: "Net Dollar Retention", detail: "118% — strong expansion within existing accounts" },
+            { metric: "Rule of 40 Score", detail: "68 — significantly above the benchmark for high-quality SaaS" },
+          ].map((d) => (
+            <div key={d.metric} className="flex items-start gap-3 rounded-lg border border-white/5 bg-white/2 px-4 py-2.5">
+              <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#4FD1FF]" />
+              <div>
+                <p className="text-sm font-medium text-white">{d.metric}</p>
+                <p className="text-xs text-[#9aa4cb]">{d.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-rose-400/80 mb-3">Key Risks</p>
+        <ul className="space-y-1.5 text-sm text-[#d8def5]">
+          <li className="flex items-start gap-2"><span className="mt-0.5 text-rose-400/60">▸</span>Government contract concentration risk</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5 text-rose-400/60">▸</span>Valuation premium at 85x forward P/E</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5 text-rose-400/60">▸</span>Competition from hyperscalers (AWS, Azure, GCP)</li>
+        </ul>
+      </div>
+
+      <div className="rounded-xl border border-[#4FD1FF]/20 bg-[#4FD1FF]/5 p-4">
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-1">Recommendation</p>
+        <p className="text-lg font-semibold text-white">ACCUMULATE</p>
+        <p className="text-sm text-[#d8def5]">at current levels · 18-month price target: <span className="text-[#4FD1FF] font-semibold">$115</span></p>
+      </div>
+
+      <p className="text-xs text-[#5a6a8a]">Clay Execution Engine · Generated moments ago</p>
+    </div>
+  );
+}
+
+function ResearchContent() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-xl font-semibold text-white">Market Research — Enterprise AI Infrastructure</h3>
+        <p className="mt-1 text-sm text-[#9aa4cb]">2024–2030 market sizing and competitive landscape</p>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-xl border border-white/8 bg-white/3 p-4 text-center">
+          <p className="text-xs text-[#9aa4cb]">Market Size (2024)</p>
+          <p className="text-3xl font-semibold text-white mt-1">$189B</p>
+        </div>
+        <div className="rounded-xl border border-[#4FD1FF]/20 bg-[#4FD1FF]/5 p-4 text-center">
+          <p className="text-xs text-[#4FD1FF]">Projected (2030)</p>
+          <p className="text-3xl font-semibold text-white mt-1">$827B</p>
+          <p className="text-xs text-[#9aa4cb] mt-0.5">28% CAGR</p>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Key Trends</p>
+        <div className="grid gap-2 md:grid-cols-2">
+          {[
+            { trend: "Inference Cost Decline", detail: "~40% per year reduction in inference costs" },
+            { trend: "On-Prem AI Growth", detail: "On-premise AI deployments growing 3x" },
+            { trend: "Agent Frameworks", detail: "AI agent frameworks maturing rapidly across enterprise" },
+            { trend: "Regulatory Clarity", detail: "Frameworks crystallizing in EU and US markets" },
+          ].map((t) => (
+            <div key={t.trend} className="rounded-lg border border-white/8 bg-white/3 p-3">
+              <p className="text-sm font-medium text-white">{t.trend}</p>
+              <p className="text-xs text-[#9aa4cb] mt-0.5">{t.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Competitive Landscape</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/8">
+                <th className="px-3 py-2 text-left text-xs text-[#9aa4cb]">Company</th>
+                <th className="px-3 py-2 text-left text-xs text-[#9aa4cb]">Segment</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">Market Share</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { company: "NVIDIA", segment: "GPU / Compute", share: "78%" },
+                { company: "AWS Bedrock", segment: "Cloud AI", share: "31%" },
+                { company: "Microsoft Azure AI", segment: "Cloud AI", share: "24%" },
+                { company: "Google Vertex", segment: "Cloud AI", share: "18%" },
+              ].map((c) => (
+                <tr key={c.company} className="border-b border-white/5">
+                  <td className="px-3 py-2 text-white font-medium">{c.company}</td>
+                  <td className="px-3 py-2 text-[#d8def5]">{c.segment}</td>
+                  <td className="px-3 py-2 text-right text-white">{c.share}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-2 text-xs text-[#9aa4cb]">Emerging challengers: Groq, Cerebras, AMD MI300X</p>
+      </div>
+
+      <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+        <p className="text-xs uppercase tracking-[0.14em] text-[#9aa4cb] mb-2">Sources</p>
+        <p className="text-xs text-[#9aa4cb]">Gartner · IDC · Company filings (10-K, 10-Q) · CB Insights</p>
+      </div>
+
+      <p className="text-xs text-[#5a6a8a]">Clay Execution Engine · Generated moments ago</p>
+    </div>
+  );
+}
+
+function ForecastContent() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-xl font-semibold text-white">Financial Forecast — Datadog, Inc. (DDOG)</h3>
+        <p className="mt-1 text-sm text-[#9aa4cb]">Forward revenue and margin projections</p>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Revenue Forecast</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/8">
+                <th className="px-3 py-2 text-left text-xs text-[#9aa4cb]">Metric</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2024A</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2025E</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2026E</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2027E</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/5">
+                <td className="px-3 py-2 text-[#d8def5]">Revenue ($B)</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$2.84</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$3.52</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$4.29</td>
+                <td className="px-3 py-2 text-right text-white font-medium">$5.15</td>
+              </tr>
+              <tr className="border-b border-white/5">
+                <td className="px-3 py-2 text-[#d8def5]">Revenue Growth</td>
+                <td className="px-3 py-2 text-right text-[#9aa4cb]">—</td>
+                <td className="px-3 py-2 text-right text-white">24%</td>
+                <td className="px-3 py-2 text-right text-white">22%</td>
+                <td className="px-3 py-2 text-right text-white">20%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Margin Profile</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/8">
+                <th className="px-3 py-2 text-left text-xs text-[#9aa4cb]">Margin</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2024A</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2025E</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2026E</th>
+                <th className="px-3 py-2 text-right text-xs text-[#9aa4cb]">2027E</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/5">
+                <td className="px-3 py-2 text-[#d8def5]">Gross Margin</td>
+                <td className="px-3 py-2 text-right text-white">79.8%</td>
+                <td className="px-3 py-2 text-right text-white">80.5%</td>
+                <td className="px-3 py-2 text-right text-white">81.0%</td>
+                <td className="px-3 py-2 text-right text-white">81.5%</td>
+              </tr>
+              <tr className="border-b border-white/5">
+                <td className="px-3 py-2 text-[#d8def5]">Operating Margin</td>
+                <td className="px-3 py-2 text-right text-white">22.1%</td>
+                <td className="px-3 py-2 text-right text-white">24.8%</td>
+                <td className="px-3 py-2 text-right text-white">27.0%</td>
+                <td className="px-3 py-2 text-right text-white">29.5%</td>
+              </tr>
+              <tr className="border-b border-white/5">
+                <td className="px-3 py-2 text-[#d8def5]">FCF Margin</td>
+                <td className="px-3 py-2 text-right text-[#4FD1FF]">30.2%</td>
+                <td className="px-3 py-2 text-right text-[#4FD1FF]">32.5%</td>
+                <td className="px-3 py-2 text-right text-[#4FD1FF]">34.0%</td>
+                <td className="px-3 py-2 text-right text-[#4FD1FF]">35.5%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs uppercase tracking-[0.14em] text-[#4FD1FF] mb-3">Key Insights</p>
+        <div className="space-y-2">
+          {[
+            "Infrastructure monitoring consolidation driving ASP expansion",
+            "AI-native observability features creating new revenue stream",
+            "International expansion (currently 28% of rev) provides growth runway",
+          ].map((insight) => (
+            <div key={insight} className="flex items-start gap-2 text-sm text-[#d8def5]">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#4FD1FF]" />
+              {insight}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="text-xs text-[#5a6a8a]">Clay Execution Engine · Generated moments ago</p>
+    </div>
+  );
+}
+
+function ClayOutputModal({ outputId, onClose }: { outputId: string; onClose: () => void }) {
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
+  const contentMap: Record<string, React.ReactNode> = {
+    dcf: <DCFContent />,
+    memo: <MemoContent />,
+    research: <ResearchContent />,
+    forecast: <ForecastContent />,
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-white/10 bg-[#0a0f1e] p-6 md:p-8 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#9aa4cb] transition-colors hover:bg-white/10 hover:text-white"
+        >
+          ✕
+        </button>
+        {contentMap[outputId]}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function ClayProducesSection() {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  return (
+    <>
+      <Section className="py-6">
+        <FadeIn>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Output examples</p>
+          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">Clay produces:</h2>
+          <p className="mt-3 max-w-3xl text-[#9aa4cb]">
+            Autonomously generated outputs across research, modeling, and reporting
+          </p>
+        </FadeIn>
+        <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          {clayOutputs.map((output, i) => (
+            <FadeIn key={output.id} delay={i * 0.06}>
+              <motion.button
+                whileHover={{ y: -4, scale: 1.01 }}
+                onClick={() => setActiveModal(output.id)}
+                className="w-full rounded-2xl border border-white/8 bg-white/4 p-5 text-left transition-all duration-300 hover:border-[#4FD1FF]/25 hover:bg-white/6"
+              >
+                <span className="text-2xl">{output.icon}</span>
+                <p className="mt-3 text-sm font-medium text-white">{output.title}</p>
+                <p className="mt-1.5 text-xs text-[#9aa4cb]">{output.descriptor}</p>
+                <div className="mt-3 flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#4FD1FF]" />
+                  <span className="text-[10px] text-[#4FD1FF]">Generated by Clay</span>
+                </div>
+              </motion.button>
+            </FadeIn>
+          ))}
+        </div>
+      </Section>
+
+      <AnimatePresence>
+        {activeModal && (
+          <ClayOutputModal outputId={activeModal} onClose={() => setActiveModal(null)} />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -451,17 +910,8 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ===== METRICS ===== */}
-      <Section className="py-3">
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {metrics.map((metric) => (
-            <FadeIn key={metric.label} className="rounded-2xl border border-white/8 bg-white/4 p-5 text-center">
-              <CountUp value={metric.value} suffix={metric.suffix} className="text-4xl font-semibold text-white" />
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#9aa4cb]">{metric.label}</p>
-            </FadeIn>
-          ))}
-        </div>
-      </Section>
+      {/* ===== CLAY PRODUCES ===== */}
+      <ClayProducesSection />
 
       {/* ===== COMPARISON ===== */}
       <Section className="pt-4">
