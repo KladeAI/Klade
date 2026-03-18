@@ -557,8 +557,8 @@ export default function HomePage() {
               <Button href="#lead-form" eventName="cta_click" eventPayload={{ placement: "banner", cta: "join_beta" }}>
                 Join Private Beta
               </Button>
-              <Button href="mailto:arjun@kladeai.com" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "email_founder" }}>
-                Email a Founder
+              <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "book_demo" }}>
+                Book a Demo
               </Button>
             </div>
           </div>

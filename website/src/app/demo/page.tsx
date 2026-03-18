@@ -90,7 +90,7 @@ export default function DemoPage() {
               financial deliverables — in minutes, not days.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button href="https://calendly.com/arjun-kladeai/30min" eventName="demo_cta_click" eventPayload={{ placement: "demo_hero", cta: "book_demo" }}>
+              <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" eventName="demo_cta_click" eventPayload={{ placement: "demo_hero", cta: "book_demo" }}>
                 Book a Live Demo
               </Button>
               <Button href="#workflow" variant="secondary">
@@ -226,7 +226,7 @@ export default function DemoPage() {
               Or explore the documentation to learn more.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button href="https://calendly.com/arjun-kladeai/30min" eventName="demo_cta_click" eventPayload={{ placement: "demo_footer", cta: "book_demo" }}>
+              <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" eventName="demo_cta_click" eventPayload={{ placement: "demo_footer", cta: "book_demo" }}>
                 Book a Live Demo
               </Button>
               <Button href="mailto:arjun@kladeai.com" variant="secondary" eventName="demo_cta_click" eventPayload={{ placement: "demo_footer", cta: "talk_founders" }}>
