@@ -15,7 +15,9 @@ It includes:
 
 ## Product scope (v0.1)
 
-Target users: MD/VP teams in PE, IB, HF, and consulting.
+Target users: Mid-market finance teams — boutique investment banks, PE shops, family offices, wealth managers, and consulting firms.
+
+Positioning: ROGO-level AI analyst capability at 10-30x lower cost ($2-5K/month vs $150K+/seat/year), delivered as managed SaaS integrated into Slack/Teams/email. No IT department required.
 
 Initial workflows:
 1. Company/industry research synthesis
