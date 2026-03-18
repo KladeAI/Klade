@@ -11,9 +11,11 @@ Klade builds and deploys AI employees — starting with Financial Analysts — a
 
 ## Vision
 
-Every MD, VP, and partner at a finance firm has junior analysts doing repetitive busy work — building models, pulling comps, writing memos, formatting decks, updating trackers. That's $80-120K/yr per head for work that's structured and repeatable.
+Enterprise AI platforms like ROGO charge $150K+/seat and require dedicated IT teams to deploy. That prices out the vast majority of finance — boutique banks, PE shops, family offices, and wealth managers who do the same analyst work but can't justify six-figure AI spend.
 
-Klade replaces that with AI analysts that live in your Slack, cost a fraction, and never sleep.
+Klade gives mid-market firms the same AI analyst capability at a fraction of the cost ($2-5K/month), fully managed, integrated into tools they already use (Slack, Teams, email). No IT department required. No new platform to learn.
+
+**Target market:** Mid-market firms — boutique investment banks, PE shops, family offices, wealth managers, and consulting firms that can't afford or don't need enterprise AI platforms.
 
 Long term: Klade expands beyond finance into every role where AI employees can deliver real business output.
 
@@ -75,6 +77,10 @@ Built on **OpenClaw** as the core runtime, with specialized role layers on top:
 1. **AI Staffing** — role-specific AI employees, specialized by function and industry
 2. **Managed Infrastructure** — we run deployment, integration, reliability, and maintenance
 
+### Delivery Tiers
+1. **Managed SaaS** (primary) — we host a dedicated instance for the client. They just log in via Slack/Teams/web. No IT team needed.
+2. **On-Prem** (premium) — for larger or more security-sensitive clients, we deploy on their infrastructure. Full data isolation.
+
 This is not DIY software. This is managed capability.
 
 ---
@@ -82,9 +88,11 @@ This is not DIY software. This is managed capability.
 ## Monetization
 
 ### Pricing Options
-1. **Monthly Plan** — defined pool of agent-hours per month
-2. **Yearly Plan** — larger annual pool, better effective pricing
-3. **Billable-Hour Plan** — usage billed per agent-hour (higher unit rate to incentivize subscriptions)
+1. **Monthly Plan** — $2-5K/month depending on usage tier and customization
+2. **Annual Plan** — discounted annual commitment
+3. **Enterprise/On-Prem** — custom pricing for dedicated infrastructure deployments
+
+**Competitive positioning:** ROGO charges $150K+/seat/year for enterprise. We deliver comparable capability at 10-30x lower cost to firms that don't need (or can't afford) enterprise scale.
 
 ### Metering
 - Usage tracked in tokens/events internally, converted to **agent-hours** for billing
@@ -106,11 +114,13 @@ This is not DIY software. This is managed capability.
 
 ## Why This Wins
 
-1. **Clear buyer, high willingness to pay** — finance firms already spend enormous money on analyst labor
-2. **Well-defined work** — analyst tasks are structured and repeatable, easier to build reliable skills
-3. **Volume play** — one MD might want 3-5 AI analysts
-4. **Managed service moat** — we own deployment quality, operations, and iteration speed
-5. **Plug-and-play** — business teams buy outcomes, not integration pain
+1. **Massive underserved market** — mid-market firms want AI analyst capability but enterprise platforms price them out
+2. **Clear buyer, proven willingness to pay** — finance firms already spend $80-150K/yr per junior analyst
+3. **Well-defined work** — analyst tasks are structured and repeatable, easier to build reliable skills
+4. **ROGO-level capability, 10-30x cheaper** — same underlying models, purpose-built for smaller teams
+5. **Zero setup friction** — managed SaaS, integrated into Slack/Teams/email, no IT department needed
+6. **Managed service moat** — we own deployment quality, operations, and iteration speed
+7. **Customization depth** — each client gets a tailored analyst, not a one-size-fits-all platform
 
 ---
 
