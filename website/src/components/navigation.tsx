@@ -140,11 +140,11 @@ export function Navigation() {
             </Link>
           ))}
           <Link
-            href={pathname === "/" ? "#lead-form" : "/#lead-form"}
-            onClick={() => trackEvent("nav_cta_click", { cta: "join_beta" })}
-            className="rounded-md bg-white px-3.5 py-1.5 text-[13px] font-medium text-[#080c1a] transition-opacity duration-150 hover:opacity-90"
+            href="/waitlist"
+            onClick={() => trackEvent("nav_cta_click", { cta: "join_waitlist" })}
+            className="rounded-md bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] px-3.5 py-1.5 text-[13px] font-medium text-white transition-opacity duration-150 hover:opacity-90"
           >
-            Join Beta
+            Join Waitlist
           </Link>
         </nav>
 
@@ -204,11 +204,11 @@ export function Navigation() {
                     Email a Founder
                   </Link>
                   <Link
-                    href={pathname === "/" ? "#lead-form" : "/#lead-form"}
+                    href="/waitlist"
                     onClick={() => setOpen(false)}
-                    className="rounded-md bg-white py-2.5 text-center text-[13px] font-medium text-[#080c1a]"
+                    className="rounded-md bg-gradient-to-r from-[#4FD1FF] via-[#3C5BFF] to-[#7A5CFF] py-2.5 text-center text-[13px] font-medium text-white"
                   >
-                    Join Beta
+                    Join Waitlist
                   </Link>
                 </div>
               </nav>

@@ -3,6 +3,7 @@
 import { FadeIn, ProgressBar, SpotlightCard, StaggerContainer, StaggerItem } from "@/components/animated";
 import { SiteShell } from "@/components/site-shell";
 import { Button, Section } from "@/components/ui";
+import { WaitlistForm } from "@/components/waitlist";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -687,8 +688,11 @@ export default function HomePage() {
               Models, decks, research, workflows, and more. Shaped around how your team actually works.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="#lead-form" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "join_beta" }}>
-                Join Private Beta
+              <Button href="/waitlist" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "join_waitlist" }}>
+                Join the Waitlist
+              </Button>
+              <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" variant="secondary" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "book_demo" }}>
+                Book a Demo
               </Button>
               <Button href="#meet-clay" variant="secondary" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "meet_clay" }}>
                 Meet Clay ↓
@@ -997,19 +1001,30 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ===== CTA BANNER ===== */}
+      {/* ===== WAITLIST + CTA BANNER ===== */}
       <Section className="py-3">
         <FadeIn>
-          <div className="rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-r from-[#0a0f2c] via-[#10162f] to-[#0a0f2c] p-8 text-center">
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">Ready to meet your AI teammate?</h2>
-            <p className="mt-3 text-[#b3bedf]">Private beta. Founder-led onboarding. Fast response.</p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button href="#lead-form" eventName="cta_click" eventPayload={{ placement: "banner", cta: "join_beta" }}>
-                Join Private Beta
-              </Button>
-              <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "book_demo" }}>
-                Book a Demo
-              </Button>
+          <div className="rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-r from-[#0a0f2c] via-[#10162f] to-[#0a0f2c] p-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-semibold text-white md:text-4xl">Ready to meet your AI teammate?</h2>
+              <p className="mt-3 text-[#b3bedf]">Join the waitlist for early access. Founder-led onboarding. Fast response.</p>
+
+              {/* Waitlist form — primary CTA */}
+              <div className="mt-6">
+                <WaitlistForm variant="hero" />
+              </div>
+
+              {/* Book a Demo — secondary CTA */}
+              <div className="mt-5 flex items-center justify-center gap-3">
+                <div className="h-px w-8 bg-white/10" />
+                <span className="text-xs text-[#5a6a8a]">or</span>
+                <div className="h-px w-8 bg-white/10" />
+              </div>
+              <div className="mt-4">
+                <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "book_demo" }}>
+                  Book a Demo Instead
+                </Button>
+              </div>
             </div>
           </div>
         </FadeIn>
