@@ -16,6 +16,7 @@ const navLinks = [
   { label: "Meet Clay", href: "/#meet-clay" },
   { label: "Capabilities", href: "/#capabilities" },
   { label: "Docs", href: "/docs" },
+  { label: "Trust Center", href: "/security" },
   { label: "Demo", href: "/demo" },
   { label: "Pricing", href: "/pricing" },
   { label: "Team", href: "/team" },
