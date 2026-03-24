@@ -53,6 +53,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="image" property="og:image" content="https://kladeai.com/og-klade-v2.png" />
+      </head>
       <body className={`${geist.variable} bg-black font-sans antialiased`}>
         <a
           href="#main-content"
