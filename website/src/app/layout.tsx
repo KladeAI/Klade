@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Klade",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-klade-v2.png",
         width: 1200,
         height: 630,
         alt: "Klade — AI Analysts for Financial Intelligence",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og-image.png"],
+    images: ["/og-klade-v2.png"],
   },
   robots: {
     index: true,
