@@ -25,11 +25,20 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://kladeai.com",
     siteName: "Klade",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Klade — AI Analysts for Financial Intelligence",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
