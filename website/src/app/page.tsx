@@ -68,7 +68,7 @@ const orchestrationSteps = [
 const roiCards = [
   { title: "Less repetitive load", desc: "Free your team from rebuilding the same models, reports, and decks every week." },
   { title: "Faster turnaround", desc: "Deliverables in minutes, not days. Research, analysis, and presentations on demand." },
-  { title: "Lower cost per output", desc: "Dramatically cheaper than additional headcount for recurring analytical work." },
+  { title: "Lower cost per output", desc: "Dramatically cheaper per deliverable — augments your team so they focus on judgment, not mechanical work." },
   { title: "Consistent quality", desc: "Structured, cited, format-compliant output every time — no variance." },
 ];
 
@@ -680,12 +680,12 @@ export default function HomePage() {
               Private Beta
             </div>
             <h1 className="mt-6 max-w-5xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl lg:text-7xl">
-              One AI teammate.<br />
-              <span className="klade-gradient-text">Many specialists behind the scenes.</span>
+              Clay molds to your firm.<br />
+              <span className="klade-gradient-text">Not the other way around.</span>
             </h1>
             <p className="mt-5 max-w-3xl text-lg text-[#b3bedf] md:text-xl">
-              Clay is your moldable AI operator — one interface backed by many specialized agents.
-              Models, decks, research, workflows, and more. Shaped around how your team actually works.
+              Every deployment is personalized. Clay learns your workflows, adapts to your terminology, and builds custom skills unique to your firm.
+              Models, decks, research, and more — handled by specialized agents shaped around how your team actually works.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/waitlist" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "join_waitlist" }}>
@@ -830,7 +830,7 @@ export default function HomePage() {
             One bot. Many specialists.
           </h2>
           <p className="mt-3 max-w-3xl text-[#9aa4cb]">
-            Clay orchestrates specialized agents across every function your team needs. Not a single-purpose tool — a moldable system that adapts to your workflows.
+            Clay orchestrates specialized agents across every function your team needs. Your firm does something unique? We build custom skills for it. No two deployments are the same.
           </p>
         </FadeIn>
         <StaggerContainer className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
@@ -855,7 +855,7 @@ export default function HomePage() {
           <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
             <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Use cases</p>
             <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">
-              Klade molds to the company. Not the other way around.
+              Clay molds to your firm. Not the other way around.
             </h2>
             <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">
               One system, many specialists — shaped around the way your business actually operates.
@@ -880,7 +880,7 @@ export default function HomePage() {
             Why teams switch to Klade.
           </h2>
           <p className="mt-3 max-w-3xl text-[#9aa4cb]">
-            Replace repetitive analytical headcount with adaptable AI support that scales across functions.
+            Handles the mechanical work so your team focuses on judgment — augmenting your existing team with AI that scales across functions.
           </p>
         </FadeIn>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -889,7 +889,7 @@ export default function HomePage() {
             <p className="text-xs uppercase tracking-[0.16em] text-[#9aa4cb]">Without Klade</p>
             <ul className="mt-3 space-y-2 text-sm text-[#b3bedf]">
               <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Hours spent on repetitive models and reports</li>
-              <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Bandwidth ceiling from finite headcount</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Bandwidth ceiling limits what your team can take on</li>
               <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> Inconsistent deliverable quality</li>
               <li className="flex items-start gap-2"><span className="mt-0.5 text-red-400">✕</span> One tool per function, constant switching</li>
             </ul>
@@ -898,7 +898,7 @@ export default function HomePage() {
             <p className="text-xs uppercase tracking-[0.16em] text-[#4FD1FF]">With Klade</p>
             <ul className="mt-3 space-y-2 text-sm text-[#d8def5]">
               <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Deliverables in minutes, not days</li>
-              <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Scales across functions without new hires</li>
+              <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Frees analysts for higher-value work</li>
               <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> Structured, cited, format-compliant every time</li>
               <li className="flex items-start gap-2"><span className="mt-0.5 text-[#4FD1FF]">✓</span> One AI teammate handles it all</li>
             </ul>
@@ -921,7 +921,7 @@ export default function HomePage() {
       <Section className="pt-4">
         <FadeIn>
           <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">Traditional headcount vs Clay.</h2>
+            <h2 className="text-3xl font-semibold text-white md:text-4xl">Traditional approach vs Clay.</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <div className="rounded-2xl border border-white/8 bg-white/4 p-5">
                 <p className="text-xs uppercase tracking-[0.16em] text-[#9aa4cb]">Traditional hire</p>
@@ -961,6 +961,32 @@ export default function HomePage() {
                 "Founder-led deployment accountability",
               ].map((item) => (
                 <p key={item} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-[#d8def5]">{item}</p>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
+      </Section>
+
+      {/* ===== ONBOARDING ===== */}
+      <Section className="pt-4">
+        <FadeIn>
+          <div className="rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-br from-[#0d1225] to-[#10162f] p-6 md:p-8">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Onboarding</p>
+            <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">Founder-led onboarding. Every time.</h2>
+            <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">
+              We learn your workflows, build custom skills for your firm, and stay with you. No hand-off to a support queue — the people who built Clay are the ones deploying it for your team.
+            </p>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              {[
+                { step: "01", title: "We learn your workflows", desc: "Deep-dive into how your team actually operates day-to-day." },
+                { step: "02", title: "We build custom skills", desc: "Tailored agents for the tasks unique to your firm." },
+                { step: "03", title: "We stay with you", desc: "Ongoing support and iteration as your needs evolve." },
+              ].map((item) => (
+                <div key={item.step} className="rounded-xl border border-white/8 bg-white/4 p-4">
+                  <p className="text-xs font-medium text-[#4FD1FF]">{item.step}</p>
+                  <p className="mt-2 text-sm font-medium text-white">{item.title}</p>
+                  <p className="mt-1.5 text-xs text-[#9aa4cb]">{item.desc}</p>
+                </div>
               ))}
             </div>
           </div>
