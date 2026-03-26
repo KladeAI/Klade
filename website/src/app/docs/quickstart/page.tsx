@@ -47,7 +47,7 @@ export default function QuickstartPage() {
           <div className="mt-6 space-y-4">
             <ProcessStep number={1} title="Desk activation" description="We enable the specialist desks aligned to your workflows — valuation, research, risk, or all of them." />
             <ProcessStep number={2} title="Output calibration" description="Clay is tuned to produce deliverables in your preferred formats, structure, and level of detail." />
-            <ProcessStep number={3} title="Integration setup" description="Connect Clay to your team's communication platform — Slack, Discord, or Telegram." />
+            <ProcessStep number={3} title="Integration setup" description="Connect Clay to your team's communication platform — Teams, Slack, Discord, or Telegram." />
           </div>
         </FadeIn>
 

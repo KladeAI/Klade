@@ -22,7 +22,7 @@ const workflowSteps = [
   {
     step: "Step 4",
     title: "Deliver",
-    body: "Outputs are sent into Slack or Teams with source-cited notes and task-ready recommendations.",
+    body: "Outputs are sent into Teams or Slack with source-cited notes and task-ready recommendations.",
   },
 ];
 

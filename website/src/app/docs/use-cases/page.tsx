@@ -25,7 +25,7 @@ const useCases = [
     id: "hedge-fund-brief",
     title: "Hedge Fund Morning Brief",
     scenario: "A portfolio manager needs a comprehensive market brief every morning before the 8 AM meeting, covering overnight developments, portfolio-relevant events, and actionable intelligence.",
-    howClayHelps: "Clay's Market Intelligence desk generates a systematic morning brief: overnight market moves, earnings results, macro developments, and events relevant to existing positions. The brief is delivered automatically through Slack before the meeting starts.",
+    howClayHelps: "Clay's Market Intelligence desk generates a systematic morning brief: overnight market moves, earnings results, macro developments, and events relevant to existing positions. The brief is delivered automatically through Teams before the meeting starts.",
     output: "Daily morning brief: market summary, overnight developments, earnings highlights, macro indicators, and position-specific alerts with context and analysis.",
     time: "Automated daily delivery",
   },

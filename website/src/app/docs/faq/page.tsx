@@ -35,7 +35,7 @@ const faqItems = [
   },
   {
     question: "What platforms does Clay work on?",
-    answer: "Clay connects to Slack, Discord, and Telegram. Your team submits requests and receives deliverables through whichever platform you already use — no new tools to learn, no separate login, no portal to check. Choose one or connect multiple.",
+    answer: "Clay connects to Microsoft Teams, Slack, Discord, and Telegram. Your team submits requests and receives deliverables through whichever platform you already use — no new tools to learn, no separate login, no portal to check. Choose one or connect multiple.",
   },
   {
     question: "How is Clay different from ChatGPT or Copilot?",

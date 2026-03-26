@@ -29,7 +29,8 @@ export default function IntegrationsPage() {
             Clay meets your team where they already work. Connect through any of the supported
             platforms and start making requests immediately.
           </DocsText>
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <FeatureCard icon="🏢" title="Microsoft Teams" description="Native Teams app with channels, group chats, and direct message support." />
             <FeatureCard icon="💬" title="Slack" description="Direct messages and dedicated channels for team-wide Clay access." />
             <FeatureCard icon="🎮" title="Discord" description="Server-based deployment with role-scoped access controls." />
             <FeatureCard icon="✈️" title="Telegram" description="Direct bot interface for fast, mobile-friendly access to Clay." />

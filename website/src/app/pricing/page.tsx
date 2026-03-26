@@ -66,7 +66,7 @@ const faqs = [
   ],
   [
     "What platforms does Clay work on?",
-    "Slack, Microsoft Teams, Telegram, and Discord. Clay deploys as a dedicated bot in your workspace — no new software to install, no separate portal to learn. Your team can message Clay just like they'd message a colleague.",
+    "Microsoft Teams, Slack, Telegram, and Discord. Clay deploys as a dedicated bot in your workspace — no new software to install, no separate portal to learn. Your team can message Clay just like they'd message a colleague.",
   ],
   [
     "Can we try Clay before committing?",
