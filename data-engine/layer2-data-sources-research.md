@@ -534,6 +534,60 @@ sec_company_tickers     — cik, ticker, company_name, exchange
 
 ---
 
+## Phase 4: Historical Depth Expansion (Week 9-12)
+*Focus: Backfill core data sources with deeper historical coverage*
+
+### Current Time Depth
+
+| Source | Earliest | Latest | Current Depth | Target Depth |
+|--------|----------|--------|---------------|--------------|
+| Economic indicators (FRED) | 1854 | 2029 (projections) | 170+ years | ✅ Already deep |
+| Fundamentals (XBRL + FDIC) | 2005 | Feb 2026 | ~20 years | 2000 (25 years) |
+| Filings metadata | May 2006 | Mar 2026 | ~20 years | 2000 (25 years) |
+| **Filing chunks (full-text)** | **Mar 30, 2026** | **Apr 2, 2026** | **~3 days** ⚠️ | **2010 (15 years)** |
+
+### Priority 1: Historical Filing Chunks (CRITICAL)
+
+The biggest gap in our entire data engine. We have 877K filing chunks but they only cover the last few days of filings. A client asking "what did Apple say about China risk in 2018 vs 2024?" gets nothing from our DB — Clay has to do a live SEC EDGAR fetch.
+
+**Plan:**
+- Backfill 10-K and 10-Q full-text chunks for all S&P 500 companies from 2010-2025
+- ~500 companies × ~15 years × 2 filing types × ~200 chunks per filing = **~3M new chunks**
+- Reuse existing chunking pipeline from Layer 1
+- Source: SEC EDGAR EFTS full-text search + filing archives
+- This is a multi-day campaign (similar to Layer 1 overhaul pattern)
+
+**Effort:** Hard — 40-60 hours across multiple ingestion runs  
+**Impact:** Transforms Clay from "current filings only" to "15 years of institutional memory"
+
+### Priority 2: Deeper XBRL Fundamentals
+
+XBRL company facts go back further than 2005 for large-cap companies. SEC EDGAR's XBRL bulk data includes historical filings back to ~2000 for early XBRL adopters.
+
+**Plan:**
+- Re-run XBRL companyfacts bulk load with expanded date range
+- Target: extend from 2005 → 2000 where data exists
+- Estimated: ~500K additional fundamentals records
+
+**Effort:** Medium — 10-15 hours (mostly pipeline reuse)
+
+### Priority 3: Historical 8-K Event Archive
+
+8-K filings capture material events (M&A, leadership changes, earnings restatements). Historical 8-K full-text from 2010+ would give Clay an "event memory."
+
+**Plan:**
+- Ingest 8-K full-text chunks for S&P 500 from 2010-2025
+- ~500 companies × 15 years × ~20 8-Ks/year × ~30 chunks = ~4.5M chunks
+- Focus on material event types (Items 1.01, 2.01, 2.02, 5.02, 8.01)
+
+**Effort:** Hard — 30-40 hours  
+**Impact:** Enables historical event analysis, M&A pattern detection, leadership change tracking
+
+**Phase 4 Total: ~8M new records**  
+**Cumulative Total: ~20M records**
+
+---
+
 ## Risk Factors
 
 1. **API Rate Limits:** BLS (500/day) and Census (500/day) limit ingestion speed. Plan multi-day campaigns similar to Layer 1
