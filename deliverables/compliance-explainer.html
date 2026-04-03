@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clay by Klade AI — Compliance & Security Overview</title>
+<style>
+  @page { size: letter; margin: 0.7in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.5;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 0.7in;
+    font-size: 10.5pt;
+  }
+  h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2px;
+  }
+  .subtitle {
+    font-size: 10.5pt;
+    color: #475569;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #0f172a;
+    margin: 10px 0 14px 0;
+  }
+  hr.light {
+    border-top: 1px solid #cbd5e1;
+    margin: 12px 0;
+  }
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    margin-top: 12px;
+  }
+  p { margin-bottom: 6px; }
+  ul {
+    margin: 0 0 6px 18px;
+    padding: 0;
+  }
+  li { margin-bottom: 2px; }
+  .columns {
+    display: flex;
+    gap: 24px;
+  }
+  .col { flex: 1; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 4px 0 6px 0;
+  }
+  th {
+    text-align: left;
+    background: #f1f5f9;
+    padding: 4px 8px;
+    font-weight: 600;
+    border-bottom: 1.5px solid #94a3b8;
+  }
+  td {
+    padding: 3px 8px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .highlight { font-weight: 700; color: #0f172a; }
+  .audience {
+    text-align: center;
+    font-size: 9.5pt;
+    color: #475569;
+    margin: 10px 0 4px 0;
+  }
+  .footer {
+    text-align: center;
+    font-size: 9pt;
+    color: #64748b;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #cbd5e1;
+  }
+  .footer a { color: #0f172a; text-decoration: none; font-weight: 600; }
+  .footer strong { color: #0f172a; }
+  strong { color: #0f172a; }
+</style>
+</head>
+<body>
+
+<h1>Clay by Klade AI — Compliance &amp; Security Overview</h1>
+<div class="subtitle">AI-powered financial analysis built for regulated firms.</div>
+<hr>
+
+<div class="columns">
+<div class="col">
+
+<h2>Data Sources: Public &amp; Government Only</h2>
+<p>Clay's intelligence is built exclusively on publicly available, government-published data:</p>
+<ul>
+  <li><strong>SEC EDGAR</strong> — Corporate filings (10-K, 10-Q, 8-K, proxy)</li>
+  <li><strong>FRED</strong> — Federal Reserve economic indicators</li>
+  <li><strong>FDIC</strong> — Bank financial &amp; regulatory data</li>
+  <li><strong>U.S. Treasury</strong> — Rates, auctions, fiscal reports</li>
+</ul>
+<p>No proprietary client data is ingested, processed, or stored on Klade servers in our standard deployment.</p>
+
+<h2>Infrastructure &amp; Compliance</h2>
+<ul>
+  <li><strong>SOC 2 Type II compliant</strong> infrastructure (Supabase Pro)</li>
+  <li>Enterprise-grade encryption at rest and in transit</li>
+  <li>Role-based access controls &amp; audit logging</li>
+  <li>No client PII on our servers in standard deployment</li>
+</ul>
+
+<h2>Not Investment Advice</h2>
+<p>Clay is a <strong>research and analysis tool</strong> — not a financial advisor. Clay does not make trading recommendations, provide buy/sell signals, or suggest transactions. All output supports — never replaces — professional judgment.</p>
+
+</div>
+<div class="col">
+
+<h2>On-Premise Deployment</h2>
+<p>For security-conscious firms requiring full data sovereignty:</p>
+<ul>
+  <li>Clay deploys entirely within the client's infrastructure</li>
+  <li>Client proprietary data <strong>never leaves their network</strong></li>
+  <li>Same analytical capabilities, zero external exposure</li>
+  <li>Ideal for firms with strict compliance mandates</li>
+</ul>
+
+<h2>Architecture: Separation by Design</h2>
+<table>
+  <tr><th>Layer</th><th>Data Type</th><th>Location</th></tr>
+  <tr><td><strong>0</strong></td><td>Raw government/public APIs</td><td>Klade Cloud</td></tr>
+  <tr><td><strong>1</strong></td><td>Structured &amp; indexed data</td><td>Klade Cloud</td></tr>
+  <tr><td><strong>2</strong></td><td>Enriched &amp; vectorized analysis</td><td>Klade Cloud</td></tr>
+  <tr><td><strong>3</strong></td><td>Client proprietary data</td><td class="highlight">On-prem only</td></tr>
+</table>
+<p>Layers 0–2 contain exclusively public data. Layer 3 exists only in on-premise deployments, fully isolated from Klade's cloud.</p>
+
+<h2>Citation-First Approach</h2>
+<p>Every data point and claim includes a <strong>traceable citation</strong> — filing name, date, section, or data series. If data is unavailable or stale, Clay discloses that explicitly. No hallucinated numbers. No uncited claims.</p>
+
+</div>
+</div>
+
+<hr class="light">
+<div class="audience"><strong>Built for:</strong> Boutique investment banks · Private equity firms · Family offices · Wealth managers</div>
+
+<div class="footer">
+  <strong>Questions?</strong> Contact Arjun Rath — <a href="mailto:arjun@kladeai.com">arjun@kladeai.com</a><br>
+  © 2026 Klade AI · kladeai.com
+</div>
+
+</body>
+</html>
