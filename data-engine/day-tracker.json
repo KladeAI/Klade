@@ -1,0 +1,64 @@
+{
+  "plan": "layer1-overhaul + layer2-expansion",
+  "project": "klade-analyst-mvp (humaesmbiarcqtpdwldg) — Pro tier",
+  "startDate": "2026-03-30",
+  "lastUpdated": "2026-04-03T15:40:00Z",
+  "stats": {
+    "current": {
+      "companies": 5393,
+      "filings": 43031,
+      "filing_chunks": 952317,
+      "economic_indicators": 1181730,
+      "fundamentals": 2488171,
+      "damodaran_industry": 6790,
+      "fama_french_factors": 234765,
+      "sec_company_tickers": 10433,
+      "cftc_cot_positions": 211310,
+      "total": 5134940
+    },
+    "target": {
+      "layer1": 4600000,
+      "layer2": 12000000,
+      "layer2_plus_phase4": 20000000
+    },
+    "percentComplete_layer1": 100,
+    "percentComplete_layer2": 42.8
+  },
+  "completedSources": [
+    {"source": "S&P 500 companies + FDIC banks", "table": "companies", "records": 5393},
+    {"source": "All filing types (10-K, 10-Q, 8-K, DEF 14A, 20-F, 6-K, Form 4, 13-F)", "table": "filings", "records": 43031},
+    {"source": "Filing chunks (full-text) — backfill in progress", "table": "filing_chunks", "records": 952317},
+    {"source": "FRED economic indicators (140+ series) + Treasury + BLS equivalents", "table": "economic_indicators", "records": 1181730},
+    {"source": "XBRL fundamentals + FDIC bank financials", "table": "fundamentals", "records": 2488171},
+    {"source": "Damodaran industry data (betas, ERP, cost of capital)", "table": "damodaran_industry", "records": 6790},
+    {"source": "Fama-French factor returns (daily + monthly)", "table": "fama_french_factors", "records": 234765},
+    {"source": "SEC company tickers master (CIK-ticker mapping)", "table": "sec_company_tickers", "records": 10433},
+    {"source": "CFTC Commitments of Traders (futures positioning)", "table": "cftc_cot_positions", "records": 211310}
+  ],
+  "activeIngestion": [
+    {"task": "Phase 4: Historical 10-K filing chunks backfill 2010-2025", "status": "in-progress", "startedAt": "2026-04-03T14:35:00Z"}
+  ],
+  "pendingSources": [
+    {"source": "BLS (Bureau of Labor Statistics)", "phase": 2, "estimatedRecords": 800000, "apiKey": "obtained"},
+    {"source": "Census Bureau Economic Data", "phase": 2, "estimatedRecords": 2000000, "apiKey": "pending"},
+    {"source": "PatentsView", "phase": 2, "estimatedRecords": 1500000, "apiKey": "pending"},
+    {"source": "World Bank Indicators", "phase": 2, "estimatedRecords": 500000, "apiKey": "none needed"},
+    {"source": "IMF Data (WEO, IFS)", "phase": 2, "estimatedRecords": 300000, "apiKey": "none needed"},
+    {"source": "SEC N-PORT (fund holdings)", "phase": 2, "estimatedRecords": 500000, "apiKey": "none needed"},
+    {"source": "USAspending.gov", "phase": 3, "estimatedRecords": 500000, "apiKey": "none needed"},
+    {"source": "OECD Data", "phase": 3, "estimatedRecords": 200000, "apiKey": "none needed"},
+    {"source": "SBA Loan Data", "phase": 3, "estimatedRecords": 200000, "apiKey": "none needed"},
+    {"source": "Historical 10-Q filing chunks 2010-2025", "phase": 4, "estimatedRecords": 3000000, "apiKey": "none needed"},
+    {"source": "Historical 8-K filing chunks 2010-2025", "phase": 4, "estimatedRecords": 4500000, "apiKey": "none needed"},
+    {"source": "Deeper XBRL fundamentals pre-2005", "phase": 4, "estimatedRecords": 500000, "apiKey": "none needed"}
+  ],
+  "apiKeys": {
+    "FRED": "obtained",
+    "BLS": "obtained (af4de01c...)",
+    "Census": "pending — Arjun registering",
+    "PatentsView": "pending",
+    "Damodaran": "none needed",
+    "CFTC": "none needed",
+    "FINRA": "none needed"
+  }
+}
