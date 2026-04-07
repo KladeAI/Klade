@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klade — Basic Deployment Pack</title>
+<style>
+  @page {
+    size: A4;
+    margin: 2cm 2.2cm;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
+  }
+  h1 {
+    font-size: 22pt;
+    font-weight: 700;
+    margin-bottom: 0.15em;
+    color: #111;
+  }
+  h1 + p { margin-bottom: 1.8em; }
+  h2 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #111;
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+    border-bottom: 1.5px solid #d0d0d0;
+    padding-bottom: 0.25em;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 1.5em 0;
+  }
+  p, li { margin-bottom: 0.5em; }
+  strong { font-weight: 600; }
+  ul { padding-left: 1.4em; list-style: disc; }
+  ul.checklist { list-style: none; padding-left: 0.2em; }
+  ul.checklist li::before {
+    content: "\2610";
+    margin-right: 0.5em;
+    font-size: 1.1em;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8em 0 1.2em;
+    font-size: 10pt;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.45em 0.7em;
+    border: 1px solid #d0d0d0;
+    vertical-align: top;
+  }
+  th {
+    background: #f5f5f5;
+    font-weight: 600;
+  }
+  blockquote {
+    border-left: 3px solid #bbb;
+    padding: 0.4em 0.8em;
+    margin: 0.8em 0;
+    color: #555;
+    font-style: italic;
+    font-size: 10pt;
+  }
+  .subtitle {
+    font-size: 10pt;
+    color: #666;
+    margin-bottom: 1.5em;
+  }
+  .faq-q {
+    font-weight: 600;
+    margin-top: 0.9em;
+    margin-bottom: 0.2em;
+  }
+  .faq-a { margin-bottom: 0.7em; }
+  .footer {
+    margin-top: 2.5em;
+    padding-top: 1em;
+    border-top: 1px solid #ccc;
+    font-size: 9.5pt;
+    color: #666;
+  }
+  .footer p { margin-bottom: 0.3em; }
+  @media print {
+    body { padding: 0; max-width: none; }
+    h2 { page-break-after: avoid; }
+    table, ul { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Klade — Basic Deployment Pack</h1>
+<p class="subtitle"><strong>Prepared for prospective clients | April 2026 | DRAFT</strong></p>
+
+<h2>1. Deployment Options</h2>
+<table>
+  <thead>
+    <tr><th></th><th>Managed SaaS (Standard)</th><th>On-Prem (Enterprise)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Hosting</strong></td><td>Klade-managed cloud (Supabase Pro, US-East)</td><td>Client infrastructure</td></tr>
+    <tr><td><strong>Access</strong></td><td>Slack / Teams / Web — no code required</td><td>Same interfaces, your network</td></tr>
+    <tr><td><strong>Data layers</strong></td><td>Public/government sources (SEC, FRED, Treasury)</td><td>+ your proprietary data (Layer 3)</td></tr>
+    <tr><td><strong>Setup time</strong></td><td>Same day</td><td>2–4 weeks scoping + deployment</td></tr>
+    <tr><td><strong>Best for</strong></td><td>Most firms; fast start, zero ops burden</td><td>Strict data-governance mandates</td></tr>
+  </tbody>
+</table>
+<p>Both tiers deliver the same Clay AI analyst capabilities: financial modeling, company research, comp tables, memo drafting, and more.</p>
+
+<h2>2. Onboarding Checklist (Day 0–3)</h2>
+<ul class="checklist">
+  <li>Sign service agreement &amp; NDA</li>
+  <li>Klade provisions dedicated tenant (SaaS) or scoping call (on-prem)</li>
+  <li>Client adds Clay bot to Slack workspace (single OAuth click)</li>
+  <li>Optional: connect Google Workspace (email, calendar, docs)</li>
+  <li>Klade configures approval rules for high-risk actions (external emails, calendar edits, document sharing)</li>
+  <li>30-min kickoff call — walkthrough of Clay's core skills &amp; Slack commands</li>
+  <li>Client designates 1–2 pilot users for first week</li>
+</ul>
+
+<h2>3. First-Week Timeline</h2>
+<table>
+  <thead>
+    <tr><th>Day</th><th>Milestone</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>1</strong></td><td>Pilot users run first queries — company lookups, filing summaries, basic comps</td></tr>
+    <tr><td><strong>3</strong></td><td>Build a live DCF or comp table on a real deal; review citation quality with team</td></tr>
+    <tr><td><strong>5</strong></td><td>Expand to memo drafting or market research; add 2–3 more users</td></tr>
+    <tr><td><strong>7</strong></td><td>Checkpoint call with Klade — review usage, tune preferences, plan rollout</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Security &amp; Compliance FAQ</h2>
+
+<p class="faq-q">What data does Klade store?</p>
+<p class="faq-a">Standard deployments use exclusively public/government data (SEC EDGAR, FRED, FDIC, U.S. Treasury). No client PII or proprietary data is stored on Klade servers unless you opt in on-prem.</p>
+
+<p class="faq-q">Is your infrastructure SOC 2 compliant?</p>
+<p class="faq-a">Yes. Our database layer runs on Supabase Pro with SOC 2 Type II-certified infrastructure, enterprise-grade encryption at rest and in transit, and role-based access controls with full audit logging.</p>
+
+<p class="faq-q">What about proprietary client data?</p>
+<p class="faq-a">On-prem deployments keep all proprietary data within your network boundary. It never touches Klade cloud.</p>
+
+<p class="faq-q">Does Clay give investment advice?</p>
+<p class="faq-a">No. Clay is a research and analysis tool. It does not make buy/sell recommendations or provide personalized investment advice. It supports professional judgment — it does not replace it.</p>
+
+<p class="faq-q">How do you handle citations?</p>
+<p class="faq-a">Citation-first: every data point is traceable to its source (filing, date, section). Clay is explicit about data freshness and will flag when information may be stale rather than fabricate numbers.</p>
+
+<p class="faq-q">What actions require approval?</p>
+<p class="faq-a">Sending external emails, editing external-facing calendar events, sharing documents outside your tenant, and any payment or financial execution action all require explicit human approval. All actions are audit-logged per tenant.</p>
+
+<h2>5. Support &amp; SLAs</h2>
+<table>
+  <thead>
+    <tr><th></th><th>Standard</th><th>Enterprise</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Support channel</strong></td><td>Shared Slack channel + email (beta@kladeai.com)</td><td>Dedicated Slack channel + named contact</td></tr>
+    <tr><td><strong>Response time</strong></td><td>&lt; 4 business hours</td><td>&lt; 1 business hour</td></tr>
+    <tr><td><strong>Uptime target</strong></td><td>99.5%</td><td>99.9% (with SLA credits)</td></tr>
+    <tr><td><strong>Onboarding</strong></td><td>Self-serve + kickoff call</td><td>White-glove setup + weekly syncs (first month)</td></tr>
+    <tr><td><strong>Quarterly reviews</strong></td><td>—</td><td>Included</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Pricing (DRAFT)</h2>
+<blockquote>Indicative ranges — final pricing confirmed during scoping.</blockquote>
+<table>
+  <thead>
+    <tr><th>Tier</th><th>Monthly</th><th>Includes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Starter</strong></td><td>~$2,000</td><td>1 Clay analyst seat, core skills, Slack integration, public data</td></tr>
+    <tr><td><strong>Growth</strong></td><td>~$3,500</td><td>Up to 5 seats, Google Workspace integration, priority support</td></tr>
+    <tr><td><strong>Enterprise</strong></td><td>Custom</td><td>Unlimited seats, on-prem option, dedicated SLA, custom integrations</td></tr>
+  </tbody>
+</table>
+<ul>
+  <li>Annual plans available at ~15% discount.</li>
+  <li>Usage metered in agent-hours; overage billed monthly.</li>
+  <li>No long-term lock-in on Starter/Growth tiers.</li>
+</ul>
+
+<div class="footer">
+  <p><strong>Questions?</strong> Reach out to your Klade contact or email <strong>beta@kladeai.com</strong>.</p>
+  <p><em>This document is provided for informational purposes and does not constitute a binding offer. Pricing and terms are subject to change.</em></p>
+</div>
+
+</body>
+</html>

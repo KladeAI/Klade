@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@page { size: letter; margin: 1in; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #1a1a1a; line-height: 1.6; font-size: 11pt; }
+h1 { color: #0f172a; font-size: 22pt; border-bottom: 3px solid #2563eb; padding-bottom: 8px; margin-top: 0; }
+h2 { color: #1e40af; font-size: 15pt; margin-top: 28px; page-break-after: avoid; }
+h3 { color: #334155; font-size: 12pt; margin-top: 18px; page-break-after: avoid; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 10pt; }
+th { background: #1e40af; color: white; padding: 8px 10px; text-align: left; }
+td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+.subtitle { color: #64748b; font-size: 11pt; margin-top: -10px; margin-bottom: 24px; }
+.cmd { font-family: 'SF Mono', 'Consolas', monospace; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 10pt; color: #1e40af; font-weight: 600; }
+.example-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin: 10px 0; font-family: 'SF Mono', 'Consolas', monospace; font-size: 9.5pt; line-height: 1.5; white-space: pre-wrap; }
+.tip { background: #eff6ff; border-left: 4px solid #2563eb; padding: 10px 14px; margin: 12px 0; border-radius: 0 6px 6px 0; }
+.footer { margin-top: 40px; padding-top: 12px; border-top: 2px solid #e2e8f0; color: #64748b; font-size: 9pt; text-align: center; }
+.logo-text { font-size: 28pt; font-weight: 800; color: #1e40af; letter-spacing: -1px; }
+ul { padding-left: 20px; }
+li { margin-bottom: 4px; }
+.badge { display: inline-block; background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 10px; font-size: 9pt; font-weight: 600; margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<span class="logo-text">KLADE</span>
+<h1>Clay Slash Commands</h1>
+<p class="subtitle">Quick Reference Guide for Clay by Klade</p>
+
+<div class="tip">
+<strong>How it works:</strong> Type any command below into your Clay chat. Commands are case-insensitive -- <span class="cmd">/Brief</span>, <span class="cmd">/brief</span>, and <span class="cmd">/BRIEF</span> all work the same. You can also just talk to Clay in plain English for anything not covered here.
+</div>
+
+<h2>All Commands at a Glance</h2>
+
+<table>
+<tr><th>Command</th><th>What It Does</th><th>Example</th></tr>
+<tr><td><span class="cmd">/brief</span></td><td>Morning market brief -- indices, movers, sectors, your watchlist</td><td><span class="cmd">/brief</span></td></tr>
+<tr><td><span class="cmd">/watchlist</span></td><td>View, add, or remove tickers from your watchlist</td><td><span class="cmd">/watchlist add AAPL</span></td></tr>
+<tr><td><span class="cmd">/analyze</span></td><td>Quick one-page company snapshot</td><td><span class="cmd">/analyze NVDA</span></td></tr>
+<tr><td><span class="cmd">/compare</span></td><td>Side-by-side comparison of 2-4 companies</td><td><span class="cmd">/compare AAPL MSFT</span></td></tr>
+<tr><td><span class="cmd">/earnings</span></td><td>Latest earnings summary -- beats, misses, guidance</td><td><span class="cmd">/earnings TSLA</span></td></tr>
+<tr><td><span class="cmd">/macro</span></td><td>Macro environment snapshot -- rates, inflation, jobs</td><td><span class="cmd">/macro</span></td></tr>
+<tr><td><span class="cmd">/search</span></td><td>Search SEC filings and data</td><td><span class="cmd">/search AAPL revenue</span></td></tr>
+<tr><td><span class="cmd">/report</span></td><td>Generate a full PDF research report</td><td><span class="cmd">/report GOOGL</span></td></tr>
+<tr><td><span class="cmd">/help</span></td><td>Show all commands or get help on a specific one</td><td><span class="cmd">/help analyze</span></td></tr>
+</table>
+
+<h2>Command Details</h2>
+
+<h3>/brief -- Morning Market Brief</h3>
+<p>Get a complete morning briefing: major indices, key indicators, overnight movers, sector performance, economic calendar, and alerts on your watchlist stocks.</p>
+<div class="example-box">You type:   /brief
+
+Clay returns:
+  Index snapshot (S&amp;P 500, NASDAQ, Dow)
+  Key indicators (10Y yield, VIX)
+  Overnight movers with reasons
+  Sector leaders and laggards
+  Today's economic calendar
+  Alerts on your watchlist stocks</div>
+<p><strong>Options:</strong> <span class="cmd">/brief detailed</span> for an expanded version with more depth.</p>
+
+<h3>/watchlist -- Manage Your Watchlist</h3>
+<p>Your watchlist powers personalized alerts and briefings. Add the companies you care about most.</p>
+<div class="example-box">/watchlist              View your current watchlist with prices
+/watchlist add AAPL     Add Apple to your watchlist
+/watchlist add MSFT GOOGL  Add multiple tickers at once
+/watchlist remove TSLA  Remove Tesla from your watchlist</div>
+
+<h3>/analyze -- Company Snapshot</h3>
+<p>A one-page snapshot of any public company: price, market cap, key financials, business description, recent developments, and Clay's take.</p>
+<div class="example-box">/analyze AAPL           Snapshot of Apple
+/analyze NVDA           Snapshot of NVIDIA
+/analyze JPM            Snapshot of JPMorgan</div>
+<p>Every number comes with a source citation (filing name, date, section).</p>
+
+<h3>/compare -- Side-by-Side Comparison</h3>
+<p>Compare 2 to 4 companies head-to-head on price, valuation, growth, margins, and returns. Clay highlights the key differences.</p>
+<div class="example-box">/compare AAPL MSFT              Two companies
+/compare AAPL MSFT GOOGL        Three companies
+/compare JPM BAC GS MS          Four companies (max)</div>
+
+<h3>/earnings -- Earnings Summary</h3>
+<p>The latest earnings release for any company: revenue and EPS beat/miss, key metrics, guidance updates, call highlights, and market reaction.</p>
+<div class="example-box">/earnings AAPL          Latest Apple earnings
+/earnings TSLA Q4       Specific quarter</div>
+<p>Beat/miss indicators make it easy to scan: green check for beats, red X for misses.</p>
+
+<h3>/macro -- Macro Environment</h3>
+<p>A snapshot of the current macro landscape: Fed funds rate, Treasury yields, inflation readings, employment data, GDP, and upcoming releases.</p>
+<div class="example-box">/macro                  Full macro snapshot
+/macro rates            Focus on interest rates
+/macro inflation        Focus on inflation data
+/macro employment       Focus on jobs data</div>
+
+<h3>/search -- Search Filings and Data</h3>
+<p>Search across SEC filings, earnings transcripts, and Clay's knowledge base for specific topics, disclosures, or data points.</p>
+<div class="example-box">/search AAPL revenue recognition
+/search "climate risk" energy sector
+/search JPM credit loss provisions</div>
+<p>Results include ranked excerpts with source citations and links.</p>
+
+<h3>/report -- Full PDF Research Report <span class="badge">FLAGSHIP</span></h3>
+<p>Clay's most comprehensive deliverable. Generates a multi-page, publication-quality PDF research report with full financial analysis.</p>
+<div class="example-box">/report AAPL            Full research report on Apple
+/report GOOGL detailed  Extended version with extra depth</div>
+<p><strong>Note:</strong> Reports take 1-2 minutes to generate. Clay will let you know when it's ready and deliver the PDF directly to your chat.</p>
+<p><strong>Report includes:</strong> Executive Summary, Business Overview, Financial Analysis, Valuation, Risk Factors, and Appendix.</p>
+
+<h3>/help -- Command Reference</h3>
+<p>Quick reference for all commands, or detailed help for a specific one.</p>
+<div class="example-box">/help                   Show all commands
+/help analyze           Detailed help for /analyze
+/help compare           Detailed help for /compare</div>
+
+<h2>Tips for Power Users</h2>
+
+<table>
+<tr><th>Tip</th><th>Details</th></tr>
+<tr><td><strong>Mix commands and conversation</strong></td><td>Start with <span class="cmd">/analyze AAPL</span>, then follow up in plain English: "What are the bear case risks?"</td></tr>
+<tr><td><strong>Case doesn't matter</strong></td><td><span class="cmd">/BRIEF</span>, <span class="cmd">/Brief</span>, <span class="cmd">/brief</span> all work. Tickers too: <span class="cmd">aapl</span> becomes AAPL automatically.</td></tr>
+<tr><td><strong>Chain commands</strong></td><td>Use <span class="cmd">/analyze</span> for a quick look, then <span class="cmd">/report</span> if you want the full deep dive.</td></tr>
+<tr><td><strong>Build your watchlist first</strong></td><td>Your watchlist powers <span class="cmd">/brief</span> alerts. Add your core positions with <span class="cmd">/watchlist add</span>.</td></tr>
+<tr><td><strong>Ask for any format</strong></td><td>After any command output, ask Clay to reformat: "Turn that into an email" or "Make it a table."</td></tr>
+</table>
+
+<h2>Still Have Questions?</h2>
+<p>Just type <span class="cmd">/help</span> or ask Clay anything in plain English. Clay understands both structured commands and natural conversation.</p>
+<p>Account or billing questions? Email <strong>support@kladeai.com</strong></p>
+
+<div class="footer">
+Clay by Klade -- Your analyst, always on.<br>
+&copy; 2026 Klade AI. All rights reserved.
+</div>
+
+</body>
+</html>
