@@ -1,10 +1,10 @@
 "use client";
 
-import { FadeIn, ProgressBar, SpotlightCard, StaggerContainer, StaggerItem } from "@/components/animated";
+import { FadeIn } from "@/components/animated";
 import { SiteShell } from "@/components/site-shell";
 import { Button, Section } from "@/components/ui";
 import { WaitlistForm } from "@/components/waitlist";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
@@ -45,17 +45,6 @@ const trustTickerItems = [
   "Founder-led onboarding",
   "Enterprise-grade security",
   "24/7 execution coverage",
-];
-
-const capabilities = [
-  { title: "Financial Models", desc: "DCFs, LBOs, comps tables — structured and cited.", icon: "📊" },
-  { title: "Presentations", desc: "PowerPoint-ready decks from data to narrative.", icon: "📑" },
-  { title: "Research & Memos", desc: "Deep-dive research with sources and analysis.", icon: "🔍" },
-  { title: "Internal Reports", desc: "Automated reporting for stakeholders and teams.", icon: "📋" },
-  { title: "Workflow Automation", desc: "Recurring processes systematized and executed.", icon: "⚙️" },
-  { title: "Data Organization", desc: "Structure, clean, and surface insights from data.", icon: "🗃️" },
-  { title: "Operations Support", desc: "Process management, coordination, logistics.", icon: "🔗" },
-  { title: "Custom Tasks", desc: "Anything your team needs — Clay adapts.", icon: "🎯" },
 ];
 
 const orchestrationSteps = [
@@ -636,7 +625,6 @@ function ClayProducesSection() {
 /* ===== PAGE ===== */
 
 export default function HomePage() {
-  const reduceMotion = useReducedMotion();
   const [form, setForm] = useState<LeadForm>(() => createInitialForm());
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const completedFields = useMemo(
@@ -684,8 +672,7 @@ export default function HomePage() {
               <span className="klade-gradient-text">Not the other way around.</span>
             </h1>
             <p className="mt-5 max-w-3xl text-lg text-[#b3bedf] md:text-xl">
-              Every deployment is personalized. Clay learns your workflows, adapts to your terminology, and builds custom skills unique to your firm.
-              Models, decks, research, and more — handled by specialized agents shaped around how your team actually works.
+              An AI analyst that learns your templates, your data sources, and your firm&apos;s voice — then ships institutional-grade work into Slack and Teams. Models, decks, research, and workflow automation, handled by specialized agents shaped around how your team actually works.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/waitlist" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "join_waitlist" }}>
@@ -822,43 +809,19 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ===== CAPABILITIES ===== */}
+      {/* ===== CLAY PRODUCES — proof above the fold ===== */}
+      <ClayProducesSection />
+
+      {/* ===== CAPABILITIES + USE CASES (merged) ===== */}
       <Section id="capabilities" className="pt-6">
         <FadeIn>
-          <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Capabilities</p>
-          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">
-            One bot. Many specialists.
-          </h2>
-          <p className="mt-3 max-w-3xl text-[#9aa4cb]">
-            Clay orchestrates specialized agents across every function your team needs. Your firm does something unique? We build custom skills for it. No two deployments are the same.
-          </p>
-        </FadeIn>
-        <StaggerContainer className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {capabilities.map((cap) => (
-            <StaggerItem key={cap.title}>
-              <motion.div
-                whileHover={reduceMotion ? undefined : { y: -4, scale: 1.01 }}
-                className="surface-card rounded-2xl p-5 transition-all duration-300"
-              >
-                <span className="text-2xl">{cap.icon}</span>
-                <p className="mt-2 text-sm font-medium text-white">{cap.title}</p>
-                <p className="mt-1.5 text-xs text-[#9aa4cb]">{cap.desc}</p>
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </Section>
-
-      {/* ===== USE CASES ===== */}
-      <Section className="pt-6">
-        <FadeIn>
           <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Use cases</p>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Capabilities &amp; Use Cases</p>
             <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">
-              Clay molds to your firm. Not the other way around.
+              One bot. Many specialists. Shaped to your firm.
             </h2>
             <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">
-              One system, many specialists — shaped around the way your business actually operates.
+              Clay orchestrates specialized agents across every function your team needs. No two deployments are the same.
             </p>
             <div className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
               {useCases.map((uc) => (
@@ -914,9 +877,6 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ===== CLAY PRODUCES ===== */}
-      <ClayProducesSection />
-
       {/* ===== COMPARISON ===== */}
       <Section className="pt-4">
         <FadeIn>
@@ -946,60 +906,26 @@ export default function HomePage() {
         </FadeIn>
       </Section>
 
-      {/* ===== SECURITY ===== */}
+      {/* ===== SECURITY (soft-trim while Trust Center is rebuilt) ===== */}
       <Section id="security" className="pt-4">
         <FadeIn>
           <div className="rounded-3xl border border-white/8 bg-white/3 p-6 md:p-8">
             <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Security</p>
-            <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">Built for teams that care about control.</h2>
-            <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">Secure-by-design architecture, workflow-scoped access, and visibility-first deployment posture from day one.</p>
-            <div className="mt-5 grid gap-3 md:grid-cols-2">
-              {[
-                "Least-privilege integration model",
-                "No client-side secrets",
-                "Audit-log ready event patterns",
-                "Founder-led deployment accountability",
-              ].map((item) => (
-                <p key={item} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-[#d8def5]">{item}</p>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
-      </Section>
-
-      {/* ===== ONBOARDING ===== */}
-      <Section className="pt-4">
-        <FadeIn>
-          <div className="rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-br from-[#0d1225] to-[#10162f] p-6 md:p-8">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Onboarding</p>
-            <h2 className="mt-2 text-3xl font-semibold text-white md:text-4xl">Founder-led onboarding. Every time.</h2>
+            <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">Secure by design. Built for teams that care about control.</h2>
             <p className="mt-3 max-w-3xl text-sm text-[#9aa4cb]">
-              We learn your workflows, build custom skills for your firm, and stay with you. No hand-off to a support queue — the people who built Clay are the ones deploying it for your team.
+              Least-privilege integrations, workflow-scoped access, and founder-led deployment accountability from day one. A full Trust Center — with our security questionnaire, subprocessor list, and data flow — is coming soon.
             </p>
-            <div className="mt-5 grid gap-3 md:grid-cols-3">
-              {[
-                { step: "01", title: "We learn your workflows", desc: "Deep-dive into how your team actually operates day-to-day." },
-                { step: "02", title: "We build custom skills", desc: "Tailored agents for the tasks unique to your firm." },
-                { step: "03", title: "We stay with you", desc: "Ongoing support and iteration as your needs evolve." },
-              ].map((item) => (
-                <div key={item.step} className="rounded-xl border border-white/8 bg-white/4 p-4">
-                  <p className="text-xs font-medium text-[#4FD1FF]">{item.step}</p>
-                  <p className="mt-2 text-sm font-medium text-white">{item.title}</p>
-                  <p className="mt-1.5 text-xs text-[#9aa4cb]">{item.desc}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </FadeIn>
       </Section>
 
-      {/* ===== FOUNDERS ===== */}
+      {/* ===== FOUNDERS (with onboarding merged in) ===== */}
       <Section id="founders" className="pt-6">
         <FadeIn>
           <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">Founding team</p>
-          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">Built by operators, not outsiders.</h2>
+          <h2 className="mt-2 text-3xl font-semibold text-white md:text-5xl">Built by operators. Deployed by founders.</h2>
           <p className="mt-3 max-w-3xl text-[#9aa4cb]">
-            Three founders operating inside the workflows we&apos;re automating. Founder-led through every step of onboarding and deployment.
+            Three founders operating inside the workflows we&apos;re automating. The people who built Clay are the ones deploying it for your team — no hand-off to a support queue.
           </p>
         </FadeIn>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -1025,6 +951,27 @@ export default function HomePage() {
             </FadeIn>
           ))}
         </div>
+
+        {/* Onboarding sub-section — merged in from the retired standalone section */}
+        <FadeIn delay={0.15}>
+          <div className="mt-6 rounded-3xl border border-[#4FD1FF]/15 bg-gradient-to-br from-[#0d1225] to-[#10162f] p-6 md:p-8">
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#4FD1FF]">What onboarding looks like</p>
+            <h3 className="mt-2 text-xl font-semibold text-white md:text-2xl">Founder-led. Every time.</h3>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              {[
+                { step: "01", title: "We learn your workflows", desc: "Deep-dive into how your team actually operates day-to-day." },
+                { step: "02", title: "We build custom skills", desc: "Tailored agents for the tasks unique to your firm." },
+                { step: "03", title: "We stay with you", desc: "Ongoing support and iteration as your needs evolve." },
+              ].map((item) => (
+                <div key={item.step} className="rounded-xl border border-white/8 bg-white/4 p-4">
+                  <p className="text-xs font-medium text-[#4FD1FF]">{item.step}</p>
+                  <p className="mt-2 text-sm font-medium text-white">{item.title}</p>
+                  <p className="mt-1.5 text-xs text-[#9aa4cb]">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeIn>
       </Section>
 
       {/* ===== WAITLIST + CTA BANNER ===== */}

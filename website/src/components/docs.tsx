@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 /* ===== SIDEBAR NAV DATA ===== */
 const docsNav = [
@@ -50,8 +50,15 @@ export function DocsSidebar({ className = "" }: { className?: string }) {
 export function DocsMobileSidebar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  useEffect(() => { setOpen(false); }, [pathname]);
+  // Reset `open` when the route changes. Done in render body (React's
+  // recommended pattern for prop-driven state resets) to avoid setState
+  // inside useEffect, which trips react-hooks/set-state-in-effect.
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
 
   return (
     <div className="lg:hidden">

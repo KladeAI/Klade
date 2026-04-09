@@ -154,6 +154,53 @@ function isDuplicateLead(data: { email: string; company: string; role: string })
 }
 
 
+/* ── Supabase insert ── */
+async function storeInSupabase(data: {
+  name: string;
+  company: string;
+  email: string;
+  teamSize: string;
+  role: string;
+  bottleneck: string;
+  clientIp: string;
+  userAgent: string;
+}) {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    console.warn("[lead] Supabase not configured, skipping DB store");
+    return { success: true };
+  }
+
+  const response = await fetch(`${url}/rest/v1/leads`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      name: data.name,
+      company: data.company,
+      email: data.email,
+      team_size: data.teamSize,
+      role: data.role,
+      bottleneck: data.bottleneck,
+      source: "website-v2",
+      client_ip: data.clientIp,
+      user_agent: data.userAgent,
+    }),
+  });
+
+  if (response.status === 201 || response.ok) {
+    return { success: true };
+  }
+
+  console.error("[lead] Supabase insert failed:", response.status, await response.text().catch(() => ""));
+  return { success: false };
+}
+
 /* ── Telegram notification ── */
 function escHtml(s: string) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -260,7 +307,12 @@ export async function POST(request: Request) {
     return jsonNoStore({ ok: true });
   }
 
-  // Notify founders via Telegram
+  const userAgent = request.headers.get("user-agent") ?? "unknown";
+
+  // Persist to Supabase first — that's the system of record
+  const dbResult = await storeInSupabase({ ...data, clientIp, userAgent });
+
+  // Then notify founders via Telegram (fire-and-forget)
   await notifyTelegram(data);
 
   console.info("[lead_capture]", {
@@ -269,8 +321,9 @@ export async function POST(request: Request) {
       source: "website-v2",
       capturedAt: new Date().toISOString(),
       clientIp,
-      userAgent: request.headers.get("user-agent") ?? "unknown",
+      userAgent,
       startedAt,
+      dbPersisted: dbResult.success,
     },
   });
 
