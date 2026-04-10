@@ -143,7 +143,7 @@ export default function WaitlistPage() {
             </p>
             <div className="mt-6">
               <Button
-                href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting"
+                href="https://calendly.com/adam-kladeai/new-meeting"
                 variant="secondary"
                 eventName="cta_click"
                 eventPayload={{ placement: "waitlist_page", cta: "book_demo" }}

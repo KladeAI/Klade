@@ -678,7 +678,7 @@ export default function HomePage() {
               <Button href="/waitlist" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "join_waitlist" }}>
                 Join the Waitlist
               </Button>
-              <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" variant="secondary" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "book_demo" }}>
+              <Button href="https://calendly.com/adam-kladeai/new-meeting" variant="secondary" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "book_demo" }}>
                 Book a Demo
               </Button>
               <Button href="#meet-clay" variant="secondary" eventName="hero_cta_click" eventPayload={{ placement: "hero", cta: "meet_clay" }}>
@@ -994,7 +994,7 @@ export default function HomePage() {
                 <div className="h-px w-8 bg-white/10" />
               </div>
               <div className="mt-4">
-                <Button href="https://calendly.com/d/cyj7-xvw-rrg/new-meeting" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "book_demo" }}>
+                <Button href="https://calendly.com/adam-kladeai/new-meeting" variant="secondary" eventName="cta_click" eventPayload={{ placement: "banner", cta: "book_demo" }}>
                   Book a Demo Instead
                 </Button>
               </div>
