@@ -10,7 +10,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * To bring the site back: delete this file and push to main (Vercel redeploys
  * automatically). That's the entire reversal.
  *
- * This middleware runs before every page and API route. Pages get a minimal
+ * This proxy runs before every page and API route. Pages get a minimal
  * holding page; API routes get a 503 so no form submission can land.
  */
 
@@ -45,7 +45,7 @@ const HOLDING_PAGE = `<!doctype html>
 </body>
 </html>`;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/api")) {
     const res = NextResponse.json(
       { success: false, message: "This service is temporarily unavailable." },
